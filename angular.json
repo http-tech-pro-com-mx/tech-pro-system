@@ -25,7 +25,14 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.slimscroll.js",
+              "src/assets/js/waves.min.js",
+              "src/assets/js/admin.js",
+              "src/assets/js/demo.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
