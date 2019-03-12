@@ -16,8 +16,8 @@ import { TokenInterceptor } from './auth/token.interceptor';
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   {
-    path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
-
+    path: 'home', component: HomeComponent, children: [
+      { path: 'attendance', loadChildren: './attendance/attendance.module#AttendanceModule' },
     ]
   },
   { path: '**', component: NotFound404Component }];

@@ -182,7 +182,7 @@
             <ul class="ml-menu">
               <li>
                 <a href="pages/ui/alerts.html">CONSULTA</a>
-              </li>              
+              </li>
               <li>
                 <a href="pages/ui/animations.html">CONFIGURACIÓN</a>
               </li>
@@ -196,7 +196,7 @@
             <ul class="ml-menu">
               <li>
                 <a href="pages/ui/alerts.html">CREAR</a>
-              </li>              
+              </li>
               <li>
                 <a href="pages/ui/animations.html">CONSULTAR</a>
               </li>
@@ -233,7 +233,7 @@
         </li>
       </ul>
       <div class="tab-content">
-        <div role="tabpanel"  class="tab-pane fade in active in active"  id="settings">
+        <div role="tabpanel" class="tab-pane fade in active in active" id="settings">
           <div class="demo-settings">
             <p>GENERAL SETTINGS</p>
             <ul class="setting-list">
@@ -309,6 +309,11 @@
     <div class="container-fluid">
       <div class="block-header">
         <h2>{{ section }}</h2>
+        <div class="row clearfix">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
       </div>
     </div>
   </section>
