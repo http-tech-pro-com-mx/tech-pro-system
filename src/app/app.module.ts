@@ -14,10 +14,13 @@ import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: '**', component: NotFound404Component }
-];
+  { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
+  {
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
+
+    ]
+  },
+  { path: '**', component: NotFound404Component }];
 
 
 @NgModule({
