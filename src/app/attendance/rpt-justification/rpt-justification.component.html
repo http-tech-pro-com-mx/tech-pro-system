@@ -1,3 +1,110 @@
-<p>
-  rpt-justification works!
-</p>
+<h2>
+  <b>{{ section }}</b>
+</h2>
+<br>
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h5> BUSCAR </h5>
+      </div>
+      <div class="body">
+        <div class="row clearfix">
+          <div class="col-sm-2">
+            <select class="form-control">
+              <option value="">-- AÑO --</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <select class="form-control">
+              <option value="">MES</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+          <div class="col-sm-2">
+            <select class="form-control">
+              <option value="">QUINCENA</option>
+              <option value="1">PRIMER</option>
+              <option value="2">SEGUNDA</option>
+            </select>
+          </div>
+          <div class="col-sm-5">
+            <select class="form-control" data-live-search="true">
+              <option value="">EMPLEADO</option>
+              <option value="1">IVAN TADEO HUERTA</option>
+              <option value="2">RAMIRO LUNA</option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <button type="button" class="btn bg-lime m-l-15 waves-effect waves-brown waves-ripple">
+              <i class="material-icons">
+                search
+              </i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h5>HISTORIAL</h5>
+      </div>
+      <div class="body table-responsive">
+        <table id="mainTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>FECHA INICIO</th>
+              <th>FECHA FIN</th>
+              <th>MOTIVO</th>
+              <th>STATUS</th>
+              <th>¿AUTORIZÓ?</th>
+            </tr>
+          </thead>
+          <tbody>
+             <tr>
+               <td>13 - MARZO - 2019 </td>
+               <td>13 - MARZO - 2019 </td>
+               <td>DIAS PENDIENTES</td>
+               <td>JUSTIFICADO</td>
+               <td>DIANA SANCHEZ</td>
+             </tr>
+             <tr>
+               <td>13 - MARZO - 2019 </td>
+               <td>13 - MARZO - 2019 </td>
+               <td>VACACIONES</td>
+               <td>JUSTIFICADO</td>
+               <td>DIANA SANCHEZ</td>
+             </tr>
+             <tr>
+               <td>13 - MARZO - 2019 </td>
+               <td>13 - MARZO - 2019 </td>
+               <td>RETARDO</td>
+               <td>NO JUSTICADO</td>
+               <td>DIANA SANCHEZ</td>
+             </tr>
+             <tr>
+               <td>13 - MARZO - 2019 </td>
+               <td>13 - MARZO - 2019 </td>
+               <td>RETARDO</td>
+               <td>PENDIENTE</td>
+               <td> - </td>
+             </tr>
+          </tbody>          
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
