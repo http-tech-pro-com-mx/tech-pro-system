@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RptAttendanceComponent implements OnInit {
 
+  public section: String; 
+
   constructor() { }
 
   ngOnInit() {
+    this.section = "CONSULTA DE ASISTENCIAS"
   }
 
 }

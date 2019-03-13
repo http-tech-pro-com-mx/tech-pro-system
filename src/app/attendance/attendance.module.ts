@@ -2,18 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { RptAttendanceComponent } from './rpt-attendance/rpt-attendance.component';
+import { ConfAttendanceComponent } from './conf-attendance/conf-attendance.component';
 
 
 const routesAttendance: Routes = [
-  {
-    path: 'reporte', component: RptAttendanceComponent
-    // data: {
-    //   expectedRole: 56
-    // }
-  }];
+  { path: 'reports', component: RptAttendanceComponent },
+  { path: 'config', component: ConfAttendanceComponent }
+];
 
 @NgModule({
-  declarations: [RptAttendanceComponent],
+  declarations: [RptAttendanceComponent, ConfAttendanceComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routesAttendance)
