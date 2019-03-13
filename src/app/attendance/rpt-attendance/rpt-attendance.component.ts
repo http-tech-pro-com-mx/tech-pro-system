@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $:any;
 @Component({
   selector: 'app-rpt-attendance',
   templateUrl: './rpt-attendance.component.html',
@@ -12,7 +13,8 @@ export class RptAttendanceComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.section = "CONSULTA DE ASISTENCIAS"
+    this.section = "CONSULTA DE ASISTENCIAS";
+    $('select').selectpicker();
   }
 
 }

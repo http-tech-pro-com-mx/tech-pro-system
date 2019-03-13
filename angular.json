@@ -23,7 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css"
             ],
             "scripts": [
               "src/assets/js/jquery.min.js",
@@ -31,7 +32,8 @@
               "src/assets/js/jquery.slimscroll.js",
               "src/assets/js/waves.min.js",
               "src/assets/js/admin.js",
-              "src/assets/js/demo.js"
+              "src/assets/js/demo.js",
+              "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"
             ],
             "es5BrowserSupport": true
           },
