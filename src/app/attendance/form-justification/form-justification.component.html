@@ -1,0 +1,85 @@
+<h2>
+  <b>{{ section }}</b>
+</h2>
+<br>
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h2>
+          CREAR
+          <small>INGRESA LOS DATOS PARA ENVIAR</small>
+        </h2>
+        <ul class="header-dropdown m-r--5">
+          <li class="dropdown">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">more_vert</i>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <a href="javascript:void(0);">AYUDA</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="body">
+        <form>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <input type="checkbox" name="rango_dias" id="rango_dias" class="filled-in chk-col-lime">
+              <label for="rango_dias">RANGO DE DÍAS</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <h2 class="card-inside-title">DÍA</h2>
+              <div class="input-group date" id="bs_datepicker_component_container">
+                <div class="form-line">
+                  <input type="text" class="form-control" placeholder="Seleccione día">
+                </div>
+                <span class="input-group-addon">
+                  <i class="material-icons">date_range</i>
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <h2 class="card-inside-title">RANGO DE DÍAS</h2>
+              <div class="input-daterange input-group" id="bs_datepicker_range_container">
+                <div class="form-line">
+                  <input type="text" class="form-control" placeholder="FECHA INICIO">
+                </div>
+                <span class="input-group-addon">al</span>
+                <div class="form-line">
+                  <input type="text" class="form-control" placeholder="FECHA FIN">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <input type="text" id="motivo" class="form-control">
+                  <label class="form-label">MOTIVO</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group form-float">
+                <div class="form-line">
+                  <label class="form-label">DESCRIPCIÓN</label>
+                  <textarea name="description" cols="30" rows="5" class="form-control no-resize"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button type="button" class="btn bg-lime m-t-15 waves-effect">ENVIAR</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

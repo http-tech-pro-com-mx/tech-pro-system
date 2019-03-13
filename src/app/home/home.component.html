@@ -126,11 +126,6 @@
             </ul>
           </li>
           <!-- #END# Notifications -->
-          <li class="pull-right">
-            <a href="javascript:void(0);" class="js-right-sidebar" data-close="true">
-              <i class="material-icons">more_vert</i>
-            </a>
-          </li>
         </ul>
       </div>
     </div>
@@ -181,7 +176,7 @@
             </a>
             <ul class="ml-menu">
               <li>
-                <a routerLink="attendance/reports">CONSULTA</a>
+                <a routerLink="attendance/report">CONSULTA</a>
               </li>
               <li>
                 <a routerLink="attendance/config">CONFIGURACIÓN</a>
@@ -195,10 +190,10 @@
             </a>
             <ul class="ml-menu">
               <li>
-                <a href="pages/ui/alerts.html">CREAR</a>
+                <a routerLink="attendance/justication">CREAR</a>
               </li>
               <li>
-                <a href="pages/ui/animations.html">CONSULTAR</a>
+                <a routerLink="attendance/report-justication">CONSULTAR</a>
               </li>
             </ul>
           </li>
@@ -225,84 +220,6 @@
       <!-- #Footer -->
     </aside>
     <!-- #END# Left Sidebar -->
-    <!-- Right Sidebar -->
-    <aside id="rightsidebar" class="right-sidebar">
-      <ul class="nav nav-tabs tab-nav-right" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#settings" data-toggle="tab">SETTINGS</a>
-        </li>
-      </ul>
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade in active in active" id="settings">
-          <div class="demo-settings">
-            <p>GENERAL SETTINGS</p>
-            <ul class="setting-list">
-              <li>
-                <span>Report Panel Usage</span>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox" checked>
-                    <span class="lever"></span>
-                  </label>
-                </div>
-              </li>
-              <li>
-                <span>Email Redirect</span>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox">
-                    <span class="lever"></span>
-                  </label>
-                </div>
-              </li>
-            </ul>
-            <p>SYSTEM SETTINGS</p>
-            <ul class="setting-list">
-              <li>
-                <span>Notifications</span>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox" checked>
-                    <span class="lever"></span>
-                  </label>
-                </div>
-              </li>
-              <li>
-                <span>Auto Updates</span>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox" checked>
-                    <span class="lever"></span>
-                  </label>
-                </div>
-              </li>
-            </ul>
-            <p>ACCOUNT SETTINGS</p>
-            <ul class="setting-list">
-              <li>
-                <span>Offline</span>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox">
-                    <span class="lever"></span>
-                  </label>
-                </div>
-              </li>
-              <li>
-                <span>Location Permission</span>
-                <div class="switch">
-                  <label>
-                    <input type="checkbox" checked>
-                    <span class="lever"></span>
-                  </label>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </aside>
-    <!-- #END# Right Sidebar -->
   </section>
 
 
