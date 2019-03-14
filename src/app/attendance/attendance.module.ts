@@ -6,6 +6,7 @@ import { ConfAttendanceComponent } from './conf-attendance/conf-attendance.compo
 import { FormJustificationComponent } from './form-justification/form-justification.component';
 import { RptJustificationComponent } from './rpt-justification/rpt-justification.component';
 import { OutstandingJusticationComponent } from './outstanding-justication/outstanding-justication.component';
+import { RptAttendanceAdminComponent } from './rpt-attendance-admin/rpt-attendance-admin.component';
 
 
 const routesAttendance: Routes = [
@@ -13,11 +14,12 @@ const routesAttendance: Routes = [
   { path: 'config', component: ConfAttendanceComponent },
   { path: 'justication', component: FormJustificationComponent },
   { path: 'report-justication', component: RptJustificationComponent },
-  { path: 'outstanding-justication', component: OutstandingJusticationComponent }
+  { path: 'outstanding-justication', component: OutstandingJusticationComponent },
+  { path: 'report-admin', component: RptAttendanceAdminComponent }
 ];
 
 @NgModule({
-  declarations: [RptAttendanceComponent, ConfAttendanceComponent, FormJustificationComponent, RptJustificationComponent, OutstandingJusticationComponent],
+  declarations: [RptAttendanceComponent, ConfAttendanceComponent, FormJustificationComponent, RptJustificationComponent, OutstandingJusticationComponent, RptAttendanceAdminComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routesAttendance)
