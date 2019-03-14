@@ -1,0 +1,8 @@
+.panel-default > .panel-heading-custom{
+    background-color: #2B9CD5;
+    color: #fff;
+}
+
+.panel-group .panel{
+    border-color: #2B9CD5;
+}

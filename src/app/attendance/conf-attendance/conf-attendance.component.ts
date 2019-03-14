@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfAttendanceComponent implements OnInit {
 
+  public section:string;
+
   constructor() { }
 
   ngOnInit() {
+    this.section = "CONFIGURACIÓN";
   }
 
 }
