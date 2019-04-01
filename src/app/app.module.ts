@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoaderComponent } from './loader/loader.component';
@@ -16,7 +18,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   {
-    path: 'home', component: HomeComponent, children: [
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard] , children: [
       { path: 'attendance', loadChildren: './attendance/attendance.module#AttendanceModule' },
     ]
   },
@@ -33,6 +35,9 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

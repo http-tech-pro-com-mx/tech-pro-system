@@ -1,7 +1,7 @@
 <div class="text-center margin-card-top">
   <div class="card">
     <div class="body">
-      <form id="sign_in" method="POST" autocomplete="off">
+      <form id="sign_in" [formGroup]="formLogin" class="col s12"  (ngSubmit)="login()" autocomplete="off">
         <img src="assets/images/img-login.png" alt="">
         <div class="msg">
           <b>SISTEMA INTERNO</b>
@@ -11,7 +11,7 @@
             <i class="material-icons">email</i>
           </span>
           <div class="form-line">
-            <input type="text" class="form-control" name="username" placeholder="EMAIL" required autofocus>
+            <input type="text" class="form-control"  placeholder="USERNAME"  id='usuario' formControlName='usuario' (ngModelChange)="resetMensaje()" [(ngModel)]='usuario.usuario'  autofocus>
           </div>
         </div>
         <div class="input-group">
@@ -19,16 +19,16 @@
             <i class="material-icons">lock</i>
           </span>
           <div class="form-line">
-            <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA" required>
+            <input type="password" class="form-control"  placeholder="PASSWORD"  id='contrasenia' formControlName='contrasenia' (ngModelChange)="resetMensaje()" [(ngModel)]='usuario.contrasenia'>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-6 p-t-5">
-            <input type="checkbox" name="rememberme" id="rememberme" class="filled-in chk-col-blue">
+            <input type="checkbox" id="rememberme" class="filled-in chk-col-blue">
             <label for="rememberme">RECORDAR</label>
           </div>
           <div class="col-xs-6">
-            <button class="btn btn-block bg-blue  waves-effect" type="submit">INICIAR SESIÓN</button>
+            <button class="btn btn-block bg-blue  waves-effect" type="submit"  [disabled]='disabled'>{{ !disabled ? 'INICIAR SESIÓN' : 'PROCESANDO'}}</button>
           </div>
         </div>
         <div class="row m-t-15 m-b--20">
