@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     this.disabled = false;
     this.formLogin = this.fb.group({
       usuario: new FormControl('',[Validators.required]),
-      contrasenia: new FormControl([Validators.required])
+      contrasenia: new FormControl('',[Validators.required])
     });
   }
 
