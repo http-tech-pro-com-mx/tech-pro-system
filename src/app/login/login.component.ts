@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { LoginService } from './login.service';
 
-
+declare var toastr:any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -43,30 +43,27 @@ export class LoginComponent implements OnInit {
       
       this.disabled = true;
       this.service.login(this.usuario).subscribe(result => {
-        console.log(result)
-        if (result.response.sucessfull) {
+      
+        if (result.access_token) {
           if (typeof (Storage) !== "undefined") {
-            this.usuario = result.response.usuario;
-            //localStorage.setItem('bio2019t3chPr0', this.usuario.token);
-            localStorage.setItem('data_user', JSON.stringify(this.usuario));
+            localStorage.setItem('bio2019t3chPr0', result.access_token);
+            localStorage.setItem('data_user', JSON.stringify(result));
             this.router.navigate(['home']);
           } else {
-            //Materialize.toast('LocalStorage no soportado en este navegador!', 4000, 'red');
+            toastr.error('LocalStorage no soportado en este navegador!');
           }
         } else {
           this.mensaje_error = result.response.message;
-          //Materialize.toast(this.mensaje_error, 3000, 'red');
+          toastr.error('Error en el inicio de sesión!')
         }
         this.disabled = false;
       }, error => {
-        console.log(error)
         this.disabled = false;
-        //Materialize.toast('Ocurrió  un error en el servicio!', 4000, 'red');
+        toastr.error('Usuario o contraseña incorrectos!');
       });
 
     } else {
-      //Materialize.toast('Verifique los datos capturados!', 4000, 'red');
-      alert('Verfique los datos capturados!')
+      toastr.error('Verifique los datos capturados!');
     }
 
   }
