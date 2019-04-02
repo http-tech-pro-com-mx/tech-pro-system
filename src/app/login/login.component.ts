@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
 
     if (this.formLogin.valid) {
-      
+      console.log(this.usuario)
       this.disabled = true;
       this.service.login(this.usuario).subscribe(result => {
       

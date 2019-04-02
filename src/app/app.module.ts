@@ -20,6 +20,7 @@ const appRoutes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard] , children: [
       { path: 'attendance', loadChildren: './attendance/attendance.module#AttendanceModule' },
+      { path: 'user', loadChildren: './user/user.module#UserModule' }
     ]
   },
   { path: '**', component: NotFound404Component }];
