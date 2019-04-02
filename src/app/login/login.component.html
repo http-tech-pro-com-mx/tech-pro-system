@@ -14,11 +14,11 @@
             <input type="text" class="form-control" placeholder="USERNAME" id='usuario' formControlName='usuario'
               (ngModelChange)="resetMensaje()" [(ngModel)]='usuario.usuario' autofocus>
           </div>
-          <div
+          <small
             *ngIf="formLogin.controls.usuario.errors?.required && (formLogin.controls.usuario?.touched || submitted)"
-            class="error">
+            class="form-text text-muted text-validator-error">
             Ingrese usuario
-          </div>
+          </small>
         </div>
         <div class="input-group">
           <span class="input-group-addon">
@@ -28,10 +28,10 @@
             <input type="password" class="form-control" placeholder="PASSWORD" id='contrasenia'
               formControlName='contrasenia' (ngModelChange)="resetMensaje()" [(ngModel)]='usuario.contrasenia'>
           </div>
-          <div *ngIf="formLogin.controls.contrasenia.errors?.required && (formLogin.controls.contrasenia?.touched || submitted)"
-          class="error">
+          <small *ngIf="formLogin.controls.contrasenia.errors?.required && (formLogin.controls.contrasenia?.touched || submitted)"
+          class="form-text text-muted text-validator-error">
           Ingrese contraseña
-        </div>
+          </small>
         </div>
         <div class="row">
           <div class="col-xs-6 p-t-5">

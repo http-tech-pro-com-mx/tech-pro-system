@@ -137,11 +137,12 @@
       <!-- User Info -->
       <div class="user-info">
         <div class="image">
-          <img src="assets/images/avatar-hombre.png" width="48" height="48" alt="User" />
+          <img *ngIf="personal.genero == 1" src="assets/images/avatar-hombre.png" width="48" height="48" alt="User" />
+          <img *ngIf="personal.genero == 2" src="assets/images/avatar-mujer.png" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
-          <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-          <div class="email">john.doe@example.com</div>
+          <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ personal.nombre + ' ' + personal.apellido_paterno + ' ' + personal.apellido_materno }}</div>
+          <div class="email">{{ personal.correo_electronico }}</div>
           <div class="btn-group user-helper-dropdown">
             <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
             <ul class="dropdown-menu pull-right">
@@ -151,7 +152,7 @@
               </li>
               <li role="separator" class="divider"></li>
               <li>
-                <a href="javascript:void(0);">
+                <a (click)="logout($event)">
                   <i class="material-icons">input</i>Cerrar sesión</a>
               </li>
             </ul>
