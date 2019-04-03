@@ -56,7 +56,7 @@ export class PerfilComponent implements OnInit {
         this.status_message = " " + result.message;
       }
 
-      //this.ngAfterInit();
+      this.ngAfterInit();
       this.loading = false;
 
     }, error => {
