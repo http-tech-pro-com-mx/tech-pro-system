@@ -19,6 +19,7 @@ export class PerfilComponent implements OnInit {
   public section: String;
   public loading: boolean;
   public status_message: string;
+  public submitted: boolean;
   public personal: Personal;
   public areas: Array<Area>;
   public contrasenias: any;
@@ -33,6 +34,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.status_message = null;
+    this.submitted = false;
     this.section = "MI PERFIL";
     this.areas = [];
     this.contrasenias = {
@@ -79,20 +81,36 @@ export class PerfilComponent implements OnInit {
 
   ngAfterInit() {
 
-    // setTimeout(() => {
-
-      this.form = this.fb.group({
-        actual: new FormControl('', [Validators.required]),
-        nueva: new FormControl('', [Validators.required]),
-        confirmacion: new FormControl('', [Validators.required])
-      });
-
-    // }, 900);
+    this.form = this.fb.group({
+      actual: new FormControl('', [Validators.required]),
+      nueva: new FormControl('', [Validators.required]),
+      confirmacion: new FormControl('', [])
+    }, { validator: this.checkPasswords });
 
   }
 
   changePassword() {
-    console.log('Parametros de envio', this.contrasenias)
+
+    this.submitted = true;
+    console.log(this.form)
+
+    if (this.form.valid) {
+
+    } else {
+
+      if (this.form.errors && this.form.errors.notSame) {
+          toastr.error('Las contraseñas no coinciden');
+      }else{
+        toastr.error('Verifique los datos capturados!');
+      } 
+    }
+  }
+
+  checkPasswords(group: FormGroup) {
+    let pass = group.controls.nueva.value;
+    let confirmPass = group.controls.confirmacion.value;
+
+    return pass === confirmPass ? null : { notSame: true }
   }
 
 }

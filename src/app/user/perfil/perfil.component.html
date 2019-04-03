@@ -92,6 +92,11 @@
                         <input type="password" class="form-control" id="contrasenia_actual" name="contrasenia_actual"
                           placeholder="CONTRASEÑA ACTUAL" [(ngModel)]="contrasenias.actual" formControlName='actual'>
                       </div>
+                      <small
+                        *ngIf="form.controls.actual.errors?.required && (form.controls.actual?.touched || submitted)"
+                        class="form-text text-muted text-validator-error">
+                        Requerido
+                      </small>
                     </div>
                   </div>
                   <div class="form-group">
@@ -101,6 +106,10 @@
                         <input type="password" class="form-control" id="contrasenia_nueva" name="contrasenia_nueva"
                           placeholder="NUEVA CONTRASEÑA" [(ngModel)]="contrasenias.nueva" formControlName='nueva'>
                       </div>
+                      <small *ngIf="form.controls.nueva.errors?.required && (form.controls.nueva?.touched || submitted)"
+                        class="form-text text-muted text-validator-error">
+                        Requerido
+                      </small>
                     </div>
                   </div>
                   <div class="form-group">
@@ -109,7 +118,8 @@
                     <div class="col-sm-9">
                       <div class="form-line">
                         <input type="password" class="form-control" id="contrasenia_confirmacion"
-                          placeholder="NUEVA CONTRASEÑA (CONFIRMAR)" [(ngModel)]="contrasenias.confirmacion" formControlName='confirmacion'>
+                          placeholder="NUEVA CONTRASEÑA (CONFIRMAR)" [(ngModel)]="contrasenias.confirmacion"
+                          formControlName='confirmacion'>
                       </div>
                     </div>
                   </div>
