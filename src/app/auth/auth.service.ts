@@ -20,7 +20,11 @@ export class AuthService {
   }
 
   public getIdUsuario(): number{
-     return jwt_decode(this.getToken()).sub || -1;
-     
+     return jwt_decode(this.getToken()).sub || -1; 
   }
+
+  public getUserName(): string{
+    return jwt_decode(this.getToken()).user_name || "NOT_USER"; 
+ }
+
 }

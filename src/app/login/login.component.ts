@@ -39,8 +39,7 @@ export class LoginComponent implements OnInit {
     this.mensaje_error = "";
     this.submitted = true;
 
-    if (this.formLogin.valid) {
-      console.log(this.usuario)
+    if (this.formLogin.valid) {    
       this.disabled = true;
       this.service.login(this.usuario).subscribe(result => {
       

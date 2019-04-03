@@ -1,91 +1,128 @@
-<h2>
-  <b>{{ section }}</b>
-</h2>
-<br>
-<div class="row clearfix">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card">
-      <div class="header">
-        <h2>
-          <small>INFORMACIÓN DETALLADA</small>
-        </h2>
+<app-preloader *ngIf="loading"></app-preloader>
+<div *ngIf="!loading && status_message">
+  <h3>{{ status_message }}</h3>
+  <p>Por favor, intenta más tarde</p>
+</div>
+<div *ngIf="!loading && !status_message">
+  <h2>
+    <b>{{ section }}</b>
+  </h2>
+  <br>
+  <div class="row clearfix">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <div class="card profile-card">
+        <div class="profile-header">&nbsp;</div>
+        <div class="profile-body">
+          <div class="image-area">
+            <img src="assets/images/avatar-hombre.png" alt="Imagen de perfil" />
+          </div>
+          <div class="content-area">
+            <h3>{{ personal.nombre + ' '+ personal.apellido_paterno }}</h3>
+            <p>{{ personal.perfil.valor }}</p>
+            <p>{{ personal.area.valor }}</p>
+          </div>
+        </div>
+        <div class="profile-footer">
+          <button class="btn btn-primary btn-lg waves-effect btn-block">CAMBIAR IMAGEN</button>
+        </div>
       </div>
-      <div class="body">
-        <form>
-          <div class="row clearfix">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <input type="text" class="form-control" value="IVAN" disabled>
-                  <label class="form-label">NOMBRE</label>
-                </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body">
+          <div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#profile_settings" aria-controls="settings" role="tab" data-toggle="tab">MIS DATOS</a>
+              </li>
+              <li role="presentation">
+                <a href="#change_password_settings" aria-controls="settings" role="tab" data-toggle="tab">CAMBIAR
+                  CONTRASEÑA</a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="profile_settings">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="nombre" class="col-sm-2 control-label">NOMBRE</label>
+                    <div class="col-sm-10">
+                      <div class="form-line">
+                        <input type="text" class="form-control" id="nombre" name="nombre"
+                          [value]="personal.nombre +' '+personal.apellido_paterno + ' ' + personal.apellido_materno"
+                          disabled>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="Email" class="col-sm-2 control-label">EMAIL</label>
+                    <div class="col-sm-10">
+                      <div class="form-line">
+                        <input type="email" class="form-control" id="Email" name="Email"
+                          [value]="personal.correo_electronico" disabled>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="puesto" class="col-sm-2 control-label">PUESTO</label>
+                    <div class="col-sm-10">
+                      <div class="form-line">
+                        <input type="text" class="form-control" id="puesto" name="puesto"
+                          [value]="personal.perfil.valor" disabled>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="area" class="col-sm-2 control-label">AREA</label>
+                    <div class="col-sm-10">
+                      <select class="form-control" [value]="personal.area.id_area" disabled>
+                        <option value="">-- SELECCIONE --</option>
+                        <option *ngFor="let area of areas" [value]="area.id_area">{{ area.valor }}</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <input type="text" class="form-control" value="IVAN" disabled>
-                  <label class="form-label">APELLIDO PATERNO</label>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <input type="text" class="form-control" value="IVAN" disabled>
-                  <label class="form-label">APELLIDO MATERNO</label>
-                </div>
+              <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="OldPassword" class="col-sm-3 control-label">CONTRASEÑA ACTUAL</label>
+                    <div class="col-sm-9">
+                      <div class="form-line">
+                        <input type="password" class="form-control" id="OldPassword" name="OldPassword"
+                          placeholder="CONTRASEÑA ACTUAL" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="NewPassword" class="col-sm-3 control-label">NUEVA CONTRASEÑA</label>
+                    <div class="col-sm-9">
+                      <div class="form-line">
+                        <input type="password" class="form-control" id="NewPassword" name="NewPassword"
+                          placeholder="NUEVA CONTRASEÑA" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="NewPasswordConfirm" class="col-sm-3 control-label">NUEVA CONTRASEÑA (CONFIRMAR)</label>
+                    <div class="col-sm-9">
+                      <div class="form-line">
+                        <input type="password" class="form-control" id="NewPasswordConfirm" name="NewPasswordConfirm"
+                          placeholder="NUEVA CONTRASEÑA (CONFIRMAR)" required>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                      <button type="submit" class="btn btn-primary">CAMBIAR</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-          <div class="row clearfix">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <select class="form-control" disabled>
-                <option value="">-- SELECCIONE --</option>
-                <option value="10">MASCULINO</option>
-                <option value="20">FEMENINO</option>
-              </select>
-            </div>
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <input type="email" class="form-control" value="IVAN" disabled>
-                  <label class="form-label">CORREO ELECTRONICO</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <input type="text" class="form-control" value="IVAN" disabled>
-                  <label class="form-label">PUESTO</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <input type="text" class="form-control" value="IVAN" disabled>
-                  <label class="form-label">AREA</label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="form-group form-float">
-                <div class="form-line">
-                  <textarea name="description" cols="30" rows="2" class="form-control no-resize" disabled>Descripción del area</textarea>
-                  <label class="form-label">DESCRIPCIÓN AREA</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

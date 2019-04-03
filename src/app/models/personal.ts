@@ -1,3 +1,6 @@
+import { Area } from './area';
+import { Perfil } from './perfil';
+
 export class Personal {
     constructor(
         public id_personal: number,
@@ -6,8 +9,8 @@ export class Personal {
         public apellido_materno:string,
         public genero: number,
         public correo_electronico: string,
-        public id_area: number,
-        public id_perfil: number, 
+        public area: Area,
+        public perfil: Perfil, 
         public jefe_directo?: number
     ){}
 }
