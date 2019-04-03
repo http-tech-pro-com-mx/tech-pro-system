@@ -17,4 +17,12 @@ export class PerfilService {
     return this.http.get<any>(this.URL + '/profile/'+usuario);
   }
 
+
+  changePassword(contrasenias: any): Observable<any>{
+    let params = new URLSearchParams();
+    params.set('nueva', contrasenias.nueva);
+    params.set('actual', contrasenias.actual);
+    return this.http.post<any>(this.URL,params.toString());
+  }
+
 }

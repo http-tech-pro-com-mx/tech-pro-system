@@ -84,35 +84,36 @@
                 </form>
               </div>
               <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
-                <form class="form-horizontal">
+                <form [formGroup]="form" class="form-horizontal"  class="col s12" (ngSubmit)="changePassword()"
+                  autocomplete="off">
                   <div class="form-group">
-                    <label for="OldPassword" class="col-sm-3 control-label">CONTRASEÑA ACTUAL</label>
+                    <label for="contrasenia_actual" class="col-sm-3 control-label">CONTRASEÑA ACTUAL</label>
                     <div class="col-sm-9">
                       <div class="form-line">
-                        <input type="password" class="form-control" id="OldPassword" name="OldPassword"
-                          placeholder="CONTRASEÑA ACTUAL" required>
+                        <input type="password" class="form-control" id="contrasenia_actual" name="contrasenia_actual"
+                          placeholder="CONTRASEÑA ACTUAL" [(ngModel)]="contrasenias.actual" formControlName="actual">
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="NewPassword" class="col-sm-3 control-label">NUEVA CONTRASEÑA</label>
+                    <label for="contrasenia_nueva" class="col-sm-3 control-label">NUEVA CONTRASEÑA</label>
                     <div class="col-sm-9">
                       <div class="form-line">
-                        <input type="password" class="form-control" id="NewPassword" name="NewPassword"
-                          placeholder="NUEVA CONTRASEÑA" required>
+                        <input type="password" class="form-control" id="contrasenia_nueva" name="contrasenia_nueva"
+                          placeholder="NUEVA CONTRASEÑA" [(ngModel)]="contrasenias.nueva" formControlName="nueva">
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="NewPasswordConfirm" class="col-sm-3 control-label">NUEVA CONTRASEÑA (CONFIRMAR)</label>
+                    <label for="contrasenia_confirmacion" class="col-sm-3 control-label">NUEVA CONTRASEÑA
+                      (CONFIRMAR)</label>
                     <div class="col-sm-9">
                       <div class="form-line">
-                        <input type="password" class="form-control" id="NewPasswordConfirm" name="NewPasswordConfirm"
-                          placeholder="NUEVA CONTRASEÑA (CONFIRMAR)" required>
+                        <input type="password" class="form-control" id="contrasenia_confirmacion" placeholder="NUEVA CONTRASEÑA (CONFIRMAR)"
+                          [(ngModel)]="contrasenias.confirmacion" formControlName="confirmacion">
                       </div>
                     </div>
                   </div>
-
                   <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
                       <button type="submit" class="btn btn-primary">CAMBIAR</button>

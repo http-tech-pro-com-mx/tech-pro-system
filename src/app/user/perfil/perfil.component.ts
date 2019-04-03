@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Personal } from '../../models/personal';
 import { PerfilService } from './perfil.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -19,10 +20,13 @@ export class PerfilComponent implements OnInit {
   public loading: boolean;
   public status_message: string;
   public personal: Personal;
-  public areas:Array<Area>;
+  public areas: Array<Area>;
+  public contrasenias: any;
+  public form: FormGroup;
 
   constructor(
     private service: PerfilService,
+    private fb: FormBuilder,
     private auth: AuthService
   ) { }
 
@@ -31,6 +35,11 @@ export class PerfilComponent implements OnInit {
     this.status_message = null;
     this.section = "MI PERFIL";
     this.areas = [];
+    this.contrasenias = {
+      actual: '',
+      nueva: '',
+      confirmacion: ''
+    };
 
     this.personal = new Personal(-1, '', '', '', -1, '', new Area(-1, '', '', -1), new Perfil(-1, '', '', -1));
 
@@ -44,10 +53,12 @@ export class PerfilComponent implements OnInit {
 
       } else {
         toastr.error(result.message);
-        this.status_message = " "+result.message;
+        this.status_message = " " + result.message;
       }
 
+      //this.ngAfterInit();
       this.loading = false;
+
     }, error => {
       this.status_message = 'Error: ' + error.status;
       toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
@@ -64,6 +75,24 @@ export class PerfilComponent implements OnInit {
       $.AdminBSB.navbar.activate();
       $.AdminBSB.dropdownMenu.activate();
     }, 150);
+  }
+
+  ngAfterInit() {
+
+    // setTimeout(() => {
+
+      this.form = this.fb.group({
+        actual: new FormControl('', [Validators.required]),
+        nueva: new FormControl('', [Validators.required]),
+        confirmacion: new FormControl('', [Validators.required])
+      });
+
+    // }, 900);
+
+  }
+
+  changePassword() {
+    console.log('Parametros de envio', this.contrasenias)
   }
 
 }
