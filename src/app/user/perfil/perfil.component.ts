@@ -5,6 +5,7 @@ import { PerfilService } from './perfil.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Area } from '../../models/area';
 import { Perfil } from '../../models/perfil';
+import swal from 'sweetalert2';
 
 declare var $: any;
 declare var toastr: any;
@@ -92,17 +93,48 @@ export class PerfilComponent implements OnInit {
   changePassword() {
 
     this.submitted = true;
-    console.log(this.form)
 
     if (this.form.valid) {
+      swal.fire({
+        title: '<span style="color: #2196f3 ">¿Desea cambiar su contraseña?</span>',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0075D3',
+        cancelButtonColor: '#2196f3 ',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si!',
+        allowOutsideClick: false,
+        allowEnterKey: false
+      }).then((result) => {
+        /*
+         * Si acepta
+         */
+        if (result.value) {
 
+          this.service.changePassword(this.contrasenias).subscribe(result => {
+            console.log(result)
+            if (result.successful) {
+
+            } else {
+
+              toastr.error(result.message);
+            }
+          }, error => {
+            console.log(error)
+            if (error.status == 403) {
+              toastr.error('No tiene permiso para realizar esta acción');
+            } else {
+              toastr.error('Ocurrió un error! Error: ' + error.status);
+            }
+
+          });
+
+        } else if (result.dismiss === swal.DismissReason.cancel) { }
+      })
+    } else if (this.form.errors && this.form.errors.notSame) {
+      toastr.error('Las contraseñas no coinciden');
     } else {
-
-      if (this.form.errors && this.form.errors.notSame) {
-          toastr.error('Las contraseñas no coinciden');
-      }else{
-        toastr.error('Verifique los datos capturados!');
-      } 
+      toastr.error('Verifique los datos capturados!');
     }
   }
 

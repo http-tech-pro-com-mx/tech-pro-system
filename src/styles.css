@@ -2,3 +2,7 @@
 .text-validator-error{
     color: red;
 }
+
+.swal2-container {
+    zoom: 1.5;
+  }

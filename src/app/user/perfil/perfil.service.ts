@@ -19,10 +19,8 @@ export class PerfilService {
 
 
   changePassword(contrasenias: any): Observable<any>{
-    let params = new URLSearchParams();
-    params.set('nueva', contrasenias.nueva);
-    params.set('actual', contrasenias.actual);
-    return this.http.post<any>(this.URL,params.toString());
+    let params = JSON.stringify(contrasenias);
+    return this.http.post<any>(this.URL+'/changePassword', params);
   }
 
 }
