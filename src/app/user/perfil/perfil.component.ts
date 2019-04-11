@@ -112,15 +112,19 @@ export class PerfilComponent implements OnInit {
         if (result.value) {
 
           this.service.changePassword(this.contrasenias).subscribe(result => {
-            console.log(result)
+            
             if (result.successful) {
-
+              this.contrasenias.actual = '';
+              this.contrasenias.nueva = '';
+              this.contrasenias.confirmacion = '';
+              this.submitted = false;
+              this.form.reset();
+              swal.fire('Exito !', result.message,'success');
             } else {
-
               toastr.error(result.message);
             }
           }, error => {
-            console.log(error)
+           
             if (error.status == 403) {
               toastr.error('No tiene permiso para realizar esta acción');
             } else {
