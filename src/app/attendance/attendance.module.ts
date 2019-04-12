@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { RptAttendanceComponent } from './rpt-attendance/rpt-attendance.component';
 import { ConfAttendanceComponent } from './conf-attendance/conf-attendance.component';
@@ -7,7 +8,7 @@ import { FormJustificationComponent } from './form-justification/form-justificat
 import { RptJustificationComponent } from './rpt-justification/rpt-justification.component';
 import { OutstandingJusticationComponent } from './outstanding-justication/outstanding-justication.component';
 import { RptAttendanceAdminComponent } from './rpt-attendance-admin/rpt-attendance-admin.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routesAttendance: Routes = [
   { path: 'report', component: RptAttendanceComponent },
@@ -22,6 +23,9 @@ const routesAttendance: Routes = [
   declarations: [RptAttendanceComponent, ConfAttendanceComponent, FormJustificationComponent, RptJustificationComponent, OutstandingJusticationComponent, RptAttendanceAdminComponent],
   imports: [
     CommonModule,
+    SharedModule,
+    FormsModule, 
+    ReactiveFormsModule,
     RouterModule.forChild(routesAttendance)
   ]
 })
