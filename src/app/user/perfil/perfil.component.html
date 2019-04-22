@@ -14,7 +14,7 @@
         <div class="profile-header">&nbsp;</div>
         <div class="profile-body">
           <div class="image-area">
-            <img src="assets/images/avatar-hombre.png" alt="Imagen de perfil" />
+            <img [src]="'http://localhost:8080/api/usuarios/getImageProfile/'+personal.genero+'/'+personal.nombre_foto" width="200" height="200" alt="Imagen de perfil" />
           </div>
           <div class="content-area">
             <h3>{{ personal.nombre + ' '+ personal.apellido_paterno }}</h3>

@@ -137,8 +137,8 @@
       <!-- User Info -->
       <div class="user-info">
         <div class="image">
-          <img *ngIf="personal.genero == 1" src="assets/images/avatar-hombre.png" width="48" height="48" alt="User" />
-          <img *ngIf="personal.genero == 2" src="assets/images/avatar-mujer.png" width="48" height="48" alt="User" />
+          <img *ngIf="personal.genero == 1" [src]="'http://localhost:8080/api/usuarios/getImageProfile/1/'+personal.nombre_foto" width="48" height="48" alt="User" />
+          <img *ngIf="personal.genero == 2" [src]="'http://localhost:8080/api/usuarios/getImageProfile/2/'+personal.nombre_foto" width="48" height="48" alt="User" />
         </div>
         <div class="info-container">
           <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ personal.nombre + ' ' + personal.apellido_paterno + ' ' + personal.apellido_materno }}</div>

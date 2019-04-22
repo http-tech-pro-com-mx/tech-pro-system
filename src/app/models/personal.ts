@@ -8,6 +8,7 @@ export class Personal {
         public apellido_paterno:string,
         public apellido_materno:string,
         public genero: number,
+        public nombre_foto: string,
         public correo_electronico: string,
         public area: Area,
         public perfil: Perfil, 

@@ -44,7 +44,7 @@ export class PerfilComponent implements OnInit {
       confirmacion: ''
     };
 
-    this.personal = new Personal(-1, '', '', '', -1, '', new Area(-1, '', '', -1), new Perfil(-1, '', '', -1));
+    this.personal = new Personal(-1, '', '', '', -1,'default.png', '', new Area(-1, '', '', -1), new Perfil(-1, '', '', -1));
 
     this.service.getFindByUser(this.auth.getUserName()).subscribe(result => {
 
