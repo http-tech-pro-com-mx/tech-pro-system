@@ -33,6 +33,11 @@
     font-size: 1rem;
     text-align: center;
     color: #f1f1f1;
+    border: 2px dashed #BDBDBD;
+
+    -webkit-transition: all .25s linear;
+    -o-transition: all .25s linear;
+    transition: all .25s linear;
 }
 
 .file-upload-wrapper .card.card-body input {
@@ -65,15 +70,10 @@
     color: #BDBDBD;
 }
 
-/* .avatar-pic {
-    width: 150px;
+.file-upload:hover{
+    background-color: rgba(62,69,81,.1);
+    -webkit-transition: all .25s linear;
+    -o-transition: all .25s linear;
+    transition: all .25s linear;
 }
 
-.rounded-circle {
-    border-radius: 50%!important;
-}
-
-.z-depth-1-half {
-    -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15)!important;
-    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15)!important;
-} */
