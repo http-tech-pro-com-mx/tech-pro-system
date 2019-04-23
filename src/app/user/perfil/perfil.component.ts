@@ -8,7 +8,9 @@ import { Perfil } from '../../models/perfil';
 import swal from 'sweetalert2';
 
 declare var $: any;
+declare var Dropzone: any;
 declare var toastr: any;
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -25,6 +27,7 @@ export class PerfilComponent implements OnInit {
   public areas: Array<Area>;
   public contrasenias: any;
   public form: FormGroup;
+
 
   constructor(
     private service: PerfilService,
@@ -44,7 +47,7 @@ export class PerfilComponent implements OnInit {
       confirmacion: ''
     };
 
-    this.personal = new Personal(-1, '', '', '', -1,'default.png', '', new Area(-1, '', '', -1), new Perfil(-1, '', '', -1));
+    this.personal = new Personal(-1, '', '', '', -1, 'default.png', '', new Area(-1, '', '', -1), new Perfil(-1, '', '', -1));
 
     this.service.getFindByUser(this.auth.getUserName()).subscribe(result => {
 
@@ -77,6 +80,7 @@ export class PerfilComponent implements OnInit {
       $.AdminBSB.rightSideBar.activate();
       $.AdminBSB.navbar.activate();
       $.AdminBSB.dropdownMenu.activate();
+
     }, 150);
   }
 
@@ -112,19 +116,19 @@ export class PerfilComponent implements OnInit {
         if (result.value) {
 
           this.service.changePassword(this.contrasenias).subscribe(result => {
-            
+
             if (result.successful) {
               this.contrasenias.actual = '';
               this.contrasenias.nueva = '';
               this.contrasenias.confirmacion = '';
               this.submitted = false;
               this.form.reset();
-              swal.fire('Exito !', result.message,'success');
+              swal.fire('Exito !', result.message, 'success');
             } else {
               toastr.error(result.message);
             }
           }, error => {
-           
+
             if (error.status == 403) {
               toastr.error('No tiene permiso para realizar esta acción');
             } else {
@@ -147,6 +151,30 @@ export class PerfilComponent implements OnInit {
     let confirmPass = group.controls.confirmacion.value;
 
     return pass === confirmPass ? null : { notSame: true }
+  }
+
+  async changeImage(): Promise<void> {
+    const { value: file } = await swal.fire({
+      title: '<h6>SELECCIONE IMAGEN</h6>',
+      imageUrl: '',
+      input: 'file',
+      inputAttributes: {
+        'accept': 'image/*',
+        'aria-label': 'Upload your profile picture'
+      }
+    })
+
+    if (file) {
+      const reader = new FileReader
+      reader.onload = (e:any) => {
+        swal.fire({
+          title: 'Imagen cargada',
+          imageUrl: e.target.result,
+          imageAlt: 'The uploaded picture'
+        })
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
 }
