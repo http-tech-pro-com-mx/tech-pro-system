@@ -150,13 +150,17 @@
           <div class="container-upload">
             <div class="file-upload-wrapper">
               <div class="card card-body view file-upload">
-                <div id="container-image" class="image-preview" *ngIf="preview"> </div>
+                <div id="container-image" class="image-preview" *ngIf="preview">
+                  <div class="transbox">
+                  </div>
+                </div>
                 <div class="card-text file-upload-message" *ngIf="!preview"><i class="material-icons md-48">
                     cloud_upload
                   </i>
                   <p>Clic aquí para cargar archivo</p>
                 </div>
-                <input type="file" id="input-file-now" class="file_upload" (change)="seleccionImagen($event)" accept="image/*">
+                <input type="file" id="input-file-now" class="file_upload" (change)="seleccionImagen($event)"
+                  accept="image/*">
                 <div class="file-upload-preview"><span class="file-upload-render"></span>
                 </div>
               </div>
