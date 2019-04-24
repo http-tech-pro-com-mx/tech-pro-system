@@ -160,7 +160,7 @@
                   </i>
                   <p>Clic aquí para cargar archivo</p>
                 </div>
-                <input type="file" id="input-file-now" class="file_upload" (change)="seleccionImagen($event)"
+                <input #myInput type="file" id="input-file-now" class="file_upload" (change)="seleccionImagen($event)"
                   accept="image/*">
                 <div class="file-upload-preview"><span class="file-upload-render"></span>
                 </div>
@@ -169,7 +169,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" *ngIf="preview">ACTUALIZAR</button>
+          <button type="button" class="btn btn-primary" *ngIf="preview" (click)="uploadFile()">ACTUALIZAR</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">CERRAR</button>
         </div>
       </div>

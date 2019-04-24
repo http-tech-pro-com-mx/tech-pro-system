@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Personal } from '../../models/personal';
 import { PerfilService } from './perfil.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Area } from '../../models/area';
 import { Perfil } from '../../models/perfil';
+import { ViewChild } from '@angular/core';
 import swal from 'sweetalert2';
 
 declare var $: any;
@@ -29,6 +30,8 @@ export class PerfilComponent implements OnInit {
   public form: FormGroup;
   public preview: boolean;
 
+  @ViewChild('myInput')
+  myInputVariable: ElementRef;
 
   constructor(
     private service: PerfilService,
@@ -181,9 +184,9 @@ export class PerfilComponent implements OnInit {
             } else {
               //vista previa
               this.preview = true;
-              setTimeout(()=>{
-                document.getElementById('container-image').style.setProperty('--url', 'url('+e.target.result+')');
-              },100);
+              setTimeout(() => {
+                document.getElementById('container-image').style.setProperty('--url', 'url(' + e.target.result + ')');
+              }, 100);
             }
 
           }
@@ -194,6 +197,13 @@ export class PerfilComponent implements OnInit {
         toastr.error('Tamaño máximo soportado 4MB');
       }
     }
+  }
+
+  uploadFile(): void {
+    $('#modalChangeImage').modal('hide');
+    this.myInputVariable.nativeElement.value = "";
+    this.preview = false;
+    swal.fire('Exito!', 'Se actualizó la imagen!', 'success');
   }
 
 }
