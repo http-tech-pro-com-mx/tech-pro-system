@@ -27,6 +27,7 @@ export class PerfilComponent implements OnInit {
   public areas: Array<Area>;
   public contrasenias: any;
   public form: FormGroup;
+  public preview: boolean;
 
 
   constructor(
@@ -40,6 +41,7 @@ export class PerfilComponent implements OnInit {
     this.status_message = null;
     this.submitted = false;
     this.section = "MI PERFIL";
+    this.preview = false;
     this.areas = [];
     this.contrasenias = {
       actual: '',
@@ -154,6 +156,7 @@ export class PerfilComponent implements OnInit {
   }
 
   seleccionImagen(event): void {
+    this.preview = false;
     this.filePreview(event.target);
   }
 
@@ -167,7 +170,7 @@ export class PerfilComponent implements OnInit {
         reader.onload = (e: any) => {
           let img_aux = new Image();
           img_aux.src = e.target.result;
-          img_aux.onload = function () {
+          img_aux.onload = () => {
 
             if (img_aux.width < 100 || img_aux.height < 100) {
               //La imagen es muy pequeña
@@ -177,6 +180,10 @@ export class PerfilComponent implements OnInit {
               //La imagen es muy grande
             } else {
               //vista previa
+              this.preview = true;
+              setTimeout(()=>{
+                document.getElementById('container-image').style.setProperty('--url', 'url('+e.target.result+')');
+              },100);
             }
 
           }
