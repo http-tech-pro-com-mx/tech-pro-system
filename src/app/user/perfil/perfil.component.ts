@@ -153,27 +153,39 @@ export class PerfilComponent implements OnInit {
     return pass === confirmPass ? null : { notSame: true }
   }
 
-  async changeImage(): Promise<void> {
-    const { value: file } = await swal.fire({
-      title: '<h6>SELECCIONE IMAGEN</h6>',
-      imageUrl: '',
-      input: 'file',
-      inputAttributes: {
-        'accept': 'image/*',
-        'aria-label': 'Upload your profile picture'
-      }
-    })
+  seleccionImagen(event): void {
+    this.filePreview(event.target);
+  }
 
-    if (file) {
-      const reader = new FileReader
-      reader.onload = (e:any) => {
-        swal.fire({
-          title: 'Imagen cargada',
-          imageUrl: e.target.result,
-          imageAlt: 'The uploaded picture'
-        })
+  filePreview(input): void {
+    if (input.files && input.files[0]) {
+      let imagen = input.files[0];
+      if ((imagen.size / 1024) < 4096) {
+
+
+        let reader = new FileReader();
+        reader.onload = (e: any) => {
+          let img_aux = new Image();
+          img_aux.src = e.target.result;
+          img_aux.onload = function () {
+
+            if (img_aux.width < 100 || img_aux.height < 100) {
+              //La imagen es muy pequeña
+              toastr.error('Imagen demasiado pequeña');
+            } else if (img_aux.width > 800 || img_aux.height > 800) {
+              toastr.error('Imagen demasiado grande');
+              //La imagen es muy grande
+            } else {
+              //vista previa
+            }
+
+          }
+        }
+        reader.readAsDataURL(imagen);
+
+      } else {
+        toastr.error('Tamaño máximo soportado 4MB');
       }
-      reader.readAsDataURL(file)
     }
   }
 
