@@ -98,3 +98,10 @@ div.transbox {
     filter: alpha(opacity=100); For IE8 and earlier */
 }
 
+div.transbox p{
+    color: white;
+    font-weight: bold;
+    font-size: 2em;
+    text-shadow: 2px 2px 8px black;
+}
+
