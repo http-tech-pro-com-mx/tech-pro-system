@@ -7,6 +7,7 @@ import { Area } from '../../models/area';
 import { Perfil } from '../../models/perfil';
 import { ViewChild } from '@angular/core';
 import swal from 'sweetalert2';
+import { HttpEventType } from '@angular/common/http';
 
 declare var $: any;
 declare var Dropzone: any;
@@ -29,6 +30,8 @@ export class PerfilComponent implements OnInit {
   public contrasenias: any;
   public form: FormGroup;
   public preview: boolean;
+  public imagen_seleccionada: File;
+  public progreso:number;
 
   @ViewChild('myInput')
   myInputVariable: ElementRef;
@@ -44,8 +47,10 @@ export class PerfilComponent implements OnInit {
     this.status_message = null;
     this.submitted = false;
     this.section = "MI PERFIL";
+    this.imagen_seleccionada = null;
     this.preview = false;
     this.areas = [];
+    this.progreso = 0;
     this.contrasenias = {
       actual: '',
       nueva: '',
@@ -159,6 +164,7 @@ export class PerfilComponent implements OnInit {
   }
 
   seleccionImagen(event): void {
+    this.progreso = 0;
     this.preview = false;
     this.filePreview(event.target);
   }
@@ -183,6 +189,7 @@ export class PerfilComponent implements OnInit {
               //La imagen es muy grande
             } else {
               //vista previa
+              this.imagen_seleccionada = imagen;
               this.preview = true;
               setTimeout(() => {
                 document.getElementById('container-image').style.setProperty('--url', 'url(' + e.target.result + ')');
@@ -199,11 +206,42 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  uploadFile(): void {
+  closeModal(): void {
     $('#modalChangeImage').modal('hide');
+    this.progreso = 0;
     this.myInputVariable.nativeElement.value = "";
+    this.imagen_seleccionada = null;
     this.preview = false;
-    swal.fire('Exito!', 'Se actualizó la imagen!', 'success');
+  }
+
+
+
+  uploadFile(): void {
+
+    this.service.uploadImagen(this.imagen_seleccionada,  this.auth.getIdUsuario()).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progreso = Math.round((event.loaded / event.total) * 100);
+      } else if (event.type === HttpEventType.Response) {
+        let response: any = event.body;
+
+      if (response.successful) {
+        $('#modalChangeImage').modal('hide');
+        this.progreso = 0;
+        this.myInputVariable.nativeElement.value = "";
+        this.imagen_seleccionada = null;
+        this.preview = false;
+        swal.fire('Exito!', 'Se actualizó la imagen!', 'success');
+
+      } else {
+        toastr.error(response.message);
+      }
+      
+      }
+
+    }, error => {
+      toastr.error(error.error.error);
+    });
+
   }
 
 }

@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         this.disabled = false;
       }, error => {
         this.disabled = false;
-        toastr.error('Usuario o contraseña incorrectos!');
+        toastr.error('Ocurrió un error en el servicio');
       });
 
     } else {

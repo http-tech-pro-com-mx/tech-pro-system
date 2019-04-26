@@ -14,7 +14,15 @@ export class TokenInterceptor implements HttpInterceptor {
 
         let token = this.auth.getToken();
 
-        if (token != null) {
+        if(request.url.includes('oauth/token')){
+            return next.handle(request.clone());
+        }else if(request.url.includes('upload')){
+            request = request.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${this.auth.getToken()}`
+                }
+            });
+        }else if (token != null) {
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${this.auth.getToken()}`,
