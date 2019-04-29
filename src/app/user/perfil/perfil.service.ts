@@ -23,10 +23,11 @@ export class PerfilService {
     return this.http.post<any>(this.URL + '/changePassword', params);
   }
 
-  uploadImagen(archivo: File, id:number): Observable<HttpEvent<{}>> {
+  uploadImagen(archivo: File, id_personal): Observable<HttpEvent<{}>> {
+    
     let formData = new FormData();
     formData.append('archivo', archivo, archivo.name);
-    formData.append('id', ""+id);
+    formData.append('id_personal',id_personal);
 
     const req = new HttpRequest('POST', this.URL + '/imageProfile/upload' , formData, {
       reportProgress: true

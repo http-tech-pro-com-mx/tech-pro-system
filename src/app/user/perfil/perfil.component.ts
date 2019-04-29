@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Personal } from '../../models/personal';
 import { PerfilService } from './perfil.service';
@@ -32,6 +32,8 @@ export class PerfilComponent implements OnInit {
   public preview: boolean;
   public imagen_seleccionada: File;
   public progreso:number;
+
+
 
   @ViewChild('myInput')
   myInputVariable: ElementRef;
@@ -164,6 +166,7 @@ export class PerfilComponent implements OnInit {
   }
 
   seleccionImagen(event): void {
+    
     this.progreso = 0;
     this.preview = false;
     this.filePreview(event.target);
@@ -218,13 +221,15 @@ export class PerfilComponent implements OnInit {
 
   uploadFile(): void {
 
-    this.service.uploadImagen(this.imagen_seleccionada,  this.auth.getIdUsuario()).subscribe(event => {
+    this.service.uploadImagen(this.imagen_seleccionada,  this.auth.getIdPersonal()).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
         this.progreso = Math.round((event.loaded / event.total) * 100);
       } else if (event.type === HttpEventType.Response) {
         let response: any = event.body;
 
       if (response.successful) {
+       
+        this.personal.nombre_foto = response.nombre_foto;
         $('#modalChangeImage').modal('hide');
         this.progreso = 0;
         this.myInputVariable.nativeElement.value = "";

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { Personal } from '../models/personal';
 
+
 declare var toastr:any;
 @Component({
   selector: 'app-home',
@@ -40,5 +41,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['login']);
     event.preventDefault();
   }
+
+
 
 }

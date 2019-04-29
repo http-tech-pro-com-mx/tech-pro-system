@@ -19,8 +19,8 @@ export class AuthService {
     
   }
 
-  public getIdUsuario(): number{
-     return jwt_decode(this.getToken()).sub || -1; 
+  public getIdPersonal(): number{
+     return jwt_decode(this.getToken()).id_personal || -1; 
   }
 
   public getUserName(): string{
