@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { Personal } from '../models/personal';
+import { BASE_URL} from '../constants';
 
 
 declare var toastr:any;
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   public usuario:Usuario;
   public personal: Personal;
+  public URL_IMAGEN: string = BASE_URL + '/api/usuarios/getImageProfile/';
 
   constructor(private router: Router) { }
 

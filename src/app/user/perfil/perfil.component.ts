@@ -8,9 +8,9 @@ import { Perfil } from '../../models/perfil';
 import { ViewChild } from '@angular/core';
 import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
+import { BASE_URL } from '../../constants';
 
 declare var $: any;
-declare var Dropzone: any;
 declare var toastr: any;
 
 @Component({
@@ -32,8 +32,8 @@ export class PerfilComponent implements OnInit {
   public preview: boolean;
   public imagen_seleccionada: File;
   public progreso:number;
-
-
+  public URL_IMAGEN: string = BASE_URL + '/api/usuarios/getImageProfile';
+  public local_storage: any;
 
   @ViewChild('myInput')
   myInputVariable: ElementRef;
@@ -166,7 +166,6 @@ export class PerfilComponent implements OnInit {
   }
 
   seleccionImagen(event): void {
-    
     this.progreso = 0;
     this.preview = false;
     this.filePreview(event.target);
@@ -228,8 +227,12 @@ export class PerfilComponent implements OnInit {
         let response: any = event.body;
 
       if (response.successful) {
-       
+
         this.personal.nombre_foto = response.nombre_foto;
+        let datos  = JSON.parse(localStorage.getItem('data_user'));
+        datos.nombre_foto =   response.nombre_foto;      
+        localStorage.setItem('data_user', JSON.stringify(datos));
+        $('#img-perfil-user').attr('src', this.URL_IMAGEN+'/'+this.personal.genero+'/'+this.personal.nombre_foto);
         $('#modalChangeImage').modal('hide');
         this.progreso = 0;
         this.myInputVariable.nativeElement.value = "";
