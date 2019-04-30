@@ -61,7 +61,7 @@
       </div>
     </form>
   </div>
-  <div class="row clearfix" *ngIf="false">
+  <div class="row clearfix" *ngIf="registros.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">
@@ -79,49 +79,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>05 - MARZO - 2019</td>
-                <td>9:05</td>
-                <td>A TIEMPO</td>
-                <td>18:05</td>
-                <td>A TIEMPO</td>
-              </tr>
-              <tr>
-                <td>06 - MARZO - 2019</td>
-                <td>9:00</td>
-                <td>A TIEMPO</td>
-                <td>18:10</td>
-                <td>A TIEMPO</td>
-              </tr>
-              <tr>
-                <td>07 - MARZO - 2019</td>
-                <td>9:15</td>
-                <td>RETARDO</td>
-                <td>17:30</td>
-                <td>CHECO ANTES</td>
-              </tr>
-              <tr>
-                <td>08 - MARZO - 2019</td>
-                <td>9:20</td>
-                <td>RETARDO</td>
-                <td>18:00</td>
-                <td>A TIEMPO</td>
-              </tr>
-              <tr>
-                <td>09 - MARZO - 2019</td>
-                <td>8:50</td>
-                <td>A TIEMPO</td>
-                <td>18:20</td>
-                <td>A TIEMPO</td>
+              <tr *ngFor="let registro of registros" [ngClass]="{'retardo':(registro[2] == 'RETARDO'), 'falta': (registro[2] == 'FALTA')}">
+                <td>{{ registro[0] }}</td>
+                <td>{{ registro[1] }}</td>
+                <td>{{ registro[2] }}</td>
+                <td>{{ registro[3] }}</td>
+                <td>{{ registro[4] }}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
                 <th>
-                  <strong>TOTAL RETARDOS</strong>
+                  <strong>TOTAL RETARDOS: {{ total_retardos }}</strong>
                 </th>
                 <th></th>
-                <th>2</th>
+                <th>DESCUENTOS POR RETARDOS: {{ descuento_retardos }}</th>
                 <th></th>
                 <th></th>
               </tr>

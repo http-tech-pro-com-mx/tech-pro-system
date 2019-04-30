@@ -1,0 +1,19 @@
+.table-striped > tbody > tr.falta {
+    background-color: #ffebee;
+ }
+
+ .table-striped tbody tr.falta{
+    padding: 10px;
+    border-top: 2px solid #b71c1c ;
+    border-bottom: 2px solid #b71c1c;
+}
+
+.table-striped > tbody > tr.retardo {
+    background-color: #fffde7;
+ }
+
+ .table-striped tbody tr.retardo{
+    padding: 10px;
+    border-top: 2px solid #ffab00 ;
+    border-bottom: 2px solid #ffab00;
+}

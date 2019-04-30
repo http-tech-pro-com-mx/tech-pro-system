@@ -22,6 +22,9 @@ export class RptAttendanceComponent implements OnInit {
   public meses: Array<Mes>;
   public form: FormGroup;
   public params: any;
+  public registros: Array<any>;
+  public total_retardos: number;
+  public descuento_retardos: number;
 
   constructor(
     private service: RptAttendanceService,
@@ -39,6 +42,9 @@ export class RptAttendanceComponent implements OnInit {
     this.section = "CONSULTA DE ASISTENCIAS";
     this.anios = [];
     this.meses = [];
+    this.total_retardos = 0;
+    this.descuento_retardos = 0;
+    this.registros = [];
     this.params = {
       anio: '',
       mes: '',
@@ -101,11 +107,23 @@ export class RptAttendanceComponent implements OnInit {
   submit(): void {
 
     this.submitted = true;
+    this.total_retardos = 0;
+    this.descuento_retardos = 0;
+    this.registros = [];
 
     if (this.form.valid) {
 
-      this.service.consultaRegistroQuincena(this.params).subscribe(result => {
+      this.service.consultaRegistroQuincena(this.params, this.auth.getBadgeNumber()).subscribe(result => {
         console.log(result)
+        if (result.successful) {
+          this.registros = result.procedimiento;
+          this.total_retardos =  this.registros.filter(el=>el[2] == "RETARDO").length;
+          this.descuento_retardos = this.total_retardos / 3;
+          this.descuento_retardos = parseInt(""+this.descuento_retardos);
+        } else {
+          toastr.error('Ocurrió un error al consultar! Error: ' + result.message);
+
+        }
       }, error => {
         this.status_message = 'Error: ' + error.status;
         toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
