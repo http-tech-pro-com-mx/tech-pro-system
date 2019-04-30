@@ -80,7 +80,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let registro of registros" [ngClass]="{'retardo':(registro[2] == 'RETARDO'), 'falta': (registro[2] == 'FALTA')}">
-                <td>{{ registro[0] }}</td>
+                <td>{{ registro[0] | date: 'fullDate' : 'es-MX'}}</td>
                 <td>{{ registro[1] }}</td>
                 <td>{{ registro[2] }}</td>
                 <td>{{ registro[3] }}</td>

@@ -20,7 +20,13 @@ const routesAttendance: Routes = [
 ];
 
 @NgModule({
-  declarations: [RptAttendanceComponent, ConfAttendanceComponent, FormJustificationComponent, RptJustificationComponent, OutstandingJusticationComponent, RptAttendanceAdminComponent],
+  declarations: [
+    RptAttendanceComponent, 
+    ConfAttendanceComponent, 
+    FormJustificationComponent, 
+    RptJustificationComponent, 
+    OutstandingJusticationComponent, 
+    RptAttendanceAdminComponent],
   imports: [
     CommonModule,
     SharedModule,

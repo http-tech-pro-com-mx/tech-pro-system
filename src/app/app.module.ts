@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localeEsMx from '@angular/common/locales/es-MX';
+import { registerLocaleData } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,6 +16,8 @@ import { AuthService } from './auth/auth.service';
 import { NotAuthGuard } from './auth/not.auth.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
+
+registerLocaleData(localeEsMx);
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
@@ -49,7 +53,8 @@ const appRoutes: Routes = [
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    { provide: LOCALE_ID, useValue: 'es-MX' }
   ],
   bootstrap: [AppComponent]
 })
