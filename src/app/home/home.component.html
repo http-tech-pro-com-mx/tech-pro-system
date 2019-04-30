@@ -164,7 +164,7 @@
       <div class="menu">
         <ul class="list">
           <li class="header">MENÚ DE NAVEGACIÓN</li>
-          <li>
+          <li routerLinkActive="active">
             <a routerLink="/home">
               <i class="material-icons">home</i>
               <span>HOME</span>
@@ -176,14 +176,14 @@
               <span>ASISTENCIAS</span>
             </a>
             <ul class="ml-menu">
-              <li  routerLinkActive="active">
-                <a routerLink="attendance/report" >CONSULTA</a>
+              <li routerLinkActive="active">
+                <a routerLink="attendance/report" class="toggled waves-effect waves-block">CONSULTA</a>
               </li>
-              <li  routerLinkActive="active">
-                <a routerLink="attendance/report-admin">REPORTE ADMIN</a>
+              <li routerLinkActive="active">
+                <a routerLink="attendance/report-admin" class="toggled waves-effect waves-block">REPORTE ADMIN</a>
               </li>
-              <li>
-                <a routerLink="attendance/config">CONFIGURACIÓN</a>
+              <li routerLinkActive="active">
+                <a routerLink="attendance/config" class="toggled waves-effect waves-block">CONFIGURACIÓN</a>
               </li>
             </ul>
           </li>
@@ -193,14 +193,14 @@
               <span>JUSTIFICACIONES</span>
             </a>
             <ul class="ml-menu">
-              <li>
-                <a routerLink="attendance/justication">CREAR</a>
+              <li routerLinkActive="active">
+                <a routerLink="attendance/justication" class="toggled waves-effect waves-block">CREAR</a>
               </li>
-              <li>
-                <a routerLink="attendance/report-justication">CONSULTAR</a>
+              <li routerLinkActive="active">
+                <a routerLink="attendance/report-justication" class="toggled waves-effect waves-block">CONSULTAR</a>
               </li>
-              <li>
-                <a routerLink="attendance/outstanding-justication">PENDIENTES</a>
+              <li routerLinkActive="active">
+                <a routerLink="attendance/outstanding-justication" class="toggled waves-effect waves-block">PENDIENTES</a>
               </li>
             </ul>
           </li>
