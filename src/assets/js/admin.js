@@ -1,7 +1,6 @@
 if (typeof jQuery === "undefined") {
     throw new Error("jQuery plugins need to be before this file");
 }
-
 $.AdminBSB = {};
 $.AdminBSB.options = {
     colors: {
@@ -456,14 +455,14 @@ $.AdminBSB.browser = {
 //==========================================================================================================================
 
 $(function () {
-    $.AdminBSB.browser.activate();
-    $.AdminBSB.leftSideBar.activate();
-    $.AdminBSB.rightSideBar.activate();
-    $.AdminBSB.navbar.activate();
-    $.AdminBSB.dropdownMenu.activate();
-    $.AdminBSB.input.activate();
-    $.AdminBSB.select.activate();
-    $.AdminBSB.search.activate();
+    // $.AdminBSB.browser.activate();
+    // $.AdminBSB.leftSideBar.activate();
+    // $.AdminBSB.rightSideBar.activate();
+    // $.AdminBSB.navbar.activate();
+    // $.AdminBSB.dropdownMenu.activate();
+    // $.AdminBSB.input.activate();
+    // $.AdminBSB.select.activate();
+    // $.AdminBSB.search.activate();
 
-    setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
+    // setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });

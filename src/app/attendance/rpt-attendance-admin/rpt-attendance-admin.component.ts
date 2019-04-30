@@ -15,7 +15,6 @@ export class RptAttendanceAdminComponent implements OnInit {
   ngOnInit() {
     this.section = "REPORTE ADMINISTRADOR";
     $('select').selectpicker();
-    
   }
 
 }

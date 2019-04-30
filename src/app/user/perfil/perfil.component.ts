@@ -84,16 +84,9 @@ export class PerfilComponent implements OnInit {
     });
 
     setTimeout(function () {
-      $.AdminBSB.browser.activate();
       $.AdminBSB.input.activate();
       $.AdminBSB.select.activate();
-
-      $.AdminBSB.leftSideBar.activate();
-      $.AdminBSB.rightSideBar.activate();
-      $.AdminBSB.navbar.activate();
-      $.AdminBSB.dropdownMenu.activate();
-
-    }, 150);
+    }, 200);
   }
 
   ngAfterInit() {

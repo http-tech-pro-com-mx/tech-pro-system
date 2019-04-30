@@ -26,14 +26,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // setTimeout(function () {
-       
-    //   $.AdminBSB.leftSideBar.activate();
-    //   $.AdminBSB.rightSideBar.activate();
-    //   $.AdminBSB.navbar.activate();
-    //   $.AdminBSB.dropdownMenu.activate();
+    setTimeout(function () {
+     
+      $.AdminBSB.leftSideBar.activate();
+      $.AdminBSB.rightSideBar.activate();
+      $.AdminBSB.navbar.activate();
+      $.AdminBSB.dropdownMenu.activate();
   
-    // }, 150);
+    }, 150);
   }
 
 

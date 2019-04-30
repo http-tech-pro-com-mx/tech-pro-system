@@ -72,8 +72,6 @@ export class RptAttendanceComponent implements OnInit {
       this.loading = false;
     });
 
-    this.ngAfterInitEffect();
-
   }
 
 
@@ -93,16 +91,6 @@ export class RptAttendanceComponent implements OnInit {
 
   }
 
-  ngAfterInitEffect(): void {
-    setTimeout(function () {
-      $.AdminBSB.browser.activate();
-      $.AdminBSB.leftSideBar.activate();
-      $.AdminBSB.rightSideBar.activate();
-      $.AdminBSB.navbar.activate();
-      $.AdminBSB.dropdownMenu.activate();
-    }, 100);
-
-  }
 
   submit(): void {
 
