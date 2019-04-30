@@ -25,6 +25,7 @@ export class RptAttendanceComponent implements OnInit {
   public registros: Array<any>;
   public total_retardos: number;
   public descuento_retardos: number;
+  public busqueda:boolean;
 
   constructor(
     private service: RptAttendanceService,
@@ -37,6 +38,7 @@ export class RptAttendanceComponent implements OnInit {
   ngOnInit() {
 
     this.loading = true;
+    this.busqueda = false;
     this.status_message = null;
     this.submitted = false;
     this.section = "CONSULTA DE ASISTENCIAS";
@@ -94,6 +96,7 @@ export class RptAttendanceComponent implements OnInit {
 
   submit(): void {
 
+    this.busqueda = false;
     this.submitted = true;
     this.total_retardos = 0;
     this.descuento_retardos = 0;
@@ -108,6 +111,7 @@ export class RptAttendanceComponent implements OnInit {
           this.total_retardos =  this.registros.filter(el=>el[2] == "RETARDO").length;
           this.descuento_retardos = this.total_retardos / 3;
           this.descuento_retardos = parseInt(""+this.descuento_retardos);
+          this.busqueda = true;
         } else {
           toastr.error('Ocurrió un error al consultar! Error: ' + result.message);
 

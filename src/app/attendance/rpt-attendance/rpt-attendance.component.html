@@ -40,7 +40,7 @@
               <div class="col-sm-3">
                 <select class="form-control" formControlName='quincena' [(ngModel)]="params.quincena">
                   <option value="">-- QUINCENA --</option>
-                  <option value="1">PRIMER</option>
+                  <option value="1">PRIMERA</option>
                   <option value="2">SEGUNDA</option>
                 </select>
                 <small *ngIf="form.controls.quincena.errors?.required && (form.controls.quincena?.touched || submitted)"
@@ -61,7 +61,12 @@
       </div>
     </form>
   </div>
-  <div class="row clearfix" *ngIf="registros.length > 0">
+  <div class="row clearfix" *ngIf="busqueda && registros.length ==  0 ">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h2><b>NO HAY REGISTROS PARA LA QUINCENA SELECCIONADA</b></h2>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="busqueda && registros.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">
@@ -79,7 +84,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let registro of registros" [ngClass]="{'retardo':(registro[2] == 'RETARDO'), 'falta': (registro[2] == 'FALTA')}">
+              <tr *ngFor="let registro of registros"
+                [ngClass]="{'retardo':(registro[2] == 'RETARDO'), 'falta': (registro[2] == 'FALTA')}">
                 <td>{{ registro[0] | date: 'fullDate' : 'es-MX'}}</td>
                 <td>{{ registro[1] }}</td>
                 <td>{{ registro[2] }}</td>
