@@ -16,4 +16,8 @@ export class RptAttendanceAdminService {
     return this.http.get<any>(this.URL + '/findAllAnioAndMonthAndEmpleado');
   }
 
+  consultaRegistroQuincenaAdmin(params:any): Observable<any> {
+    return this.http.post<any>(this.URL+'/reporteEntradaSalidaAdmin',JSON.stringify(params));
+  }
+
 }
