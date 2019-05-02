@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BASE_URL } from '../../constants';
 
@@ -16,8 +16,8 @@ export class RptAttendanceService {
     return this.http.get<any>(this.URL + '/findAllAnioAndMonth');
   }
 
-  consultaRegistroQuincena(params:any, badgenumber: string): Observable<any> {
-    params.badgenumber = badgenumber;
+  consultaRegistroQuincena(params:any, userid: number): Observable<any> {
+    params.userid = userid;
     return this.http.post<any>(this.URL+'/reporteEntradaSalida',JSON.stringify(params));
   }
 

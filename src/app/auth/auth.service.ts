@@ -27,8 +27,8 @@ export class AuthService {
     return jwt_decode(this.getToken()).user_name || "NOT_USER"; 
  }
 
- public getBadgeNumber(): string{
-  return jwt_decode(this.getToken()).badge_number || "NOT_USER"; 
+ public getUserid(): number{
+  return jwt_decode(this.getToken()).userid || -1; 
 }
 
 }

@@ -104,8 +104,8 @@ export class RptAttendanceComponent implements OnInit {
 
     if (this.form.valid) {
 
-      this.service.consultaRegistroQuincena(this.params, this.auth.getBadgeNumber()).subscribe(result => {
-        console.log(result)
+      this.service.consultaRegistroQuincena(this.params, this.auth.getUserid()).subscribe(result => {
+      
         if (result.successful) {
           this.registros = result.procedimiento;
           this.total_retardos =  this.registros.filter(el=>el[2] == "RETARDO").length;
