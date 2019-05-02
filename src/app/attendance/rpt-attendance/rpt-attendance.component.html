@@ -85,12 +85,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let registro of registros"
-                [ngClass]="{'retardo':(registro[2] == 'RETARDO'), 'falta': (registro[2] == 'FALTA')}">
-                <td>{{ registro[0] | date: 'fullDate' : 'es-MX'}}</td>
-                <td>{{ registro[1] }}</td>
+                [ngClass]="{'retardo':(registro[3] == 'RETARDO'), 'falta': (registro[3] == 'FALTA')}">
+                <td>{{ registro[1] | date: 'fullDate' : 'es-MX'}}</td>
                 <td>{{ registro[2] }}</td>
                 <td>{{ registro[3] }}</td>
                 <td>{{ registro[4] }}</td>
+                <td>{{ registro[5] }}</td>
               </tr>
             </tbody>
             <tfoot>
@@ -109,7 +109,12 @@
       </div>
     </div>
   </div>
-  <div class="row clearfix" *ngIf="false">
+  <div class="row clearfix" *ngIf="busqueda && registros_comidas.length ==  0 ">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <h2><b>SIN REGISTROS DE COMIDAS </b></h2>
+    </div>
+  </div>
+  <div class="row clearfix" *ngIf="busqueda && registros_comidas.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
         <div class="header">
@@ -120,41 +125,19 @@
             <thead>
               <tr>
                 <th>FECHA</th>
-                <th>HORA ENTRADA</th>
                 <th>HORA SALIDA</th>
+                <th>HORA REGRESO</th>
+                <th>TIEMPO</th>
                 <th>VALIDACIÓN</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>05 - MARZO - 2019</td>
-                <td>14:05</td>
-                <td>15:05</td>
-                <td>A TIEMPO</td>
-              </tr>
-              <tr>
-                <td>06 - MARZO - 2019</td>
-                <td>14:00</td>
-                <td>15:00</td>
-                <td>A TIEMPO</td>
-              </tr>
-              <tr>
-                <td>07 - MARZO - 2019</td>
-                <td>14:15</td>
-                <td>16:30</td>
-                <td>TIEMPO EXCEDIDO</td>
-              </tr>
-              <tr>
-                <td>08 - MARZO - 2019</td>
-                <td>14:20</td>
-                <td> - </td>
-                <td>NO REGISTRO ENTRADA</td>
-              </tr>
-              <tr>
-                <td>09 - MARZO - 2019</td>
-                <td>14:50</td>
-                <td>15:20</td>
-                <td>A TIEMPO</td>
+              <tr *ngFor="let registro of registros_comidas">
+                <td>{{ registro[0]  | date: 'fullDate' : 'es-MX' }}</td>
+                <td>{{ registro[1] }} </td>
+                <td>{{ registro[2] }} </td>
+                <td>{{ registro[3] }} </td>
+                <td>{{ registro[4] }} </td>
               </tr>
             </tbody>
           </table>

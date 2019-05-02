@@ -26,6 +26,7 @@ export class RptAttendanceComponent implements OnInit {
   public total_retardos: number;
   public descuento_retardos: number;
   public busqueda:boolean;
+  public registros_comidas: Array<any>;
 
   constructor(
     private service: RptAttendanceService,
@@ -44,6 +45,7 @@ export class RptAttendanceComponent implements OnInit {
     this.section = "CONSULTA DE ASISTENCIAS";
     this.anios = [];
     this.meses = [];
+    this.registros_comidas = [];
     this.total_retardos = 0;
     this.descuento_retardos = 0;
     this.registros = [];
@@ -101,14 +103,16 @@ export class RptAttendanceComponent implements OnInit {
     this.total_retardos = 0;
     this.descuento_retardos = 0;
     this.registros = [];
+    this.registros_comidas = [];
 
     if (this.form.valid) {
 
       this.service.consultaRegistroQuincena(this.params, this.auth.getUserid()).subscribe(result => {
-      
+       
         if (result.successful) {
-          this.registros = result.procedimiento;
-          this.total_retardos =  this.registros.filter(el=>el[2] == "RETARDO").length;
+          this.registros_comidas = result.hora_comida; 
+          this.registros = result.entrada_salida;
+          this.total_retardos =  this.registros.filter(el=>el[3] == "RETARDO").length;
           this.descuento_retardos = this.total_retardos / 3;
           this.descuento_retardos = parseInt(""+this.descuento_retardos);
           this.busqueda = true;
