@@ -4,6 +4,8 @@ import { AuthService } from '../../auth/auth.service';
 import { RptAttendanceService } from './rpt-attendance.service';
 import { Anio } from '../../models/anio';
 import { Mes } from '../../models/mes';
+import * as highcharts from 'highcharts';
+import { configChart as grafica } from './rpt.config.export';
 
 declare var $: any;
 declare var toastr: any;
@@ -24,8 +26,11 @@ export class RptAttendanceComponent implements OnInit {
   public params: any;
   public registros: Array<any>;
   public total_retardos: number;
+  public total_no_check: number;
+  public total_ok: number;
+  public total_faltas: number;
   public descuento_retardos: number;
-  public busqueda:boolean;
+  public busqueda: boolean;
   public registros_comidas: Array<any>;
 
   constructor(
@@ -47,6 +52,9 @@ export class RptAttendanceComponent implements OnInit {
     this.meses = [];
     this.registros_comidas = [];
     this.total_retardos = 0;
+    this.total_no_check = 0;
+    this.total_ok = 0;
+    this.total_faltas = 0;
     this.descuento_retardos = 0;
     this.registros = [];
     this.params = {
@@ -108,13 +116,16 @@ export class RptAttendanceComponent implements OnInit {
     if (this.form.valid) {
 
       this.service.consultaRegistroQuincena(this.params, this.auth.getUserid()).subscribe(result => {
-       
+
         if (result.successful) {
-          this.registros_comidas = result.hora_comida; 
+          this.registros_comidas = result.hora_comida;
           this.registros = result.entrada_salida;
-          this.total_retardos =  this.registros.filter(el=>el[3] == "RETARDO").length;
+          this.total_retardos = this.registros.filter(el => el[3] == "RETARDO").length;
+          this.total_no_check = this.registros.filter(el => el[3] == "NO CHECO ENTRADA").length;
+          this.total_ok = this.registros.filter(el => el[3] == "OK").length;
+          this.total_faltas = this.registros.filter(el => el[3] == "FALTA").length;
           this.descuento_retardos = this.total_retardos / 3;
-          this.descuento_retardos = parseInt(""+this.descuento_retardos);
+          this.descuento_retardos = parseInt("" + this.descuento_retardos);
           this.busqueda = true;
         } else {
           toastr.error('Ocurrió un error al consultar! Error: ' + result.message);
@@ -131,4 +142,24 @@ export class RptAttendanceComponent implements OnInit {
 
   }
 
+  openModalGrafica(event): void {
+    event.preventDefault();
+    grafica.series = [];
+    grafica.title.text = 'HORARIO LABORAL (ENTRADAS)';
+
+    grafica.series = [
+      { name: 'OK', data: [this.total_ok], color: '#388e3c' },
+      { name: 'RETARDOS', data: [this.total_retardos], color: '#ffd740' },
+      { name: 'FALTAS', data: [this.total_faltas], color: '#d32f2f' },
+      { name: 'JUSTIFICADOS', data: [0] },
+      { name: 'NO CHECK IN', data: [this.total_no_check] }]
+
+
+    $('#divGrafica').highcharts(grafica);
+    $('#modalGrafica').modal('show');
+  }
+
+  closeModal(): void {
+    $('#modalGrafica').modal('hide');
+  }
 }
