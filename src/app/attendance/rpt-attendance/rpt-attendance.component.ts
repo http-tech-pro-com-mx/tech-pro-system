@@ -109,6 +109,10 @@ export class RptAttendanceComponent implements OnInit {
     this.busqueda = false;
     this.submitted = true;
     this.total_retardos = 0;
+    this.total_no_check = 0;
+    this.total_ok = 0;
+    this.total_faltas = 0;
+    this.descuento_retardos = 0;
     this.descuento_retardos = 0;
     this.registros = [];
     this.registros_comidas = [];

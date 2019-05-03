@@ -4,6 +4,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { AuthService } from 'src/app/auth/auth.service';
 import { Anio } from '../../models/anio';
 import { Mes } from '../../models/mes';
+import * as highcharts from 'highcharts';
+import { configChart as grafica1 } from '../rpt-attendance/rpt.config.export';
 
 declare var $: any;
 declare var toastr: any;
@@ -25,6 +27,9 @@ export class RptAttendanceAdminComponent implements OnInit {
   public params: any;
   public registros: Array<any>;
   public total_retardos: number;
+  public total_no_check: number;
+  public total_ok: number;
+  public total_faltas: number;
   public descuento_retardos: number;
   public busqueda: boolean;
   public registros_comidas: Array<any>;
@@ -44,6 +49,10 @@ export class RptAttendanceAdminComponent implements OnInit {
     this.busqueda = false;
     this.registros_comidas = [];
     this.total_retardos = 0;
+    this.total_no_check = 0;
+    this.total_ok = 0;
+    this.total_faltas = 0;
+    this.descuento_retardos = 0;
     this.descuento_retardos = 0;
     this.empleados = [];
     this.params = {
@@ -99,6 +108,10 @@ export class RptAttendanceAdminComponent implements OnInit {
     this.busqueda = false;
     this.submitted = true;
     this.total_retardos = 0;
+    this.total_no_check = 0;
+    this.total_ok = 0;
+    this.total_faltas = 0;
+    this.descuento_retardos = 0;
     this.descuento_retardos = 0;
     this.registros = [];
     this.registros_comidas = [];
@@ -110,6 +123,9 @@ export class RptAttendanceAdminComponent implements OnInit {
           this.registros_comidas = result.hora_comida;
           this.registros = result.entrada_salida;
           this.total_retardos = this.registros.filter(el => el[3] == "RETARDO").length;
+          this.total_no_check = this.registros.filter(el => el[3] == "NO CHECO ENTRADA").length;
+          this.total_ok = this.registros.filter(el => el[3] == "OK").length;
+          this.total_faltas = this.registros.filter(el => el[3] == "FALTA").length;
           this.descuento_retardos = this.total_retardos / 3;
           this.descuento_retardos = parseInt("" + this.descuento_retardos);
           this.busqueda = true;
@@ -126,6 +142,27 @@ export class RptAttendanceAdminComponent implements OnInit {
       toastr.error('Verifique los datos capturados!');
     }
 
+  }
+
+  openModalGrafica(event): void {
+    event.preventDefault();
+    grafica1.series = [];
+    grafica1.title.text = 'HORARIO LABORAL (ENTRADAS)';
+
+    grafica1.series = [
+      { name: 'OK', data: [this.total_ok], color: '#388e3c' },
+      { name: 'RETARDOS', data: [this.total_retardos], color: '#ffd740' },
+      { name: 'FALTAS', data: [this.total_faltas], color: '#d32f2f' },
+      { name: 'JUSTIFICADOS', data: [0] },
+      { name: 'NO CHECK IN', data: [this.total_no_check] }]
+
+
+    $('#divGrafica').highcharts(grafica1);
+    $('#modalGrafica').modal('show');
+  }
+
+  closeModal(): void {
+    $('#modalGrafica').modal('hide');
   }
 
 
