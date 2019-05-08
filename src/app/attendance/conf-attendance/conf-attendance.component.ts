@@ -52,6 +52,7 @@ export class ConfAttendanceComponent implements OnInit {
       }
 
       this.loading = false;
+      this.ngAfterInitEffectForm();
 
     }, error => {
       this.status_message = 'Error: ' + error.status;
@@ -95,6 +96,16 @@ export class ConfAttendanceComponent implements OnInit {
 
   borraDias(): void{
     this.consulta_dias = false;
+  }
+
+  modalQuincena(quincea: Quincena, event): void{
+    event.preventDefault();
+    $('#modalQuincena').modal('show');
+    this.ngAfterInitEffectForm()
+  }
+
+  closeModal(): void {
+    $('#modalQuincena').modal('hide');
   }
 
 }
