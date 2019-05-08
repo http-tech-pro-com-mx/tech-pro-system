@@ -8,12 +8,16 @@ import { BASE_URL } from '../../constants';
 })
 export class ConfAttendanceService {
 
-  private URL = BASE_URL + '/api/quincena';
+  private URL = BASE_URL + '/api/';
 
   constructor(private http: HttpClient) { }
 
   findAllQuincenas(): Observable<any> {
-    return this.http.get<any>(this.URL + '/findAll');
+    return this.http.get<any>(this.URL + 'quincena/findAll');
+  }
+
+  getFindDayByIdQuincena(id_quincena:number): Observable<any> {
+    return this.http.get<any>(this.URL + 'dia_habil/findDayByIdQuincena/'+id_quincena);
   }
 
 }

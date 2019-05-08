@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ConfAttendanceService } from './conf-attendance.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Quincena } from 'src/app/models/quincena';
+import { Diah } from 'src/app/models/diah';
 
 
 declare var $: any;
@@ -14,27 +15,33 @@ declare var toastr: any;
 })
 export class ConfAttendanceComponent implements OnInit {
 
-  public section:string;
+  public section: string;
   public loading: boolean;
   public status_message: string;
   public submitted: boolean;
   public form: FormGroup;
   public quincenas: Array<Quincena>;
+  public dias_by_quincena: Array<Diah>;
+  public consulta_dias:boolean;
+  
 
   constructor(private service: ConfAttendanceService,
     private fb: FormBuilder,
     private auth: AuthService) { }
 
   ngOnInit() {
-    
+
     this.loading = true;
     this.section = "CONFIGURACIÓN";
     this.status_message = null;
     this.submitted = false;
     this.quincenas = [];
+    this.dias_by_quincena = [];
+    this.consulta_dias = false;
+   
 
     this.service.findAllQuincenas().subscribe(response => {
-      console.log('quincenas',response)
+
       if (response.successful) {
         this.quincenas = response.quincenas;
         this.status_message = null;
@@ -69,9 +76,25 @@ export class ConfAttendanceComponent implements OnInit {
 
   }
 
-  consultaDiasHabiles(id_quincena: number, event): void{
+  consultaDiasHabiles(id_quincena: number, event): void {
     event.preventDefault();
-    alert('Consulta para quincena: '+ id_quincena)
+    this.consulta_dias = false;
+    this.service.getFindDayByIdQuincena(id_quincena).subscribe(response => {
+      
+      if (response.successful) {
+        this.consulta_dias = true;
+        this.dias_by_quincena = response.dias_habiles;
+      } else {
+        toastr.error(response.message);
+
+      }
+    }, error => {
+      toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
+    });
+  }
+
+  borraDias(): void{
+    this.consulta_dias = false;
   }
 
 }
