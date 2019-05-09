@@ -75,7 +75,8 @@ export class ConfAttendanceComponent implements OnInit {
     setTimeout(function () {
       $.AdminBSB.select.activate();
       $('.calendario').datepicker({
-        multidate:true
+        multidate:true,
+        language: 'es'
       });
     }, 100);
 
