@@ -6,6 +6,7 @@ import { Quincena } from 'src/app/models/quincena';
 import { Diah } from 'src/app/models/diah';
 
 
+
 declare var $: any;
 declare var toastr: any;
 @Component({
@@ -22,8 +23,8 @@ export class ConfAttendanceComponent implements OnInit {
   public form: FormGroup;
   public quincenas: Array<Quincena>;
   public dias_by_quincena: Array<Diah>;
-  public consulta_dias:boolean;
-  
+  public consulta_dias: boolean;
+
 
   constructor(private service: ConfAttendanceService,
     private fb: FormBuilder,
@@ -38,7 +39,7 @@ export class ConfAttendanceComponent implements OnInit {
     this.quincenas = [];
     this.dias_by_quincena = [];
     this.consulta_dias = false;
-   
+
 
     this.service.findAllQuincenas().subscribe(response => {
 
@@ -73,6 +74,9 @@ export class ConfAttendanceComponent implements OnInit {
 
     setTimeout(function () {
       $.AdminBSB.select.activate();
+      $('.calendario').datepicker({
+        multidate:true
+      });
     }, 100);
 
   }
@@ -81,7 +85,7 @@ export class ConfAttendanceComponent implements OnInit {
     event.preventDefault();
     this.consulta_dias = false;
     this.service.getFindDayByIdQuincena(id_quincena).subscribe(response => {
-      
+
       if (response.successful) {
         this.consulta_dias = true;
         this.dias_by_quincena = response.dias_habiles;
@@ -94,11 +98,11 @@ export class ConfAttendanceComponent implements OnInit {
     });
   }
 
-  borraDias(): void{
+  borraDias(): void {
     this.consulta_dias = false;
   }
 
-  modalQuincena(quincea: Quincena, event): void{
+  modalQuincena(quincea: Quincena, event): void {
     event.preventDefault();
     $('#modalQuincena').modal('show');
     this.ngAfterInitEffectForm()
