@@ -74,10 +74,17 @@ export class ConfAttendanceComponent implements OnInit {
 
     setTimeout(function () {
       $.AdminBSB.select.activate();
+
+      $('#demo').steps({
+        onFinish: function () { alert('complete'); }
+    });
+
       $('.calendario').datepicker({
         multidate:true,
         language: 'es'
       });
+
+      
     }, 100);
 
   }

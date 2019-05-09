@@ -109,84 +109,107 @@
                     <h5 class="modal-title">CONFIGURACIÓN QUINCENA</h5>
                 </div>
                 <div class="modal-body">
-
-                    <form>
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <select class="form-control">
-                                    <option value="">-- QUINCENA --</option>
-                                    <option value="1">PRIMERA</option>
-                                    <option value="2">SEGUNDA</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <select class="form-control">
-                                    <option value="">MES</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <select class="form-control">
-                                    <option value="">ANIO</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <hr>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <b>Hora de entrada (incluye tolerancia)</b>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">access_time</i>
-                                    </span>
-                                    <div class="form-line">
-                                        <input type="time" class="form-control time24" placeholder="Ex: 23:59">
+                    <div id="demo">
+                        <div class="step-app">
+                            <ul class="step-steps">
+                                <li><a href="#step1">1. NOMBRE</a></li>
+                                <li><a href="#step2">2. HORARIOS </a></li>
+                                <li><a href="#step3">3. DÍAS HÁBILES</a></li>
+                            </ul>
+                            <div class="step-content">
+                                <div class="step-tab-panel" id="step1">
+                                    <div class="row">
+                                        <br/>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <select class="form-control">
+                                                <option value="">-- QUINCENA --</option>
+                                                <option value="1">PRIMERA</option>
+                                                <option value="2">SEGUNDA</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <select class="form-control">
+                                                <option value="">MES</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                            <select class="form-control">
+                                                <option value="">ANIO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step-tab-panel" id="step2">
+                                    <div class="row">
+                                        <br/>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <b>Hora de entrada (incluye tolerancia)</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">access_time</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    <input type="time" class="form-control time24"
+                                                        placeholder="Ex: 23:59">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <b>Hora de salida</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">access_time</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    <input type="time" class="form-control time24"
+                                                        placeholder="Ex: 23:59">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <hr>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <b>Hora salida comida</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">access_time</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    <input type="time" class="form-control time24"
+                                                        placeholder="Ex: 23:59">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <b>Hora regreso comida</b>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="material-icons">access_time</i>
+                                                </span>
+                                                <div class="form-line">
+                                                    <input type="time" class="form-control time24"
+                                                        placeholder="Ex: 23:59">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="step-tab-panel" id="step3">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="calendario"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <b>Hora de salida</b>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">access_time</i>
-                                    </span>
-                                    <div class="form-line">
-                                        <input type="time" class="form-control time24" placeholder="Ex: 23:59">
-                                    </div>
-                                </div>
+                            <div class="step-footer">
+                                <button data-direction="prev" type="button" class="btn btn-primary">ANTERIOR</button>&nbsp;&nbsp;
+                                <button data-direction="next" type="button" class="btn btn-primary">SIGUIENTE</button>
+                                <button data-direction="finish" type="button" class="btn btn-primary">REGISTRAR</button>
                             </div>
                         </div>
-                        <div class="row">
-                            <hr>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <b>Hora salida comida</b>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">access_time</i>
-                                    </span>
-                                    <div class="form-line">
-                                        <input type="time" class="form-control time24" placeholder="Ex: 23:59">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <b>Hora regreso comida</b>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">access_time</i>
-                                    </span>
-                                    <div class="form-line">
-                                        <input type="time" class="form-control time24" placeholder="Ex: 23:59">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="calendario"></div>
-                            </div>
-                        </div>
-
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" (click)="closeModal()">CERRAR</button>

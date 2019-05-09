@@ -26,7 +26,8 @@
               "src/styles.css",
               "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
               "node_modules/toastr/build/toastr.min.css",
-              "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"
+              "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+              "node_modules/jquery.steps/dist/jquery-steps.css"
             ],
             "scripts": [
               "src/assets/js/jquery.min.js",
@@ -40,7 +41,8 @@
               "node_modules/highcharts/highcharts.js",
               "node_modules/moment/moment.js",
               "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
-              "node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js"
+              "node_modules/bootstrap-datepicker/dist/locales/bootstrap-datepicker.es.min.js",
+              "node_modules/jquery.steps/dist/jquery-steps.min.js"
             ],
             "es5BrowserSupport": true
           },
