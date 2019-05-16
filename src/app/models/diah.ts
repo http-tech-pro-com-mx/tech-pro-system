@@ -3,7 +3,7 @@ import { Quincena } from './quincena';
 export class Diah{
     constructor(
         public id_dia_habil: number,
-        public fecha: string,
+        public fecha: Date,
         public id_quincena: Quincena,
         public id_usuario_regitro?: number,
         public fecha_regitro?: string,

@@ -119,29 +119,33 @@
                             <div class="step-content">
                                 <div class="step-tab-panel" id="step1">
                                     <div class="row">
-                                        <br/>
+                                        <br />
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                            <select class="form-control">
-                                                <option value="">-- QUINCENA --</option>
+                                            <select class="form-control"  [(ngModel)]="quincena.numero_quincena">
+                                                <option value="-1">-- QUINCENA --</option>
                                                 <option value="1">PRIMERA</option>
                                                 <option value="2">SEGUNDA</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                            <select class="form-control">
-                                                <option value="">MES</option>
+                                            <select class="form-control" [(ngModel)]="quincena.id_mes.id_mes">
+                                                <option value="-1">-- MES --</option>
+                                                <option *ngFor="let mes of meses" [value]="mes.id_mes">
+                                                    {{ mes.mes_descripcion }}</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                            <select class="form-control">
-                                                <option value="">ANIO</option>
+                                            <select class="form-control"  [(ngModel)]="quincena.id_anio.id_anio">
+                                                <option value="-1">-- AÑO --</option>
+                                                <option *ngFor="let anio of anios" [value]="anio.id_anio">
+                                                    {{ anio.anio }}</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="step-tab-panel" id="step2">
                                     <div class="row">
-                                        <br/>
+                                        <br />
                                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                             <b>Hora de entrada (incluye tolerancia)</b>
                                             <div class="input-group">
@@ -150,7 +154,7 @@
                                                 </span>
                                                 <div class="form-line">
                                                     <input type="time" class="form-control time24"
-                                                        placeholder="Ex: 23:59">
+                                                        placeholder="Ex: 23:59" [(ngModel)]="quincena.hora_entrada">
                                                 </div>
                                             </div>
                                         </div>
@@ -162,7 +166,7 @@
                                                 </span>
                                                 <div class="form-line">
                                                     <input type="time" class="form-control time24"
-                                                        placeholder="Ex: 23:59">
+                                                        placeholder="Ex: 23:59" [(ngModel)]="quincena.hora_salida">
                                                 </div>
                                             </div>
                                         </div>
@@ -177,7 +181,7 @@
                                                 </span>
                                                 <div class="form-line">
                                                     <input type="time" class="form-control time24"
-                                                        placeholder="Ex: 23:59">
+                                                        placeholder="Ex: 23:59"  [(ngModel)]="quincena.hora_salida_comida">
                                                 </div>
                                             </div>
                                         </div>
@@ -189,7 +193,7 @@
                                                 </span>
                                                 <div class="form-line">
                                                     <input type="time" class="form-control time24"
-                                                        placeholder="Ex: 23:59">
+                                                        placeholder="Ex: 23:59"  [(ngModel)]="quincena.hora_entrada_comida">
                                                 </div>
                                             </div>
                                         </div>
@@ -204,9 +208,10 @@
                                 </div>
                             </div>
                             <div class="step-footer">
-                                <button data-direction="prev" type="button" class="btn btn-primary">ANTERIOR</button>&nbsp;&nbsp;
+                                <button data-direction="prev" type="button"
+                                    class="btn btn-primary">ANTERIOR</button>&nbsp;&nbsp;
                                 <button data-direction="next" type="button" class="btn btn-primary">SIGUIENTE</button>
-                                <button data-direction="finish" type="button" class="btn btn-primary">REGISTRAR</button>
+                                <button data-direction="finish" type="button" class="btn btn-primary" (click)="registraQuincena()">REGISTRAR</button>
                             </div>
                         </div>
                     </div>

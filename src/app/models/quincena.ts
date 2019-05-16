@@ -11,6 +11,6 @@ export class Quincena{
         public hora_salida_comida: string,
         public hora_entrada_comida: string, 
         public hora_salida: string, 
-        public activo: boolean
+        public activo: number
     ){}
 }
