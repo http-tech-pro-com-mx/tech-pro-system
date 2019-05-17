@@ -78,7 +78,7 @@ export class ConfAttendanceComponent implements OnInit {
 
   ngAfterInitEffectForm(): void {
 
- 
+
 
     setTimeout(() => {
       $.AdminBSB.select.activate();
@@ -87,11 +87,12 @@ export class ConfAttendanceComponent implements OnInit {
       $('#demo').steps({
         onChange: (currentIndex, newIndex, stepDirection) => {
           if (currentIndex == 0) {
-            if (this.quincena.numero_quincena == -1 || this.quincena.id_mes.id_mes == -1 || this.quincena.id_mes.id_mes == -1) {
+            
+            if (this.quincena.numero_quincena != -1 && this.quincena.id_mes.id_mes != -1 && this.quincena.id_anio.id_anio != -1) {
+              return true;
+            } else {
               toastr.error("Seleccione todos los datos");
               return false;
-            } else {
-              return true;
             }
           } else if (currentIndex == 1) {
 
@@ -157,17 +158,18 @@ export class ConfAttendanceComponent implements OnInit {
   }
 
   modalQuincena(quincea: Quincena, event): void {
-   
+
     event.preventDefault();
     $('#modalQuincena').modal('show');
     this.ngAfterInitEffectForm()
   }
 
-  closeModal(): void {
- 
+  closeModal(bandera:boolean): void {
+
+   
+
     $('#modalQuincena').modal('hide');
-    
-    $('select').selectpicker('val', '-1');
+
     this.dias_habiles = [];
     $('.calendario').datepicker('update', '');
     $('#click_reset').trigger('click');
@@ -175,7 +177,11 @@ export class ConfAttendanceComponent implements OnInit {
     let mes = new Mes(-1, "SIN MES", -1, -1);
     let anio = new Anio(-1, 1990, -1);
     this.quincena = new Quincena(-1, mes, anio, -1, "09:05", "14:00", "16:00", "18:00", 1);
-  
+
+    if(bandera){
+      $('select').selectpicker('val', '-1');
+    }
+
   }
 
   isEmpty(text: string): boolean {
@@ -194,16 +200,20 @@ export class ConfAttendanceComponent implements OnInit {
 
     if (dias_seleccionados.length > 0) {
 
-     this.dias_habiles=[];
+      this.dias_habiles = [];
 
       dias_seleccionados.forEach(dia => {
         this.dias_habiles.push(new Diah(-1, dia, this.quincena));
       });
-     
+
       this.service.createQuincena(this.quincena, this.dias_habiles).subscribe(response => {
-        console.log(response);
+ 
         if (response.successful) {
+          this.quincenas.push(response.quincena);
+          $('select').selectpicker('val', '-1');
           swal.fire('Exito !', response.message, 'success');
+
+          this.closeModal(false);
         } else {
           toastr.error(response.message);
         }
