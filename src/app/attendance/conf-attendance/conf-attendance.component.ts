@@ -22,13 +22,13 @@ export class ConfAttendanceComponent implements OnInit {
   public loading: boolean;
   public status_message: string;
   public submitted: boolean;
-  public form: FormGroup;
   public quincenas: Array<Quincena>;
   public dias_by_quincena: Array<Diah>;
   public consulta_dias: boolean;
   public anios: Array<Anio>;
   public meses: Array<Mes>;
   public quincena: Quincena;
+  public dias_habiles: Array<Diah>;
 
 
   constructor(private service: ConfAttendanceService,
@@ -49,6 +49,7 @@ export class ConfAttendanceComponent implements OnInit {
     let mes = new Mes(-1, "SIN MES", -1, -1);
     let anio = new Anio(-1, 1990, -1);
     this.quincena = new Quincena(-1, mes, anio, -1, "09:05", "14:00", "16:00", "18:00", 1);
+    this.dias_habiles = [];
 
 
     this.service.findAllQuincenas().subscribe(response => {
@@ -77,12 +78,7 @@ export class ConfAttendanceComponent implements OnInit {
 
   ngAfterInitEffectForm(): void {
 
-    this.form = this.fb.group({
-      anio: new FormControl('', [Validators.required]),
-      mes: new FormControl('', [Validators.required]),
-      quincena: new FormControl('', [Validators.required]),
-      id_personal: new FormControl('', [Validators.required])
-    });
+ 
 
     setTimeout(() => {
       $.AdminBSB.select.activate();
@@ -161,13 +157,25 @@ export class ConfAttendanceComponent implements OnInit {
   }
 
   modalQuincena(quincea: Quincena, event): void {
+   
     event.preventDefault();
     $('#modalQuincena').modal('show');
     this.ngAfterInitEffectForm()
   }
 
   closeModal(): void {
+ 
     $('#modalQuincena').modal('hide');
+    
+    $('select').selectpicker('val', '-1');
+    this.dias_habiles = [];
+    $('.calendario').datepicker('update', '');
+    $('#click_reset').trigger('click');
+
+    let mes = new Mes(-1, "SIN MES", -1, -1);
+    let anio = new Anio(-1, 1990, -1);
+    this.quincena = new Quincena(-1, mes, anio, -1, "09:05", "14:00", "16:00", "18:00", 1);
+  
   }
 
   isEmpty(text: string): boolean {
@@ -186,13 +194,13 @@ export class ConfAttendanceComponent implements OnInit {
 
     if (dias_seleccionados.length > 0) {
 
-      let dias_habiles: Array<Diah> = [];
+     this.dias_habiles=[];
 
       dias_seleccionados.forEach(dia => {
-        dias_habiles.push(new Diah(-1, dia, this.quincena));
+        this.dias_habiles.push(new Diah(-1, dia, this.quincena));
       });
-      console.log(this.quincena, dias_habiles)
-      this.service.createQuincena(this.quincena, dias_habiles).subscribe(response => {
+     
+      this.service.createQuincena(this.quincena, this.dias_habiles).subscribe(response => {
         console.log(response);
         if (response.successful) {
           swal.fire('Exito !', response.message, 'success');
