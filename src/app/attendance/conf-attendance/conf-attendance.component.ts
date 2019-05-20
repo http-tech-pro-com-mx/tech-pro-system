@@ -197,35 +197,36 @@ export class ConfAttendanceComponent implements OnInit {
   }
 
   sendQuincena(): void {
-    if (this.isEdit) {
-      swal.fire({
-        title: '<span style="color: #2196f3 ">¿Desea actualizar los datos?</span>',
-        type: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#0075D3',
-        cancelButtonColor: '#2196f3 ',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Si!',
-        allowOutsideClick: false,
-        allowEnterKey: false
-      }).then((result) => {
-        /*
-         * Si acepta
-         */
-        if (result.value) {
-        } else if (result.dismiss === swal.DismissReason.cancel) { }
-      })
-    } else {
-      let dias_seleccionados = $('.calendario').datepicker('getDates');
 
-      if (dias_seleccionados.length > 0) {
+    let dias_seleccionados = $('.calendario').datepicker('getDates');
+    if (dias_seleccionados.length > 0) {
 
-        this.dias_habiles = [];
+      this.dias_habiles = [];
 
-        dias_seleccionados.forEach(dia => {
-          this.dias_habiles.push(new Diah(-1, dia, this.quincena));
-        });
+      dias_seleccionados.forEach(dia => {
+        this.dias_habiles.push(new Diah(-1, dia,this.quincena,1));
+      });
 
+      if (this.isEdit) {
+        swal.fire({
+          title: '<span style="color: #2196f3 ">¿Desea actualizar los datos?</span>',
+          type: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#0075D3',
+          cancelButtonColor: '#2196f3 ',
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Si!',
+          allowOutsideClick: false,
+          allowEnterKey: false
+        }).then((result) => {
+          /*
+           * Si acepta
+           */
+          if (result.value) {
+          } else if (result.dismiss === swal.DismissReason.cancel) { }
+        })
+
+      } else {
         this.service.createQuincena(this.quincena, this.dias_habiles).subscribe(response => {
 
           if (response.successful) {
@@ -240,11 +241,12 @@ export class ConfAttendanceComponent implements OnInit {
         }, error => {
           toastr.error('Ocurrió un error al crear! Error: ' + error.status);
         });
-
-      } else {
-        toastr.error("Seleccione los días de quincena");
       }
+
+    } else {
+      toastr.error("Seleccione los días de quincena");
     }
+
 
   }
 

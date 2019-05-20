@@ -5,6 +5,7 @@ export class Diah{
         public id_dia_habil: number,
         public fecha: Date,
         public id_quincena: Quincena,
+        public estatus: number,
         public id_usuario_regitro?: number,
         public fecha_regitro?: string,
         public id_usuario_modifica_registro?: number,
