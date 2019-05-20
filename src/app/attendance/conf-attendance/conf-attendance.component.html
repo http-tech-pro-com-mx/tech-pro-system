@@ -86,7 +86,7 @@
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <div class="pull-right">
-                                                        <a href="javascript:void(0);">EDITAR</a>
+                                                        <a href="javascript:void(0);" (click)="editaQuincena(quincena)">EDITAR</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -121,21 +121,21 @@
                                     <div class="row">
                                         <br />
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                            <select class="form-control"  [(ngModel)]="quincena.numero_quincena">
+                                            <select class="form-control numero_quincena"  [(ngModel)]="quincena.numero_quincena">
                                                 <option value="-1">-- QUINCENA --</option>
                                                 <option value="1">PRIMERA</option>
                                                 <option value="2">SEGUNDA</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                            <select class="form-control" [(ngModel)]="quincena.id_mes.id_mes">
+                                            <select class="form-control mes_quincena" [(ngModel)]="quincena.id_mes.id_mes">
                                                 <option value="-1">-- MES --</option>
                                                 <option *ngFor="let mes of meses" [value]="mes.id_mes">
                                                     {{ mes.mes_descripcion }}</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                            <select class="form-control"  [(ngModel)]="quincena.id_anio.id_anio">
+                                            <select class="form-control anio_quincena"  [(ngModel)]="quincena.id_anio.id_anio">
                                                 <option value="-1">-- AÑO --</option>
                                                 <option *ngFor="let anio of anios" [value]="anio.id_anio">
                                                     {{ anio.anio }}</option>
@@ -211,7 +211,7 @@
                                 <button data-direction="prev" type="button"
                                     class="btn btn-primary">ANTERIOR</button>&nbsp;&nbsp;
                                 <button data-direction="next" type="button" class="btn btn-primary">SIGUIENTE</button>
-                                <button data-direction="finish" type="button" class="btn btn-primary" (click)="registraQuincena()">REGISTRAR</button>
+                                <button data-direction="finish" type="button" class="btn btn-primary" (click)="sendQuincena()">{{ (!isEdit)? 'REGISTRAR' : 'ACTUALIZAR'}}</button>
                             </div>
                         </div>
                     </div>

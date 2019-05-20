@@ -29,6 +29,7 @@ export class ConfAttendanceComponent implements OnInit {
   public meses: Array<Mes>;
   public quincena: Quincena;
   public dias_habiles: Array<Diah>;
+  public isEdit: boolean;
 
 
   constructor(private service: ConfAttendanceService,
@@ -50,6 +51,7 @@ export class ConfAttendanceComponent implements OnInit {
     let anio = new Anio(-1, 1990, -1);
     this.quincena = new Quincena(-1, mes, anio, -1, "09:05", "14:00", "16:00", "18:00", 1);
     this.dias_habiles = [];
+    this.isEdit = false;
 
 
     this.service.findAllQuincenas().subscribe(response => {
@@ -87,7 +89,7 @@ export class ConfAttendanceComponent implements OnInit {
       $('#demo').steps({
         onChange: (currentIndex, newIndex, stepDirection) => {
           if (currentIndex == 0) {
-            
+
             if (this.quincena.numero_quincena != -1 && this.quincena.id_mes.id_mes != -1 && this.quincena.id_anio.id_anio != -1) {
               return true;
             } else {
@@ -164,10 +166,10 @@ export class ConfAttendanceComponent implements OnInit {
     this.ngAfterInitEffectForm()
   }
 
-  closeModal(bandera:boolean): void {
+  closeModal(bandera: boolean): void {
 
-   
 
+    this.isEdit = false;
     $('#modalQuincena').modal('hide');
 
     this.dias_habiles = [];
@@ -178,7 +180,7 @@ export class ConfAttendanceComponent implements OnInit {
     let anio = new Anio(-1, 1990, -1);
     this.quincena = new Quincena(-1, mes, anio, -1, "09:05", "14:00", "16:00", "18:00", 1);
 
-    if(bandera){
+    if (bandera) {
       $('select').selectpicker('val', '-1');
     }
 
@@ -194,36 +196,84 @@ export class ConfAttendanceComponent implements OnInit {
     return seconds;
   }
 
-  registraQuincena(): void {
-
-    let dias_seleccionados = $('.calendario').datepicker('getDates');
-
-    if (dias_seleccionados.length > 0) {
-
-      this.dias_habiles = [];
-
-      dias_seleccionados.forEach(dia => {
-        this.dias_habiles.push(new Diah(-1, dia, this.quincena));
-      });
-
-      this.service.createQuincena(this.quincena, this.dias_habiles).subscribe(response => {
- 
-        if (response.successful) {
-          this.quincenas.push(response.quincena);
-          $('select').selectpicker('val', '-1');
-          swal.fire('Exito !', response.message, 'success');
-
-          this.closeModal(false);
-        } else {
-          toastr.error(response.message);
-        }
-      }, error => {
-        toastr.error('Ocurrió un error al crear! Error: ' + error.status);
-      });
-
+  sendQuincena(): void {
+    if (this.isEdit) {
+      swal.fire({
+        title: '<span style="color: #2196f3 ">¿Desea actualizar los datos?</span>',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0075D3',
+        cancelButtonColor: '#2196f3 ',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si!',
+        allowOutsideClick: false,
+        allowEnterKey: false
+      }).then((result) => {
+        /*
+         * Si acepta
+         */
+        if (result.value) {
+        } else if (result.dismiss === swal.DismissReason.cancel) { }
+      })
     } else {
-      toastr.error("Seleccione los días de quincena");
+      let dias_seleccionados = $('.calendario').datepicker('getDates');
+
+      if (dias_seleccionados.length > 0) {
+
+        this.dias_habiles = [];
+
+        dias_seleccionados.forEach(dia => {
+          this.dias_habiles.push(new Diah(-1, dia, this.quincena));
+        });
+
+        this.service.createQuincena(this.quincena, this.dias_habiles).subscribe(response => {
+
+          if (response.successful) {
+            this.quincenas.push(response.quincena);
+            $('select').selectpicker('val', '-1');
+            swal.fire('Exito !', response.message, 'success');
+
+            this.closeModal(false);
+          } else {
+            toastr.error(response.message);
+          }
+        }, error => {
+          toastr.error('Ocurrió un error al crear! Error: ' + error.status);
+        });
+
+      } else {
+        toastr.error("Seleccione los días de quincena");
+      }
     }
+
   }
+
+  editaQuincena(quincena: Quincena): void {
+    this.isEdit = true;
+    this.quincena = JSON.parse(JSON.stringify(quincena));
+    $('select.numero_quincena').selectpicker('val', this.quincena.numero_quincena);
+    $('select.mes_quincena').selectpicker('val', this.quincena.id_mes.id_mes);
+    $('select.anio_quincena').selectpicker('val', this.quincena.id_anio.id_anio);
+    this.service.getFindDayByIdQuincena(this.quincena.id_quincena).subscribe(response => {
+
+      if (response.successful) {
+        $('#modalQuincena').modal('show');
+        let dias: Array<any> = response.dias_habiles;
+        dias = dias.map(el => {
+          let fecha_tmp = el.fecha.split("T")[0].split("-");
+          return fecha_tmp[1] + "/" + fecha_tmp[2] + "/" + fecha_tmp[0];
+        });
+        $('.calendario').datepicker('setDates', dias);
+
+      } else {
+        toastr.error(response.message);
+
+      }
+    }, error => {
+      toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
+    });
+
+  }
+
 
 }
