@@ -30,4 +30,12 @@ export class ConfAttendanceService {
     return this.http.post<any>(this.URL + 'quincena/create-quincena',JSON.stringify(params));
   }
 
+  updateQuincena(quincena: Quincena, dias_habiles: Array<Diah>): Observable<any> {
+    let params:any = {
+      quincena: quincena,
+      dias_habiles: dias_habiles
+    };
+    return this.http.post<any>(this.URL + 'quincena/update-quincena',JSON.stringify(params));
+  }
+
 }

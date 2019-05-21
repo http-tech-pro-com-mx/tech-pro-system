@@ -204,7 +204,7 @@ export class ConfAttendanceComponent implements OnInit {
       this.dias_habiles = [];
 
       dias_seleccionados.forEach(dia => {
-        this.dias_habiles.push(new Diah(-1, dia,this.quincena,1));
+        this.dias_habiles.push(new Diah(-1, dia, this.quincena, 1));
       });
 
       if (this.isEdit) {
@@ -223,6 +223,21 @@ export class ConfAttendanceComponent implements OnInit {
            * Si acepta
            */
           if (result.value) {
+            console.log('quincena y dias enviados', this.quincena, this.dias_habiles)
+            this.service.updateQuincena(this.quincena, this.dias_habiles).subscribe(response => {
+              console.log(response)
+              if (response.successful) {
+                //this.quincenas.push(response.quincena);
+                //$('select').selectpicker('val', '-1');
+                swal.fire('Exito !', response.message, 'success');
+
+                //this.closeModal(false);
+              } else {
+                toastr.error(response.message);
+              }
+            }, error => {
+              toastr.error('Ocurrió un error al actualizar! Error: ' + error.status);
+            });
           } else if (result.dismiss === swal.DismissReason.cancel) { }
         })
 
