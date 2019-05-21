@@ -223,15 +223,20 @@ export class ConfAttendanceComponent implements OnInit {
            * Si acepta
            */
           if (result.value) {
-            console.log('quincena y dias enviados', this.quincena, this.dias_habiles)
+           
             this.service.updateQuincena(this.quincena, this.dias_habiles).subscribe(response => {
-              console.log(response)
+              
               if (response.successful) {
-                //this.quincenas.push(response.quincena);
-                //$('select').selectpicker('val', '-1');
+                let quincena_update = response.quincena_update as Quincena;
+               
+                this.quincenas = this.quincenas.map(el=>{
+                  if(el.id_quincena ==  quincena_update.id_quincena){
+                      return el = quincena_update
+                  }else{
+                    return el;
+                  }
+                });
                 swal.fire('Exito !', response.message, 'success');
-
-                //this.closeModal(false);
               } else {
                 toastr.error(response.message);
               }
