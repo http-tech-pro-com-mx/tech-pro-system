@@ -14,8 +14,8 @@
         <div class="profile-header">&nbsp;</div>
         <div class="profile-body">
           <div class="image-area">
-            <img [src]="URL_IMAGEN+'/'+personal.genero+'/'+personal.nombre_foto"
-              width="200" height="200" alt="Imagen de perfil" />
+            <img [src]="URL_IMAGEN+'/'+personal.genero+'/'+personal.nombre_foto" width="200" height="200"
+              alt="Imagen de perfil" />
           </div>
           <div class="content-area">
             <h3>{{ personal.nombre + ' '+ personal.apellido_paterno }}</h3>
@@ -167,8 +167,7 @@
               </div>
             </div>
             <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-              attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100"
-              [ngStyle]="{width:progreso+'%'}">
+              attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progreso+'%'}">
               {{progreso}}%</div>
           </div>
         </div>
@@ -179,3 +178,4 @@
       </div>
     </div>
   </div>
+</div>
