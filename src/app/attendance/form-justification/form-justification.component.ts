@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $:any;
 @Component({
   selector: 'app-form-justification',
   templateUrl: './form-justification.component.html',
@@ -12,6 +13,13 @@ export class FormJustificationComponent implements OnInit {
 
   ngOnInit() {
     this.section = "JUSTIFICACIÓN";
+
+    $('.calendario').datepicker({
+      multidate: true,
+      format: 'mm/dd/yyyy',
+      language: 'es'
+    });
+
   }
 
 }
