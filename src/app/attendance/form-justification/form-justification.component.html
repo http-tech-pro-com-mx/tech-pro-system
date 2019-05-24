@@ -1,65 +1,74 @@
-<app-preloader *ngIf="loading"></app-preloader>
-<div *ngIf="!loading && status_message">
-  <h3>{{ status_message }}</h3>
-  <p>Por favor, intenta más tarde</p>
-</div>
-<div *ngIf="!loading && !status_message">
-  <h2>
-    <b>{{ section }}</b>
-  </h2>
-  <br>
-  <div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
-        <div class="header">
-          <h2>
-            CREAR
-            <small>INGRESE LOS DATOS PARA ENVIAR</small>
-          </h2>
-          <ul class="header-dropdown m-r--5">
-            <li class="dropdown">
-              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">more_vert</i>
-              </a>
-              <ul class="dropdown-menu pull-right">
-                <li>
-                  <a href="javascript:void(0);">AYUDA</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div class="body">
-          <form>
-            <div class="row">
-              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="calendario"></div>
-              </div>
-              <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+<h2>
+  <b>{{ section }}</b>
+</h2>
+<br>
+<div class="row clearfix">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="header">
+        <h2>
+          CREAR
+          <small>INGRESE LOS DATOS PARA ENVIAR</small>
+        </h2>
+        <ul class="header-dropdown m-r--5">
+          <li class="dropdown">
+            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">more_vert</i>
+            </a>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <a href="javascript:void(0);">AYUDA</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="body">
+        <form>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <div class="calendario"></div>
+              <small *ngIf="hasDays" class="form-text text-muted text-validator-error">
+                Se requieren días
+              </small>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+              <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group form-float">
                     <div class="form-line">
-                      <input type="text" id="motivo" class="form-control">
+                      <input type="text" id="motivo" class="form-control" formControlName='motivo'
+                        [(ngModel)]="justificacion.motivo">
                       <label for="motivo" class="form-label">MOTIVO</label>
                     </div>
+                    <small *ngIf="form.controls.motivo.errors?.required && (form.controls.motivo?.touched || submitted)"
+                      class="form-text text-muted text-validator-error">
+                      Se requiere motivo
+                    </small>
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group form-float">
                     <div class="form-line">
                       <label class="form-label">DESCRIPCIÓN</label>
-                      <textarea name="description" cols="30" rows="5" class="form-control no-resize"></textarea>
+                      <textarea name="description" cols="30" rows="5" class="form-control no-resize"
+                        formControlName='descripcion' [(ngModel)]="justificacion.descripcion"></textarea>
                     </div>
+                    <small
+                      *ngIf="form.controls.descripcion.errors?.required && (form.controls.descripcion?.touched || submitted)"
+                      class="form-text text-muted text-validator-error">
+                      Se requiere descripción
+                    </small>
                   </div>
                   <div class="pull-right">
-                    <button type="button" class="btn bg-lime m-t-15 waves-effect">ENVIAR</button>
+                    <button type="submit" class="btn bg-lime m-t-15 waves-effect">ENVIAR</button>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>

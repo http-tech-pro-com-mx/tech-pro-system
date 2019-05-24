@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../app/auth/auth.service';
 import { FormJustificationService } from './form-justification.service';
-import { Diah } from 'src/app/models/diah';
+import { Justificacion } from '../../models/justificacion';
+import { Diah } from '../../models/diah';
+import { Personal } from '../../models/personal';
 
 declare var $: any;
 declare var toastr: any;
@@ -14,10 +16,14 @@ declare var toastr: any;
 export class FormJustificationComponent implements OnInit {
 
   public section: string;
-  public loading: boolean;
   public status_message: string;
   public form: FormGroup;
-  public dias_habiles: Array<Diah>;
+  public dias: Array<Diah>;
+  public justificacion: Justificacion;
+  public personal: Personal;
+  public submitted:boolean;
+  public hasDays: boolean;
+
 
   constructor(
     private fb: FormBuilder,
@@ -26,36 +32,46 @@ export class FormJustificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loading = true;
-    this.dias_habiles = [];
+    this.dias = [];
+    this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
+    this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal)
     this.section = "JUSTIFICACIÓN";
-    this.service.getDayHabiles().subscribe(response =>{
-      console.log(response)
-      if(response.successful){
-        this.status_message = null;
-        this.dias_habiles = response.dias_habiles;
-      }else{
-        toastr.error(response.message);
-        this.status_message = " " + response.message;
-      }
-      this.loading = false;
-      this.ngAfterInit();
-    }, error =>{
-      this.status_message = 'Error: ' + error.status;
-      toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
-      this.loading = false;
-    });
-  }
+    this.submitted = false;
+    this.hasDays = false;
 
-  ngAfterInit() {
-    setTimeout(()=>{
+    this.form = this.fb.group({
+      motivo: new FormControl('', [Validators.required]),
+      descripcion: new FormControl('', [Validators.required])
+    });
+
+    setTimeout(() => {
       $.AdminBSB.input.activate();
       $('.calendario').datepicker({
         multidate: true,
         format: 'mm/dd/yyyy',
         language: 'es'
+      }).on('changeDate', (ev) => {
+           this.hasDays = (ev.dates.length == 0)
       });
-    },100);
+
+      
+    }, 100);
+
+
   }
+
+  submit(): void {
+    this.submitted = true;
+    let dias_seleccionados = $('.calendario').datepicker('getDates');
+
+    if (this.form.valid && (dias_seleccionados.length > 0)) {
+      alert('Todo correcto!')
+    } else {
+      this.hasDays = (dias_seleccionados.length == 0);
+      toastr.error('Verifique los datos capturados!');
+    }
+  }
+
+
 
 }

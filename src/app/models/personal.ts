@@ -10,8 +10,8 @@ export class Personal {
         public genero: number,
         public nombre_foto: string,
         public correo_electronico: string,
-        public area: Area,
-        public perfil: Perfil, 
+        public area?: Area,
+        public perfil?: Perfil, 
         public jefe_directo?: number
     ){}
 }

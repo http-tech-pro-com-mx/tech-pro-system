@@ -12,8 +12,5 @@ export class FormJustificationService {
 
   constructor(private http: HttpClient) { }
 
-  getDayHabiles(): Observable<any> {
-    return this.http.get<any>(this.URL + 'dia_habil/findAll');
-  }
   
 }

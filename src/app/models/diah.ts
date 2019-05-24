@@ -1,4 +1,5 @@
 import { Quincena } from './quincena';
+import { Justificacion } from './justificacion';
 
 export class Diah{
     constructor(
@@ -9,6 +10,7 @@ export class Diah{
         public id_usuario_regitro?: number,
         public fecha_regitro?: string,
         public id_usuario_modifica_registro?: number,
-        public fecha_modifica_registro?: string
+        public fecha_modifica_registro?: string,
+        public justificaciones?: Array<Justificacion>
     ){}
 }

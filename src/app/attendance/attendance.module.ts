@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const routesAttendance: Routes = [
   { path: 'report', component: RptAttendanceComponent },
   { path: 'config', component: ConfAttendanceComponent },
-  { path: 'justication', component: FormJustificationComponent },
+  { path: 'justication/:id', component: FormJustificationComponent },
   { path: 'report-justication', component: RptJustificationComponent },
   { path: 'outstanding-justication', component: OutstandingJusticationComponent },
   { path: 'report-admin', component: RptAttendanceAdminComponent }
