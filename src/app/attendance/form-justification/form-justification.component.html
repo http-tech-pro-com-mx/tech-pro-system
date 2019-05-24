@@ -46,6 +46,14 @@
                       class="form-text text-muted text-validator-error">
                       Se requiere motivo
                     </small>
+                    <small *ngIf="(form.controls.motivo.errors?.whitespace) && (form.controls.motivo?.touched || submitted) && !form.controls.motivo.errors?.required"
+                      class="form-text text-muted text-validator-error">
+                      Escriba motivo
+                    </small>
+                    <small *ngIf="form.controls.motivo.errors?.maxlength && (form.controls.motivo?.touched || submitted) && (!form.controls.motivo.errors?.whitespace)"
+                      class="form-text text-muted text-validator-error">
+                      Máximo 100 caracteres
+                    </small>
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -55,10 +63,17 @@
                       <textarea name="description" cols="30" rows="5" class="form-control no-resize"
                         formControlName='descripcion' [(ngModel)]="justificacion.descripcion"></textarea>
                     </div>
-                    <small
-                      *ngIf="form.controls.descripcion.errors?.required && (form.controls.descripcion?.touched || submitted)"
+                    <small *ngIf="form.controls.descripcion.errors?.required && (form.controls.descripcion?.touched || submitted)"
                       class="form-text text-muted text-validator-error">
                       Se requiere descripción
+                    </small>
+                    <small *ngIf="(form.controls.descripcion.errors?.whitespace) && (form.controls.descripcion?.touched || submitted) && !form.controls.descripcion.errors?.required"
+                      class="form-text text-muted text-validator-error">
+                      Escriba una descripción
+                    </small>
+                    <small *ngIf="(form.controls.descripcion.errors?.maxlength) && (form.controls.descripcion?.touched || submitted) && (!form.controls.descripcion.errors?.whitespace)"
+                      class="form-text text-muted text-validator-error">
+                      Maximo 500 caracteres
                     </small>
                   </div>
                   <div class="pull-right">
