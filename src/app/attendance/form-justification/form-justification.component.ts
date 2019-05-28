@@ -5,7 +5,11 @@ import { FormJustificationService } from './form-justification.service';
 import { Justificacion } from '../../models/justificacion';
 import { Diah } from '../../models/diah';
 import { Personal } from '../../models/personal';
-import { noWhitespaceValidator  } from '../../utils';
+import { noWhitespaceValidator } from '../../utils';
+import { Quincena } from 'src/app/models/quincena';
+import { Mes } from 'src/app/models/mes';
+import { Anio } from 'src/app/models/anio';
+import swal from 'sweetalert2';
 
 declare var $: any;
 declare var toastr: any;
@@ -22,7 +26,7 @@ export class FormJustificationComponent implements OnInit {
   public dias: Array<Diah>;
   public justificacion: Justificacion;
   public personal: Personal;
-  public submitted:boolean;
+  public submitted: boolean;
   public hasDays: boolean;
 
 
@@ -35,14 +39,14 @@ export class FormJustificationComponent implements OnInit {
   ngOnInit() {
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-    this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal)
+    this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal, null, -1, "", -1, "");
     this.section = "JUSTIFICACIÓN";
     this.submitted = false;
     this.hasDays = false;
 
     this.form = this.fb.group({
-      motivo: new FormControl('', [Validators.required, noWhitespaceValidator , Validators.maxLength(100)]),
-      descripcion: new FormControl('', [Validators.required, noWhitespaceValidator , Validators.maxLength(500)])
+      motivo: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(100)]),
+      descripcion: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(500)])
     });
 
     setTimeout(() => {
@@ -52,10 +56,10 @@ export class FormJustificationComponent implements OnInit {
         format: 'mm/dd/yyyy',
         language: 'es'
       }).on('changeDate', (ev) => {
-           this.hasDays = (ev.dates.length == 0)
+        this.hasDays = (ev.dates.length == 0)
       });
 
-      
+
     }, 100);
 
 
@@ -63,15 +67,47 @@ export class FormJustificationComponent implements OnInit {
 
   submit(): void {
     this.submitted = true;
+    this.dias = [];
     let dias_seleccionados = $('.calendario').datepicker('getDates');
-    debugger
     if (this.form.valid && (dias_seleccionados.length > 0)) {
 
-       this.service.createJustificacion(this.justificacion).subscribe(response =>{
-          console.log(response)
-       }, error =>{
-        console.log('Ocurrio un error',error)
-       });
+      dias_seleccionados.forEach(dia => {
+        this.dias.push(new Diah(-1, dia, new Quincena(-1, new Mes(-1, "", -1, 1), new Anio(-1, -1, 1), -1, "", "", "", "", -1), -1, -1, "", -1, ""))
+      });
+
+      this.justificacion.dias = this.dias;
+
+      swal.fire({
+        title: '<span style="color: #2196f3">¿Esta seguro de enviar?</span>',
+        html: '<p style="color: #2196f3">Se notificará a traves de correo electrónico a su jefe para validar</p>',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0075D3',
+        cancelButtonColor: '#2196f3 ',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si!',
+        allowOutsideClick: false,
+        allowEnterKey: false
+      }).then((result) => {
+        /*
+         * Si acepta
+         */
+        if (result.value) {
+
+        } else if (result.dismiss === swal.DismissReason.cancel) { }
+      })
+
+      // this.service.createJustificacion(this.justificacion).subscribe(response => {
+      //   console.log(response)
+      //   if (response.successful) {
+
+      //   } else {
+      //     toastr.error(response.message);
+      //   }
+      // }, error => {
+      //   toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
+
+      // });
 
     } else {
       this.hasDays = (dias_seleccionados.length == 0);
