@@ -8,7 +8,7 @@ import { Diah } from 'src/app/models/diah';
 @Injectable({
   providedIn: 'root'
 })
-export class ConfAttendanceService {
+export class QuincenasService {
 
   private URL = BASE_URL + '/api/';
 

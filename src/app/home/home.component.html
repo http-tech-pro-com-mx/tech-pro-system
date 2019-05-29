@@ -7,7 +7,8 @@
   <nav class="navbar">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+        <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse"
+          data-target="#navbar-collapse" aria-expanded="false"></a>
         <a href="javascript:void(0);" class="bars"></a>
         <a class="navbar-brand" href="index.html">TECH-PRO</a>
       </div>
@@ -137,14 +138,18 @@
       <!-- User Info -->
       <div class="user-info">
         <div class="image">
-          <img  id="img-perfil-user" *ngIf="personal.genero == 1" [src]="URL_IMAGEN+'1/'+personal.nombre_foto" width="48" height="48" alt="User" />
-          <img  id="img-perfil-user" *ngIf="personal.genero == 2" [src]="URL_IMAGEN+'2/'+personal.nombre_foto" width="48" height="48" alt="User" />
+          <img id="img-perfil-user" *ngIf="personal.genero == 1" [src]="URL_IMAGEN+'1/'+personal.nombre_foto" width="48"
+            height="48" alt="User" />
+          <img id="img-perfil-user" *ngIf="personal.genero == 2" [src]="URL_IMAGEN+'2/'+personal.nombre_foto" width="48"
+            height="48" alt="User" />
         </div>
         <div class="info-container">
-          <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ personal.nombre + ' ' + personal.apellido_paterno + ' ' + personal.apellido_materno }}</div>
+          <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ personal.nombre + ' ' + personal.apellido_paterno + ' ' + personal.apellido_materno }}</div>
           <div class="email">{{ personal.correo_electronico }}</div>
           <div class="btn-group user-helper-dropdown">
-            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="true">keyboard_arrow_down</i>
             <ul class="dropdown-menu pull-right">
               <li>
                 <a routerLink="user/perfil/">
@@ -164,10 +169,18 @@
       <div class="menu">
         <ul class="list">
           <li class="header">MENÚ DE NAVEGACIÓN</li>
-          <li routerLinkActive="active">
+          <li >
             <a routerLink="/home">
               <i class="material-icons">home</i>
               <span>HOME</span>
+            </a>
+          </li>
+          <li routerLinkActive="active">
+            <a routerLink="attendance/quincenas" class="toggled waves-effect waves-block">
+              <i class="material-icons">
+                date_range
+              </i>
+              <span>QUINCENAS</span>
             </a>
           </li>
           <li>
@@ -181,9 +194,6 @@
               </li>
               <li routerLinkActive="active">
                 <a routerLink="attendance/report-admin" class="toggled waves-effect waves-block">REPORTE ADMIN</a>
-              </li>
-              <li routerLinkActive="active">
-                <a routerLink="attendance/config" class="toggled waves-effect waves-block">CONFIGURACIÓN</a>
               </li>
             </ul>
           </li>
@@ -200,7 +210,8 @@
                 <a routerLink="attendance/report-justication" class="toggled waves-effect waves-block">CONSULTAR</a>
               </li>
               <li routerLinkActive="active">
-                <a routerLink="attendance/outstanding-justication" class="toggled waves-effect waves-block">PENDIENTES</a>
+                <a routerLink="attendance/outstanding-justication"
+                  class="toggled waves-effect waves-block">PENDIENTES</a>
               </li>
             </ul>
           </li>

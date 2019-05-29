@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { ConfAttendanceService } from './conf-attendance.service';
+import { QuincenasService } from './quincenas.service';
 import { AuthService } from '../../auth/auth.service';
 import { Quincena } from '../../models/quincena';
 import { Diah } from '../../models/diah';
@@ -12,11 +12,11 @@ import swal from 'sweetalert2';
 declare var $: any;
 declare var toastr: any;
 @Component({
-  selector: 'app-conf-attendance',
-  templateUrl: './conf-attendance.component.html',
-  styleUrls: ['./conf-attendance.component.css']
+  selector: 'quincenas',
+  templateUrl: './quincenas.component.html',
+  styleUrls: ['./quincenas.component.css']
 })
-export class ConfAttendanceComponent implements OnInit {
+export class QuincenaComponent implements OnInit {
 
   public section: string;
   public loading: boolean;
@@ -32,7 +32,7 @@ export class ConfAttendanceComponent implements OnInit {
   public isEdit: boolean;
 
 
-  constructor(private service: ConfAttendanceService,
+  constructor(private service: QuincenasService,
     private fb: FormBuilder,
     private auth: AuthService) { }
 

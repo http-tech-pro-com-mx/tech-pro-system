@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { RptAttendanceComponent } from './rpt-attendance/rpt-attendance.component';
-import { ConfAttendanceComponent } from './conf-attendance/conf-attendance.component';
+import { QuincenaComponent } from './quincenas/quincenas.component';
 import { FormJustificationComponent } from './form-justification/form-justification.component';
 import { RptJustificationComponent } from './rpt-justification/rpt-justification.component';
 import { OutstandingJusticationComponent } from './outstanding-justication/outstanding-justication.component';
@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routesAttendance: Routes = [
   { path: 'report', component: RptAttendanceComponent },
-  { path: 'config', component: ConfAttendanceComponent },
+  { path: 'quincenas', component: QuincenaComponent },
   { path: 'justication/:id', component: FormJustificationComponent },
   { path: 'report-justication', component: RptJustificationComponent },
   { path: 'outstanding-justication', component: OutstandingJusticationComponent },
@@ -22,7 +22,7 @@ const routesAttendance: Routes = [
 @NgModule({
   declarations: [
     RptAttendanceComponent, 
-    ConfAttendanceComponent, 
+    QuincenaComponent, 
     FormJustificationComponent, 
     RptJustificationComponent, 
     OutstandingJusticationComponent, 
