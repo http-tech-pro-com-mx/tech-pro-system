@@ -14,7 +14,6 @@ export class FormJustificationService {
   constructor(private http: HttpClient) { }
 
   createJustificacion(justificacion: Justificacion): Observable<any> {
-    console.log(JSON.stringify(justificacion))
     return this.http.post<any>(this.URL + 'justificacion/crear',JSON.stringify(justificacion));
   }
 

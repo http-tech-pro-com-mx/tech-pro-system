@@ -79,7 +79,7 @@ export class FormJustificationComponent implements OnInit {
 
       swal.fire({
         title: '<span style="color: #2196f3">¿Esta seguro de enviar?</span>',
-        html: '<p style="color: #2196f3">Se notificará a traves de correo electrónico a su jefe para validar</p>',
+        html: '<p style="color: #2196f3">Su jefe recibirá un correo electrónico para validar su registro</p>',
         type: 'question',
         showCancelButton: true,
         confirmButtonColor: '#0075D3',
@@ -94,20 +94,29 @@ export class FormJustificationComponent implements OnInit {
          */
         if (result.value) {
 
+          this.service.createJustificacion(this.justificacion).subscribe(response => {
+
+            if (response.successful) {
+              swal.fire('Exito !', response.message, 'success');
+              this.dias = [];
+              this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
+              this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal, null, -1, "", -1, "");
+              this.submitted = false;
+              this.hasDays = false;
+              this.form.reset();
+              $('.calendario').datepicker('update', '');
+            } else {
+              toastr.error(response.message);
+            }
+          }, error => {
+            toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
+
+          });
+
+
         } else if (result.dismiss === swal.DismissReason.cancel) { }
       })
 
-      // this.service.createJustificacion(this.justificacion).subscribe(response => {
-      //   console.log(response)
-      //   if (response.successful) {
-
-      //   } else {
-      //     toastr.error(response.message);
-      //   }
-      // }, error => {
-      //   toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
-
-      // });
 
     } else {
       this.hasDays = (dias_seleccionados.length == 0);
