@@ -40,7 +40,7 @@ export class FormJustificationComponent implements OnInit {
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
     this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal, null, -1, "", -1, "");
-    this.section = "JUSTIFICACIÓN";
+    this.section = "JUSTIFICANTE";
     this.submitted = false;
     this.hasDays = false;
 
