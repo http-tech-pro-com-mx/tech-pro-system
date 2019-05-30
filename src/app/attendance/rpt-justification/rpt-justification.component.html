@@ -11,51 +11,98 @@
   <div class="row clearfix">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
-        <div class="body table-responsive">
-          <table id="mainTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-              <tr>
-                <th>EMPLEADO</th>
-                <th>MOTIVO</th>
-                <th>STATUS</th>
-                <th>AUTORIZAR</th>
-                <th>¿AUTORIZÓ?</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let justificacion of justificaciones; let i = index">
-                <td>
-                  {{ justificacion.id_personal.nombre + ' '+ justificacion.id_personal.apellido_paterno + ' ' + justificacion.id_personal.apellido_materno  }}
-                </td>
-                <td>{{ justificacion.motivo }}</td>
-                <td [ngSwitch]="justificacion.id_estatus">
-                  <i class="material-icons" *ngSwitchCase="1">hourglass_full</i>
-                  <i class="material-icons" *ngSwitchCase="2">cancel</i>
-                  <i class="material-icons" *ngSwitchCase="3">check_circle</i>
-                </td>
-                <td>
-                  <div class="form-group">
-                    <input type="radio" [name]="'row'+i" [id]="'si_justifica'+i" [checked]="justificacion.id_estatus == 3" class="with-gap" (change)="cambiarEstatus(3, justificacion,$event)">
-                    <label [for]="'si_justifica'+i">SI</label>
-                    <input type="radio"  [name]="'row'+i" [id]="'no_justifica'+i" [checked]="justificacion.id_estatus == 2" class="with-gap" (change)="cambiarEstatus(2, justificacion, $event)">
-                    <label [for]="'no_justifica'+i"  class="m-l-20">NO</label>
-                  </div>
-                </td>
-                <td> - </td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>EMPLEADO</th>
-                <th>MOTIVO</th>
-                <th>STATUS</th>
-                <th>AUTORIZAR</th>
-                <th>¿AUTORIZÓ?</th>
-              </tr>
-            </tfoot>
-          </table>
+        <div class="header">
+          <h2>
+            <small>HAGA CLIC SOBRE EL MOTIVO PARA VER EL DETALLE</small>
+          </h2>
+          <div class="body table-responsive">
+            <table id="mainTable" class="table table-striped table-bordered" style="width:100%">
+              <thead>
+                <tr>
+                  <th>EMPLEADO</th>
+                  <th>MOTIVO</th>
+                  <th>STATUS</th>
+                  <th>AUTORIZAR</th>
+                  <th>¿AUTORIZÓ?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let justificacion of justificaciones; let i = index">
+                  <td>
+                    {{ justificacion.id_personal.nombre + ' '+ justificacion.id_personal.apellido_paterno + ' ' + justificacion.id_personal.apellido_materno  }}
+                  </td>
+                  <td><a href="#" (click)="openModal(justificacion, $event)">{{ justificacion.motivo }}</a></td>
+                  <td [ngSwitch]="justificacion.id_estatus">
+                    <i class="material-icons" *ngSwitchCase="1">hourglass_full</i>
+                    <i class="material-icons" *ngSwitchCase="2">cancel</i>
+                    <i class="material-icons" *ngSwitchCase="3">check_circle</i>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <input type="radio" [name]="'row'+i" [id]="'si_justifica'+i"
+                        [checked]="justificacion.id_estatus == 3" class="with-gap"
+                        (change)="cambiarEstatus(3, justificacion,$event)">
+                      <label [for]="'si_justifica'+i">SI</label>
+                      <input type="radio" [name]="'row'+i" [id]="'no_justifica'+i"
+                        [checked]="justificacion.id_estatus == 2" class="with-gap"
+                        (change)="cambiarEstatus(2, justificacion, $event)">
+                      <label [for]="'no_justifica'+i" class="m-l-20">NO</label>
+                    </div>
+                  </td>
+                  <td> - </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>EMPLEADO</th>
+                  <th>MOTIVO</th>
+                  <th>STATUS</th>
+                  <th>AUTORIZAR</th>
+                  <th>¿AUTORIZÓ?</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal fade" id="modalDetalle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">DETALLE</h5>
+          <hr>
+        </div>
+        <div class="modal-body">
+          <div class="form-group form-float">
+            <h6 class="card-inside-title">EMPLEADO</h6>
+            <div class="form-line">
+              <input type="text" class="form-control" aria-required="true"
+                [value]="detalle.id_personal.nombre+' '+detalle.id_personal.apellido_paterno+' '+detalle.id_personal.apellido_materno"
+                disabled>
+            </div>
+          </div>
+          <div class="form-group form-float">
+            <h6 class="card-inside-title">MOTIVO</h6>
+            <div class="form-line">
+              <input type="text" class="form-control" aria-required="true" [value]="detalle.motivo" disabled>
+            </div>
+          </div>
+          <div class="form-group form-float">
+            <h6 class="card-inside-title">DESCRIPCIÓN</h6>
+            <div class="form-line">
+              <textarea cols="30" rows="3" class="form-control no-resize" aria-required="true"
+                disabled>{{ detalle.descripcion }}</textarea>
+            </div>
+          </div>
+          <div class="form-group form-float">
+            <h6 class="card-inside-title">DIA(S):</h6>
+            <span *ngFor="let dia of detalle.dias">&#8226; &nbsp;{{dia.fecha | date: 'fullDate' : 'es-MX' + '   ' }} &nbsp;</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="closeModal()">CERRAR</button>
+        </div>
+      </div>
