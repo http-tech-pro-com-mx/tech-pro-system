@@ -39,7 +39,7 @@ export class FormJustificationComponent implements OnInit {
   ngOnInit() {
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-    this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal, null, -1, "", -1, "");
+    this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "",null, "");
     this.section = "JUSTIFICANTE";
     this.submitted = false;
     this.hasDays = false;
@@ -100,7 +100,7 @@ export class FormJustificationComponent implements OnInit {
               swal.fire('Exito !', response.message, 'success');
               this.dias = [];
               this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-              this.justificacion = new Justificacion(-1, "", "", -1, this.dias, this.personal, null, -1, "", -1, "");
+              this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "", -1, "");
               this.submitted = false;
               this.hasDays = false;
               this.form.reset();

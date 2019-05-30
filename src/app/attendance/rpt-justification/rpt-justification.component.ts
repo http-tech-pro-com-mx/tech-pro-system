@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RptJustificationService } from './rpt-justification.service';
-import { Anio } from '../../models/anio';
-import { Mes } from '../../models/mes';
+import { Justificacion } from 'src/app/models/justificacion';
+import { dataTableConfigJSON } from '../../utils';
+import swal from 'sweetalert2';
+
 
 declare var $: any;
 declare var toastr: any;
@@ -19,17 +20,11 @@ export class RptJustificationComponent implements OnInit {
   public loading: boolean;
   public status_message: string;
   public submitted: boolean;
-  public anios: Array<Anio>;
-  public meses: Array<Mes>;
-  public empleados: Array<any>;
-  public form: FormGroup;
-  public params: any;
-  public registros: Array<any>;
   public busqueda: boolean;
+  public justificaciones: Array<Justificacion>;
 
 
   constructor(private service: RptJustificationService,
-    private fb: FormBuilder,
     private auth: AuthService) { }
 
   ngOnInit() {
@@ -37,26 +32,14 @@ export class RptJustificationComponent implements OnInit {
     this.section = "JUSTIFICANTES";
     this.status_message = null;
     this.submitted = false;
-    this.anios = [];
-    this.meses = [];
-    this.registros = [];
     this.busqueda = false;
-    this.empleados = [];
-    this.params = {
-      anio: '',
-      mes: '',
-      quincena: '',
-      id_personal: ''
-    };
+    this.justificaciones = [];
 
-    this.service.findAllAnioAndMonthAndEmpleado().subscribe(response => {
-
+    this.service.findAllJustificaciones().subscribe(response => {
+      console.log(response)
       if (response.successful) {
-        this.empleados = response.empleados;
-        this.meses = response.meses;
-        this.anios = response.anios;
         this.status_message = null;
-
+        this.justificaciones = response.justificaciones;
       } else {
         toastr.error(response.message);
         this.status_message = " " + response.message;
@@ -64,29 +47,58 @@ export class RptJustificationComponent implements OnInit {
 
       this.loading = false;
       this.ngAfterInitEffectForm();
-
     }, error => {
       this.status_message = 'Error: ' + error.status;
       toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
       this.loading = false;
     });
 
-
   }
 
   ngAfterInitEffectForm(): void {
 
-    this.form = this.fb.group({
-      anio: new FormControl('', [Validators.required]),
-      mes: new FormControl('', [Validators.required]),
-      quincena: new FormControl('', [Validators.required]),
-      id_personal: new FormControl('', [Validators.required])
-    });
-
     setTimeout(function () {
-      $.AdminBSB.select.activate();
-    }, 100);
 
+      $('#mainTable').DataTable({
+        "language": dataTableConfigJSON,
+        "bSort": false
+      });
+
+      $.AdminBSB.select.activate();
+
+    }, 80);
+
+  }
+
+  cambiarEstatus(status: number, justificacion: Justificacion, event:any): void {
+    
+    justificacion.id_estatus = status;
+    let mensaje = (status == 3)?'autorizar': 'NO autorizar';
+    let nombre_solicitante = justificacion.id_personal.nombre + ' '+justificacion.id_personal.apellido_paterno + ' '+justificacion.id_personal.apellido_materno;
+    swal.fire({
+      title: '<span style="color: #2196f3">¿Esta seguro de '+mensaje+'?</span>',
+      html: '<b style="color: #2196f3">A: '+nombre_solicitante+'</b><br><b style="color: #2196f3">MOTIVO: '+justificacion.motivo+'</b>',
+      type: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#0075D3',
+      cancelButtonColor: '#2196f3 ',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si!',
+      allowOutsideClick: false,
+      allowEnterKey: false
+    }).then((result) => {
+      /*
+       * Si acepta
+       */
+      if (result.value) {
+      } else if (result.dismiss === swal.DismissReason.cancel) { 
+         if(justificacion.id_estatus == 2){
+          justificacion.id_estatus = 3;
+         }else if(justificacion.id_estatus == 3){
+          justificacion.id_estatus = 2;
+         }
+      }
+    })
   }
 
 

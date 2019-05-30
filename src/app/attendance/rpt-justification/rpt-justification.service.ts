@@ -12,8 +12,8 @@ export class RptJustificationService {
 
   constructor(private http: HttpClient) { }
 
-  findAllAnioAndMonthAndEmpleado(): Observable<any> {
-    return this.http.get<any>(this.URL + 'quincena/findAllAnioAndMonthAndEmpleado');
+  findAllJustificaciones(): Observable<any> {
+    return this.http.get<any>(this.URL + 'justificacion/findAllJustificaciones');
   }
 
 }
