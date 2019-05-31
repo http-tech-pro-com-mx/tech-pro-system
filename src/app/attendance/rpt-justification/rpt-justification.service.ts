@@ -16,4 +16,8 @@ export class RptJustificationService {
     return this.http.get<any>(this.URL + 'justificacion/findAllJustificaciones');
   }
 
+  autorizar(id_jutificacion:number, estatus:number): Observable<any> {
+    return this.http.post<any>(this.URL+'justificacion/autorizar',{id_justificacion: id_jutificacion, estatus: estatus });
+  }
+
 }

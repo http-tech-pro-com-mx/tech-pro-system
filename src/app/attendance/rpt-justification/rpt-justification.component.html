@@ -49,18 +49,14 @@
                       <label [for]="'no_justifica'+i" class="m-l-20">NO</label>
                     </div>
                   </td>
-                  <td> - </td>
+                  <td *ngIf="justificacion.id_personal_autoriza; else vacio"> 
+                      {{ justificacion.id_personal_autoriza.nombre + ' '+ justificacion.id_personal_autoriza.apellido_paterno + ' ' + justificacion.id_personal_autoriza.apellido_materno  }}
+                  </td>
+                  <ng-template #vacio>
+                      <td>-</td>
+                  </ng-template>
                 </tr>
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>EMPLEADO</th>
-                  <th>MOTIVO</th>
-                  <th>STATUS</th>
-                  <th>AUTORIZAR</th>
-                  <th>¿AUTORIZÓ?</th>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>

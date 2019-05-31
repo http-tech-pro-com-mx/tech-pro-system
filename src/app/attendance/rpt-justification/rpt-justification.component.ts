@@ -36,10 +36,10 @@ export class RptJustificationComponent implements OnInit {
     this.submitted = false;
     this.busqueda = false;
     this.justificaciones = [];
-    this.detalle = new Justificacion(-1,"","",-1,[],new Personal(-1,"","","",-1,"",""));
+    this.detalle = new Justificacion(-1, "", "", -1, [], new Personal(-1, "", "", "", -1, "", ""));
 
     this.service.findAllJustificaciones().subscribe(response => {
-     
+
       if (response.successful) {
         this.status_message = null;
         this.justificaciones = response.justificaciones;
@@ -68,21 +68,21 @@ export class RptJustificationComponent implements OnInit {
       });
 
       $.AdminBSB.select.activate();
-     
+
 
     }, 80);
 
   }
 
-  cambiarEstatus(status: number, justificacion: Justificacion, event:any): void {
+  cambiarEstatus(status: number, justificacion: Justificacion, event: any): void {
     let estatus_tmp = justificacion.id_estatus;
     justificacion.id_estatus = status;
-    console.log('estuatuis temporal', estatus_tmp)
-    let mensaje = (status == 3)?'autorizar': 'NO autorizar';
-    let nombre_solicitante = justificacion.id_personal.nombre + ' '+justificacion.id_personal.apellido_paterno + ' '+justificacion.id_personal.apellido_materno;
+
+    let mensaje = (status == 3) ? 'autorizar' : 'NO autorizar';
+    let nombre_solicitante = justificacion.id_personal.nombre + ' ' + justificacion.id_personal.apellido_paterno + ' ' + justificacion.id_personal.apellido_materno;
     swal.fire({
-      title: '<span style="color: #2196f3">¿Esta seguro de '+mensaje+'?</span>',
-      html: '<b style="color: #2196f3">A: '+nombre_solicitante+'</b><br><b style="color: #2196f3">MOTIVO: '+justificacion.motivo+'</b>',
+      title: '<span style="color: #2196f3">¿Esta seguro de ' + mensaje + '?</span>',
+      html: '<b style="color: #2196f3">A: ' + nombre_solicitante + '</b><br><b style="color: #2196f3">MOTIVO: ' + justificacion.motivo + '</b>',
       type: 'question',
       showCancelButton: true,
       confirmButtonColor: '#0075D3',
@@ -96,31 +96,44 @@ export class RptJustificationComponent implements OnInit {
        * Si acepta
        */
       if (result.value) {
+
+        this.service.autorizar(justificacion.id_justificacion, justificacion.id_estatus).subscribe(response => {
+        
+          if (response.successful) {
+            swal.fire('Exito !', response.message, 'success');
+          } else {
+            toastr.error('Ocurrió un error! Error: ' + response.message);
+          }
+
+        }, error => {
+          toastr.error('Ocurrió un error al autorizar! Error: ' + error.status);
+        });
+
       } else if (result.dismiss === swal.DismissReason.cancel) {
-            if(estatus_tmp == 1){
-              justificacion.id_estatus = 1;
-            } else if(justificacion.id_estatus == 2){
-              justificacion.id_estatus = 3;
-            }else if(justificacion.id_estatus == 3){
-              justificacion.id_estatus = 2;
-            }
+        if (estatus_tmp == 1) {
+          justificacion.id_estatus = 1;
+        } else if (justificacion.id_estatus == 2) {
+          justificacion.id_estatus = 3;
+        } else if (justificacion.id_estatus == 3) {
+          justificacion.id_estatus = 2;
+        }
       }
     })
   }
 
-  openModal(justificacion: Justificacion, event):void{
+  openModal(justificacion: Justificacion, event): void {
     event.preventDefault();
     this.detalle = justificacion;
-    
-    setTimeout(()=>{
+
+    setTimeout(() => {
       $.AdminBSB.input.activate();
-    },200);
+    }, 200);
 
     $('#modalDetalle').modal('show');
   }
 
-  closeModal(): void{
-    this.detalle = new Justificacion(-1,"","",-1,[],new Personal(-1,"","","",-1,"",""));
+  closeModal(): void {
+    this.detalle = new Justificacion(-1, "", "", -1, [], new Personal(-1, "", "", "", -1, "", ""));
     $('#modalDetalle').modal('hide');
   }
 
