@@ -169,11 +169,22 @@
       <div class="menu">
         <ul class="list">
           <li class="header">MENÚ DE NAVEGACIÓN</li>
-          <li >
+          <li>
             <a routerLink="/home">
               <i class="material-icons">home</i>
               <span>HOME</span>
             </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+              <i class="material-icons">people</i>
+              <span>EMPLEADOS</span>
+            </a>
+            <ul class="ml-menu">
+              <li routerLinkActive="active">
+                <a routerLink="user/empleados" class="toggled waves-effect waves-block">CONSULTA</a>
+              </li>
+            </ul>
           </li>
           <li routerLinkActive="active">
             <a routerLink="attendance/quincenas" class="toggled waves-effect waves-block">

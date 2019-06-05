@@ -4,13 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { PerfilComponent } from './perfil/perfil.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListUsersComponent } from './list-users/list-users.component';
 
 const routesUser: Routes = [
-  { path: 'perfil', component: PerfilComponent }
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'empleados', component: ListUsersComponent },
 ]
 
 @NgModule({
-  declarations: [PerfilComponent],
+  declarations: [PerfilComponent, ListUsersComponent],
   imports: [
     CommonModule,
     SharedModule,
