@@ -50,6 +50,7 @@ export class FormJustificationComponent implements OnInit {
     });
 
     setTimeout(() => {
+      $.AdminBSB.select.activate();
       $.AdminBSB.input.activate();
       $('.calendario').datepicker({
         multidate: true,

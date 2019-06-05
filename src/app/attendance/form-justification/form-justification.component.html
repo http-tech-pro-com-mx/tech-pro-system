@@ -37,11 +37,12 @@
               <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group form-float">
-                    <div class="form-line">
-                      <input type="text" id="motivo" class="form-control" formControlName='motivo'
-                        [(ngModel)]="justificacion.motivo">
-                      <label for="motivo" class="form-label">MOTIVO</label>
-                    </div>
+                    <select class="form-control" formControlName='motivo'  [(ngModel)]="justificacion.motivo">
+                      <option value="">-- MOTIVO --</option>
+                      <option value="RETARDO">RETARDO(S)</option>
+                      <option value="VACACIONES">VACACIONES</option>
+                      <option value="RETARDO">OTRO</option>                      
+                  </select>
                     <small *ngIf="form.controls.motivo.errors?.required && (form.controls.motivo?.touched || submitted)"
                       class="form-text text-muted text-validator-error">
                       Se requiere motivo
