@@ -3,7 +3,7 @@ import { ListUsersService } from './list-users.service';
 import { Usuario } from 'src/app/models/usuario';
 import { BASE_URL } from 'src/app/constants';
 
-
+declare var $:any;
 declare var toastr: any;
 @Component({
   selector: 'app-list-users',
@@ -39,6 +39,8 @@ export class ListUsersComponent implements OnInit {
       }
 
       this.loading = false;
+      this.ngAfterInitEffectForm();
+
     }, error => {
       this.status_message = 'Error: ' + error.status;
       toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
@@ -47,5 +49,12 @@ export class ListUsersComponent implements OnInit {
 
 
   }
+
+  ngAfterInitEffectForm(): void {
+    setTimeout(function () {
+       $.AdminBSB.input.activate();
+     }, 100);
+ 
+   }
 
 }

@@ -10,15 +10,30 @@
   <br>
   <!-- Lista de empleados -->
   <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body body-search">
+          <div class="form-group form-float">
+            <div class="form-line">
+              <input type="text" id="motivo" class="form-control">
+              <label for="motivo" class="form-label">BUSCAR EMPLEADO</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row clearfix">
+    <br>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngFor="let empleado of empleados">
       <div class="card">
         <div class="header">
           <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-              <img *ngIf="empleado.personal.genero == 1" [src]="URL_IMAGEN+'1/'+empleado.personal.nombre_foto" alt="foto perfil"
-                class="avatar">
-              <img *ngIf="empleado.personal.genero == 2" [src]="URL_IMAGEN+'2/'+empleado.personal.nombre_foto" alt="foto perfil"
-                class="avatar">
+              <img *ngIf="empleado.personal.genero == 1" [src]="URL_IMAGEN+'1/'+empleado.personal.nombre_foto"
+                alt="foto perfil" class="avatar">
+              <img *ngIf="empleado.personal.genero == 2" [src]="URL_IMAGEN+'2/'+empleado.personal.nombre_foto"
+                alt="foto perfil" class="avatar">
             </div>
             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
               <h2 class="">
@@ -28,15 +43,17 @@
               <ul class="header-dropdown m-r-0">
                 <li>
                   <a href="javascript:void(0);">
-                    <i [ngClass]="{'material-icons':true, 'active': empleado.estatus , 'inactive': !empleado.estatus }">power_settings_new</i>
+                    <i
+                      [ngClass]="{'material-icons':true, 'active': empleado.estatus , 'inactive': !empleado.estatus }">power_settings_new</i>
                   </a>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="body">
-          Trabaja en el area de <b>{{ empleado.personal.area.valor }}</b> como <b>{{ empleado.personal.perfil.valor }}</b>
+        <div class="body truncate-text">
+          Trabaja en el area de <b>{{ empleado.personal.area.valor }}</b> como
+          <b>{{ empleado.personal.perfil.valor }}</b>
         </div>
       </div>
     </div>

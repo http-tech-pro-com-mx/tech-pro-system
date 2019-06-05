@@ -11,3 +11,16 @@
   .card .header .header-dropdown i.active{
     color: #9ccc65;
   }
+
+  .truncate-text{
+    height:70px;
+    background-color:#2B9CD5;
+    color:white;
+    overflow:hidden;
+    /* white-space:nowrap; */
+    text-overflow: ellipsis;
+  }
+
+  .body-search{
+    padding-bottom: 1px;
+  }
