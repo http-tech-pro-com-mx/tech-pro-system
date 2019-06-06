@@ -18,4 +18,8 @@ export class ListUsersService {
         return this.http.get<any>(this.URL + '/findAll');
     }
 
+    updateEstatus(id_usuario: number, estatus:boolean):  Observable<any> {
+        let params = JSON.stringify({id_usuario, estatus});
+        return this.http.post<any>(this.URL + '/updateEstatus', params);
+    }
 }

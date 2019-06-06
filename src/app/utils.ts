@@ -31,7 +31,12 @@ const dataTableConfigJSON = {
     }
 }
 
+function validaTextNull(texto: string): string{
+  return (!texto)?'':texto;
+}
+
 export{
     noWhitespaceValidator,
-    dataTableConfigJSON
+    dataTableConfigJSON,
+    validaTextNull
 }

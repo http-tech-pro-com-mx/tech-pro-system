@@ -2,7 +2,7 @@ import { Personal } from './personal';
 
 export class Usuario {
     constructor(
-        public id: number,
+        public id_usuario: number,
         public usuario: string,
         public contrasenia: string,
         public userid: number,
