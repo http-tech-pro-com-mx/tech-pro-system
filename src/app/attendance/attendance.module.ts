@@ -6,7 +6,6 @@ import { RptAttendanceComponent } from './rpt-attendance/rpt-attendance.componen
 import { QuincenaComponent } from './quincenas/quincenas.component';
 import { FormJustificationComponent } from './form-justification/form-justification.component';
 import { RptJustificationComponent } from './rpt-justification/rpt-justification.component';
-import { OutstandingJusticationComponent } from './outstanding-justication/outstanding-justication.component';
 import { RptAttendanceAdminComponent } from './rpt-attendance-admin/rpt-attendance-admin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -15,7 +14,6 @@ const routesAttendance: Routes = [
   { path: 'quincenas', component: QuincenaComponent },
   { path: 'justication/:id', component: FormJustificationComponent },
   { path: 'report-justication', component: RptJustificationComponent },
-  { path: 'outstanding-justication', component: OutstandingJusticationComponent },
   { path: 'report-admin', component: RptAttendanceAdminComponent }
 ];
 
@@ -25,7 +23,6 @@ const routesAttendance: Routes = [
     QuincenaComponent, 
     FormJustificationComponent, 
     RptJustificationComponent, 
-    OutstandingJusticationComponent, 
     RptAttendanceAdminComponent],
   imports: [
     CommonModule,
