@@ -17,6 +17,7 @@ export class ListUsersComponent implements OnInit {
   public status_message: string;
   public empleados: Array<Usuario>;
   public URL_IMAGEN: string = BASE_URL + '/api/usuarios/getImageProfile/';
+  public searchText: string;
 
 
   constructor(private service: ListUsersService) { }
@@ -27,6 +28,7 @@ export class ListUsersComponent implements OnInit {
     this.status_message = null;
     this.section = "CONSULTA EMPLEADOS";
     this.empleados = [];
+    this.searchText = "";
 
     this.service.getAllEmpleados().subscribe(response => {
       console.log(response);

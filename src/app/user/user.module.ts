@@ -5,6 +5,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListUsersComponent } from './list-users/list-users.component';
+import { PipeModule } from '../pipe/pipe.module'
 
 const routesUser: Routes = [
   { path: 'perfil', component: PerfilComponent },
@@ -16,6 +17,7 @@ const routesUser: Routes = [
   imports: [
     CommonModule,
     SharedModule,
+    PipeModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routesUser)

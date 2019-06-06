@@ -15,8 +15,8 @@
         <div class="body body-search">
           <div class="form-group form-float">
             <div class="form-line">
-              <input type="text" id="motivo" class="form-control">
-              <label for="motivo" class="form-label">BUSCAR EMPLEADO</label>
+              <input type="text" id="search" class="form-control" [(ngModel)]="searchText">
+              <label for="search" class="form-label">BUSCAR EMPLEADO POR NOMBRE</label>
             </div>
           </div>
         </div>
@@ -25,7 +25,7 @@
   </div>
   <div class="row clearfix">
     <br>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngFor="let empleado of empleados">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngFor="let empleado of empleados | search: searchText">
       <div class="card">
         <div class="header">
           <div class="row">
