@@ -1,0 +1,159 @@
+<app-preloader *ngIf="loading"></app-preloader>
+<div *ngIf="!loading && status_message">
+  <h3>{{ status_message }}</h3>
+  <p>Por favor, intenta más tarde</p>
+</div>
+<div *ngIf="!loading && !status_message">
+  <h2>
+    <b>{{ section }}</b>
+  </h2>
+  <br>
+  <div class="row clearfix">
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+      <div class="card profile-card">
+        <div class="profile-header">&nbsp;</div>
+        <div class="profile-body">
+          <div class="image-area">
+            <img [src]="URL_IMAGEN+'/'+personal.genero+'/'+personal.nombre_foto" width="200" height="200"
+              alt="Imagen de perfil" />
+          </div>
+          <div class="content-area">
+            <h3>{{ personal.nombre + ' '+ personal.apellido_paterno }}</h3>
+            <p>{{ personal.perfil.valor }}</p>
+            <p>{{ personal.area.valor }}</p>
+          </div>
+        </div>
+        <div class="profile-footer">
+          <button class="btn btn-primary btn-lg waves-effect btn-block" data-toggle="modal"
+            data-target="#modalChangeImage">CAMBIAR IMAGEN</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="body">
+          <div>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#profile_settings" aria-controls="settings" role="tab" data-toggle="tab">DATOS</a>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="profile_settings">
+                <form class="">
+                  <div class="row clearfix">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                      <div class="form-group form-float">
+                        <div class="form-line">
+                          <input type="text" class="form-control" [value]="personal.nombre">
+                          <label class="form-label">NOMBRE</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                      <div class="form-group form-float">
+                        <div class="form-line">
+                          <input type="text" class="form-control" [value]="personal.apellido_paterno">
+                          <label class="form-label">APELLIDO PATERNO</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                      <div class="form-group form-float">
+                        <div class="form-line">
+                          <input type="text" class="form-control" [value]="personal.apellido_materno">
+                          <label class="form-label">APELLIDO MATERNO</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                      <div class="form-group form-float">
+                        <div class="form-line">
+                          <input type="email" class="form-control" [value]="personal.correo_electronico">
+                          <label class="form-label">EMAIL</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                      <div class="form-group">
+                        <select class="form-control" [value]="personal.area.id_area">
+                          <option value="">-- AREA --</option>
+                          <option *ngFor="let area of areas" [value]="area.id_area">{{ area.valor }}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                      <div class="form-group">
+                        <select class="form-control" [value]="personal.perfil.id_perfil">
+                          <option value="">-- PERFIL --</option>
+                          <option *ngFor="let perfil of perfiles" [value]="perfil.id_perfil">{{ perfil.valor }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                      <div class="form-group">
+                        <select class="form-control" [value]="personal.jefe_directo">
+                          <option value="">-- JEFE --</option>
+                          <option *ngFor="let jefe of jefes_inmediatos" [value]="jefe[0]">{{ jefe[1] }}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modalChangeImage" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">CAMBIAR IMAGEN</h5>
+        </div>
+        <div class="modal-body">
+          <div class="container-upload">
+            <div class="file-upload-wrapper">
+              <div class="card card-body view file-upload">
+                <div id="container-image" class="image-preview" *ngIf="preview">
+                  <div class="transbox">
+                    <p>Clic aquí para cambiar</p>
+                  </div>
+                </div>
+                <div class="card-text file-upload-message" *ngIf="!preview"><i class="material-icons md-48">
+                    cloud_upload
+                  </i>
+                  <p>Clic aquí para cargar archivo</p>
+                </div>
+                <input #myInput type="file" id="input-file-now" class="file_upload" (change)="seleccionImagen($event)"
+                  accept="image/*">
+                <div class="file-upload-preview"><span class="file-upload-render"></span>
+                </div>
+              </div>
+            </div>
+            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+              attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progreso+'%'}">
+              {{progreso}}%</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" *ngIf="preview" (click)="uploadFile()">ACTUALIZAR</button>
+          <button type="button" class="btn btn-default" (click)="closeModal()">CERRAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

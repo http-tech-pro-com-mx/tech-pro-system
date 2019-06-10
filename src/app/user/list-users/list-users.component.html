@@ -37,7 +37,7 @@
             </div>
             <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
               <h2 class="">
-                <a href="#">{{ empleado.personal.nombre +' '+ empleado.personal.apellido_paterno }}
+                <a [routerLink]="'perfil/'+empleado.usuario">{{ empleado.personal.nombre +' '+ empleado.personal.apellido_paterno }}
                 </a><small>{{ empleado.personal.correo_electronico }}</small>
               </h2>
               <ul class="header-dropdown m-r-0">
