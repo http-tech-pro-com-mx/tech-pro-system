@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef} from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { noWhitespaceValidator } from '../../utils';
 import { Personal } from '../../models/personal';
 import { PerfilEmpleadoService } from './perfil-empleado.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -33,7 +34,7 @@ export class PerfilEmpleadoComponent implements OnInit {
   public form: FormGroup;
   public preview: boolean;
   public imagen_seleccionada: File;
-  public progreso:number;
+  public progreso: number;
   public URL_IMAGEN: string = BASE_URL + '/api/usuarios/getImageProfile';
 
 
@@ -94,13 +95,19 @@ export class PerfilEmpleadoComponent implements OnInit {
   ngAfterInit() {
 
     this.form = this.fb.group({
-      actual: new FormControl('', [Validators.required]),
+      nombre : new FormControl(this.personal.nombre, [Validators.required,  noWhitespaceValidator, Validators.maxLength(40)]),
+      apellido_paterno : new FormControl(this.personal.apellido_paterno, [Validators.required, noWhitespaceValidator, Validators.maxLength(60)]),
+      apellido_materno : new FormControl(this.personal.apellido_materno, [Validators.maxLength(60)]),
+      correo_electronico : new FormControl(this.personal.correo_electronico, [Validators.required, Validators.pattern(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/),Validators.maxLength(150)]),
+      id_area : new FormControl(this.personal.area.id_area, [Validators.required]),
+      id_perfil : new FormControl(this.personal.perfil.id_perfil, [Validators.required]),
+      jefe_directo : new FormControl(this.personal.jefe_directo, [])
     });
 
   }
 
- 
-  
+
+
 
   seleccionImagen(event): void {
     this.progreso = 0;
@@ -157,36 +164,64 @@ export class PerfilEmpleadoComponent implements OnInit {
 
   uploadFile(): void {
 
-    this.service.uploadImagen(this.imagen_seleccionada,  this.auth.getIdPersonal()).subscribe(event => {
+    this.service.uploadImagen(this.imagen_seleccionada, this.auth.getIdPersonal()).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
         this.progreso = Math.round((event.loaded / event.total) * 100);
       } else if (event.type === HttpEventType.Response) {
         let response: any = event.body;
 
-      if (response.successful) {
+        if (response.successful) {
 
-        this.personal.nombre_foto = response.nombre_foto;
-        let datos  = JSON.parse(localStorage.getItem('data_user'));
-        datos.nombre_foto =   response.nombre_foto;      
-        localStorage.setItem('data_user', JSON.stringify(datos));
-        $('#img-perfil-user').attr('src', this.URL_IMAGEN+'/'+this.personal.genero+'/'+this.personal.nombre_foto);
-        $('#modalChangeImage').modal('hide');
-        this.progreso = 0;
-        this.myInputVariable.nativeElement.value = "";
-        this.imagen_seleccionada = null;
-        this.preview = false;
-        swal.fire('Exito!', 'Se actualizó la imagen!', 'success');
+          this.personal.nombre_foto = response.nombre_foto;
+          let datos = JSON.parse(localStorage.getItem('data_user'));
+          datos.nombre_foto = response.nombre_foto;
+          localStorage.setItem('data_user', JSON.stringify(datos));
+          $('#img-perfil-user').attr('src', this.URL_IMAGEN + '/' + this.personal.genero + '/' + this.personal.nombre_foto);
+          $('#modalChangeImage').modal('hide');
+          this.progreso = 0;
+          this.myInputVariable.nativeElement.value = "";
+          this.imagen_seleccionada = null;
+          this.preview = false;
+          swal.fire('Exito!', 'Se actualizó la imagen!', 'success');
 
-      } else {
-        toastr.error(response.message);
-      }
-      
+        } else {
+          toastr.error(response.message);
+        }
+
       }
 
     }, error => {
       toastr.error(error.error.error);
     });
 
+  }
+
+  submitForm(): void {
+    
+    this.submitted = true;
+
+    if (this.form.valid) {
+      swal.fire({
+        title: '<span style="color: #2196f3 ">¿Actualizar información?</span>',
+        type: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#0075D3',
+        cancelButtonColor: '#2196f3 ',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Si!',
+        allowOutsideClick: false,
+        allowEnterKey: false
+      }).then((result) => {
+        /*
+         * Si acepta
+         */
+        if (result.value) {
+        } else if (result.dismiss === swal.DismissReason.cancel) { }
+      })
+
+    } else {
+      toastr.error('Verifique los datos capturados!');
+    }
   }
 
 

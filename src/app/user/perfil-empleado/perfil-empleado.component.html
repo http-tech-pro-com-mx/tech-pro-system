@@ -41,14 +41,30 @@
 
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane fade in active" id="profile_settings">
-                <form class="">
+                <form [formGroup]="form" (ngSubmit)="submitForm()" autocomplete="off">
                   <div class="row clearfix">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                       <div class="form-group form-float">
                         <div class="form-line">
-                          <input type="text" class="form-control" [value]="personal.nombre">
+                          <input type="text" class="form-control" [(ngModel)]="personal.nombre"
+                            formControlName="nombre">
                           <label class="form-label">NOMBRE</label>
                         </div>
+                        <small
+                          *ngIf="form.controls.nombre.errors?.required && (form.controls.nombre?.touched || submitted)"
+                          class="form-text text-muted text-validator-error">
+                          Se requiere nombre
+                        </small>
+                        <small
+                          *ngIf="(form.controls.nombre.errors?.whitespace) && (form.controls.nombre?.touched || submitted) && !form.controls.nombre.errors?.required"
+                          class="form-text text-muted text-validator-error">
+                          Escriba nombre
+                        </small>
+                        <small
+                          *ngIf="form.controls.nombre.errors?.maxlength && (form.controls.nombre?.touched || submitted) && (!form.controls.nombre.errors?.whitespace)"
+                          class="form-text text-muted text-validator-error">
+                          Máximo 40 caracteres
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -56,17 +72,39 @@
                     <div class="col-sm-12 col-md-12 col-lg-6">
                       <div class="form-group form-float">
                         <div class="form-line">
-                          <input type="text" class="form-control" [value]="personal.apellido_paterno">
+                          <input type="text" class="form-control" [(ngModel)]="personal.apellido_paterno"
+                            formControlName="apellido_paterno">
                           <label class="form-label">APELLIDO PATERNO</label>
                         </div>
+                        <small
+                          *ngIf="form.controls.apellido_paterno.errors?.required && (form.controls.apellido_paterno?.touched || submitted)"
+                          class="form-text text-muted text-validator-error">
+                          Se requiere apellido
+                        </small>
+                        <small
+                          *ngIf="(form.controls.apellido_paterno.errors?.whitespace) && (form.controls.apellido_paterno?.touched || submitted) && !form.controls.apellido_paterno.errors?.required"
+                          class="form-text text-muted text-validator-error">
+                          Escriba apellido
+                        </small>
+                        <small
+                          *ngIf="form.controls.apellido_paterno.errors?.maxlength && (form.controls.apellido_paterno?.touched || submitted) && (!form.controls.apellido_paterno.errors?.whitespace)"
+                          class="form-text text-muted text-validator-error">
+                          Máximo 60 caracteres
+                        </small>
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6">
                       <div class="form-group form-float">
                         <div class="form-line">
-                          <input type="text" class="form-control" [value]="personal.apellido_materno">
+                          <input type="text" class="form-control" [(ngModel)]="personal.apellido_materno"
+                            formControlName="apellido_materno">
                           <label class="form-label">APELLIDO MATERNO</label>
                         </div>
+                        <small
+                          *ngIf="form.controls.apellido_materno.errors?.maxlength && (form.controls.apellido_materno?.touched || submitted)"
+                          class="form-text text-muted text-validator-error">
+                          Máximo 60 caracteres
+                        </small>
                       </div>
                     </div>
                   </div>
@@ -74,38 +112,70 @@
                     <div class="col-sm-12 col-md-12 col-lg-12">
                       <div class="form-group form-float">
                         <div class="form-line">
-                          <input type="email" class="form-control" [value]="personal.correo_electronico">
+                          <input type="email" class="form-control" [(ngModel)]="personal.correo_electronico"
+                            formControlName="correo_electronico">
                           <label class="form-label">EMAIL</label>
                         </div>
+                        <small
+                          *ngIf="form.controls.correo_electronico.errors?.required && (form.controls.correo_electronico?.touched || submitted)"
+                          class="form-text text-muted text-validator-error">
+                          Se requiere email
+                        </small>
+                        <small
+                          *ngIf="(form.controls.correo_electronico.errors?.pattern) && (form.controls.correo_electronico?.touched || submitted) && !form.controls.correo_electronico.errors?.required"
+                          class="form-text text-muted text-validator-error">
+                          Escriba email valido
+                        </small>
+                        <small
+                          *ngIf="form.controls.correo_electronico.errors?.maxlength && (form.controls.correo_electronico?.touched || submitted) && (!form.controls.correo_electronico.errors?.pattern)"
+                          class="form-text text-muted text-validator-error">
+                          Máximo 150 caracteres
+                        </small>
                       </div>
                     </div>
                   </div>
                   <div class="row clearfix">
                     <div class="col-sm-12 col-md-12 col-lg-6">
                       <div class="form-group">
-                        <select class="form-control" [value]="personal.area.id_area">
+                        <select class="form-control" [(ngModel)]="personal.area.id_area" formControlName="id_area">
                           <option value="">-- AREA --</option>
                           <option *ngFor="let area of areas" [value]="area.id_area">{{ area.valor }}</option>
                         </select>
+                        <small
+                          *ngIf="form.controls.id_area.errors?.required && (form.controls.id_area?.touched || submitted)"
+                          class="form-text text-muted text-validator-error">
+                          Se requiere area
+                        </small>
                       </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6">
                       <div class="form-group">
-                        <select class="form-control" [value]="personal.perfil.id_perfil">
+                        <select class="form-control" [(ngModel)]="personal.perfil.id_perfil"
+                          formControlName="id_perfil">
                           <option value="">-- PERFIL --</option>
                           <option *ngFor="let perfil of perfiles" [value]="perfil.id_perfil">{{ perfil.valor }}</option>
                         </select>
+                        <small
+                          *ngIf="form.controls.id_perfil.errors?.required && (form.controls.id_perfil?.touched || submitted)"
+                          class="form-text text-muted text-validator-error">
+                          Se requiere perfil
+                        </small>
                       </div>
                     </div>
                   </div>
                   <div class="row clearfix">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                       <div class="form-group">
-                        <select class="form-control" [value]="personal.jefe_directo">
+                        <select class="form-control" [(ngModel)]="personal.jefe_directo" formControlName="jefe_directo">
                           <option value="">-- JEFE --</option>
                           <option *ngFor="let jefe of jefes_inmediatos" [value]="jefe[0]">{{ jefe[1] }}</option>
                         </select>
                       </div>
+                    </div>
+                  </div>
+                  <div class="row clearfix">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                      <button class="btn btn-primary btn-lg waves-effect btn-block">ACTUALIZAR</button>
                     </div>
                   </div>
                 </form>
