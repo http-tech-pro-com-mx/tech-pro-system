@@ -70,6 +70,10 @@ export class PerfilEmpleadoComponent implements OnInit {
         this.jefes_inmediatos = result.jefes_inmediatos;
         this.areas = result.areas;
         this.personal = result.getUser.personal;
+
+        if(this.personal.nivel_jerarquico == 1){
+          this.jefes_inmediatos  = this.jefes_inmediatos.filter(el => el[0] != this.personal.id_personal);
+        } 
         this.status_message = null;
 
       } else {
@@ -86,23 +90,24 @@ export class PerfilEmpleadoComponent implements OnInit {
       this.loading = false;
     });
 
-    setTimeout(function () {
-      $.AdminBSB.input.activate();
-      $.AdminBSB.select.activate();
-    }, 500);
   }
 
   ngAfterInit() {
 
     this.form = this.fb.group({
-      nombre : new FormControl(this.personal.nombre, [Validators.required,  noWhitespaceValidator, Validators.maxLength(40)]),
-      apellido_paterno : new FormControl(this.personal.apellido_paterno, [Validators.required, noWhitespaceValidator, Validators.maxLength(60)]),
-      apellido_materno : new FormControl(this.personal.apellido_materno, [Validators.maxLength(60)]),
-      correo_electronico : new FormControl(this.personal.correo_electronico, [Validators.required, Validators.pattern(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/),Validators.maxLength(150)]),
-      id_area : new FormControl(this.personal.area.id_area, [Validators.required]),
-      id_perfil : new FormControl(this.personal.perfil.id_perfil, [Validators.required]),
-      jefe_directo : new FormControl(this.personal.jefe_directo, [])
+      nombre: new FormControl(this.personal.nombre, [Validators.required, noWhitespaceValidator, Validators.maxLength(40)]),
+      apellido_paterno: new FormControl(this.personal.apellido_paterno, [Validators.required, noWhitespaceValidator, Validators.maxLength(60)]),
+      apellido_materno: new FormControl(this.personal.apellido_materno, [Validators.maxLength(60)]),
+      correo_electronico: new FormControl(this.personal.correo_electronico, [Validators.required, Validators.pattern(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/), Validators.maxLength(150)]),
+      id_area: new FormControl(this.personal.area.id_area, [Validators.required]),
+      id_perfil: new FormControl(this.personal.perfil.id_perfil, [Validators.required]),
+      jefe_directo: new FormControl(this.personal.jefe_directo, [])
     });
+
+    setTimeout(function () {
+      $.AdminBSB.input.activate();
+      $.AdminBSB.select.activate();
+    }, 200);
 
   }
 
@@ -164,7 +169,7 @@ export class PerfilEmpleadoComponent implements OnInit {
 
   uploadFile(): void {
 
-    this.service.uploadImagen(this.imagen_seleccionada, this.auth.getIdPersonal()).subscribe(event => {
+    this.service.uploadImagen(this.imagen_seleccionada, this.personal.id_personal).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress) {
         this.progreso = Math.round((event.loaded / event.total) * 100);
       } else if (event.type === HttpEventType.Response) {
@@ -173,10 +178,7 @@ export class PerfilEmpleadoComponent implements OnInit {
         if (response.successful) {
 
           this.personal.nombre_foto = response.nombre_foto;
-          let datos = JSON.parse(localStorage.getItem('data_user'));
-          datos.nombre_foto = response.nombre_foto;
-          localStorage.setItem('data_user', JSON.stringify(datos));
-          $('#img-perfil-user').attr('src', this.URL_IMAGEN + '/' + this.personal.genero + '/' + this.personal.nombre_foto);
+
           $('#modalChangeImage').modal('hide');
           this.progreso = 0;
           this.myInputVariable.nativeElement.value = "";
@@ -197,7 +199,7 @@ export class PerfilEmpleadoComponent implements OnInit {
   }
 
   submitForm(): void {
-    
+
     this.submitted = true;
 
     if (this.form.valid) {
@@ -216,6 +218,21 @@ export class PerfilEmpleadoComponent implements OnInit {
          * Si acepta
          */
         if (result.value) {
+
+          this.service.updateInfoUsuario(this.personal).subscribe((result) => {
+            
+            if (result.successful) {
+
+              swal.fire('Exito!', result.message, 'success');
+
+            } else {
+              toastr.error(result.message);
+              this.status_message = " " + result.message;
+            }
+          }, error => {
+            toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
+          });
+
         } else if (result.dismiss === swal.DismissReason.cancel) { }
       })
 

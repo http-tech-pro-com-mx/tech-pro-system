@@ -12,6 +12,7 @@ export class Personal {
         public correo_electronico: string,
         public area?: Area,
         public perfil?: Perfil, 
-        public jefe_directo?: number
+        public jefe_directo?: number,
+        public nivel_jerarquico?: number
     ){}
 }

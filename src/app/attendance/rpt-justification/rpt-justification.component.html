@@ -50,7 +50,7 @@
                     </div>
                   </td>
                   <td *ngIf="justificacion.id_personal_autoriza; else vacio"> 
-                      {{ justificacion.id_personal_autoriza.nombre + ' '+ justificacion.id_personal_autoriza.apellido_paterno + ' ' + justificacion.id_personal_autoriza.apellido_materno  }}
+                      {{ justificacion.id_personal_autoriza.nombre + ' '+ justificacion.id_personal_autoriza.apellido_paterno  }}
                   </td>
                   <ng-template #vacio>
                       <td>-</td>

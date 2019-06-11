@@ -15,8 +15,10 @@
         <div class="body body-search">
           <div class="form-group form-float">
             <div class="form-line">
-              <input type="text" id="search" class="form-control" [(ngModel)]="searchText">
-              <label for="search" class="form-label">BUSCAR EMPLEADO POR NOMBRE</label>
+              <form autocomplete="off">
+                <input type="text" id="search" class="form-control" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}">
+                <label for="search" class="form-label">BUSCAR EMPLEADO POR NOMBRE</label>
+              </form>
             </div>
           </div>
         </div>
