@@ -28,6 +28,9 @@ export class FormJustificationJefeComponent implements OnInit {
   public personal: Personal;
   public submitted: boolean;
   public hasDays: boolean;
+  public empleados: Array<any>;
+  public loading:boolean;
+  public empleados_justificacion:Array<any>;
 
 
   constructor(
@@ -37,13 +40,40 @@ export class FormJustificationJefeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-    this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "",null, "");
-    this.section = "JUSTIFICANTE";
+    this.justificacion = new Justificacion(-1, "", "", 1, this.dias, this.personal, null, -1, "", null, "");
+    this.section = "JUSTIFICAR EMPEADOS";
     this.submitted = false;
     this.hasDays = false;
+    this.empleados = [];
+    this.empleados_justificacion = [];
 
+    this.service.findEmpleados().subscribe(response => {
+      
+      if (response.successful) {
+        this.empleados = response.empleados;
+        this.status_message = null;
+
+      } else {
+        toastr.error(response.message);
+        this.status_message = " " + response.message;
+      }
+
+      this.loading = false;
+      this.ngAfterInitEffectForm();
+
+    }, error => {
+      this.status_message = 'Error: ' + error.status;
+      toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
+      this.loading = false;
+    });
+
+
+  }
+
+  ngAfterInitEffectForm(): void {
     this.form = this.fb.group({
       motivo: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(100)]),
       descripcion: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(500)])
@@ -53,6 +83,7 @@ export class FormJustificationJefeComponent implements OnInit {
       $.AdminBSB.select.activate();
       $.AdminBSB.input.activate();
       $('.calendario').datepicker({
+        // title: 'SELECCIONE LOS DIAS',
         multidate: true,
         format: 'mm/dd/yyyy',
         language: 'es'
@@ -62,15 +93,15 @@ export class FormJustificationJefeComponent implements OnInit {
 
 
     }, 100);
-
-
   }
 
   submit(): void {
+    
     this.submitted = true;
     this.dias = [];
     let dias_seleccionados = $('.calendario').datepicker('getDates');
-    if (this.form.valid && (dias_seleccionados.length > 0)) {
+    this.empleados_justificacion = $('.empleados-justificados').selectpicker('val');
+    if (this.form.valid && (dias_seleccionados.length > 0) && (this.empleados_justificacion.length > 0)) {
 
       dias_seleccionados.forEach(dia => {
         this.dias.push(new Diah(-1, dia, new Quincena(-1, new Mes(-1, "", -1, 1), new Anio(-1, -1, 1), -1, "", "", "", "", -1), -1, -1, "", -1, ""))
@@ -95,24 +126,24 @@ export class FormJustificationJefeComponent implements OnInit {
          */
         if (result.value) {
 
-          this.service.createJustificacion(this.justificacion).subscribe(response => {
+          // this.service.createJustificacion(this.justificacion).subscribe(response => {
 
-            if (response.successful) {
-              swal.fire('Exito !', response.message, 'success');
-              this.dias = [];
-              this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-              this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "", -1, "");
-              this.submitted = false;
-              this.hasDays = false;
-              this.form.reset();
-              $('.calendario').datepicker('update', '');
-            } else {
-              toastr.error(response.message);
-            }
-          }, error => {
-            toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
+          //   if (response.successful) {
+          //     swal.fire('Exito !', response.message, 'success');
+          //     this.dias = [];
+          //     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
+          //     this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "", -1, "");
+          //     this.submitted = false;
+          //     this.hasDays = false;
+          //     this.form.reset();
+          //     $('.calendario').datepicker('update', '');
+          //   } else {
+          //     toastr.error(response.message);
+          //   }
+          // }, error => {
+          //   toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
 
-          });
+          // });
 
 
         } else if (result.dismiss === swal.DismissReason.cancel) { }

@@ -13,6 +13,10 @@ export class FormJustificationJefeService {
 
   constructor(private http: HttpClient) { }
 
+  findEmpleados(): Observable<any> {
+    return this.http.get<any>(this.URL + 'justificacion/findEmpleados');
+  }
+
   createJustificacion(justificacion: Justificacion): Observable<any> {
     return this.http.post<any>(this.URL + 'justificacion/crear',JSON.stringify(justificacion));
   }

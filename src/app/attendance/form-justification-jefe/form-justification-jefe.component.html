@@ -1,57 +1,72 @@
-<h2>
-  <b>{{ section }}</b>
-</h2>
-<br>
-<div class="row clearfix">
-  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="card">
-      <div class="header">
-        <h2>
-          CREAR
-          <small>INGRESE LOS DATOS PARA ENVIAR</small>
-        </h2>
-        <ul class="header-dropdown m-r--5">
-          <li class="dropdown">
-            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-              aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">more_vert</i>
-            </a>
-            <ul class="dropdown-menu pull-right">
-              <li>
-                <a href="javascript:void(0);">AYUDA</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div class="body">
-        <form>
-          <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-              <div class="calendario"></div>
-              <small *ngIf="hasDays" class="form-text text-muted text-validator-error">
-                Se requieren días
-              </small>
-            </div>
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-              <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+<app-preloader *ngIf="loading"></app-preloader>
+<div *ngIf="!loading && status_message">
+  <h3>{{ status_message }}</h3>
+  <p>Por favor, intenta más tarde</p>
+</div>
+<div *ngIf="!loading && !status_message">
+  <h2>
+    <b>{{ section }}</b>
+  </h2>
+  <br>
+  <div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <h2>
+            CREAR
+            <small>INGRESE LOS DATOS PARA JUSTIFICAR A UNO O MAS EMPLEADOS</small>
+          </h2>
+          <ul class="header-dropdown m-r--5">
+            <li class="dropdown">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">help</i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li>
+                  <a href="javascript:void(0);">AYUDA</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="body">
+          <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+            <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="calendario"></div>
+                <small *ngIf="hasDays" class="form-text text-muted text-validator-error">
+                  Se requieren días
+                </small>
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group form-float">
-                    <select class="form-control" formControlName='motivo'  [(ngModel)]="justificacion.motivo">
+                    <select class="form-control empleados-justificados" multiple title="-- SELECCIONE EMPLEADO(S) --" data-live-search="true">
+                      <option *ngFor="let empleado of empleados" [value]="empleado[0]">{{ empleado[1].trim() }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group form-float">
+                    <select class="form-control" formControlName='motivo' [(ngModel)]="justificacion.motivo">
                       <option value="">-- MOTIVO --</option>
                       <option value="RETARDO">RETARDO(S)</option>
                       <option value="VACACIONES">VACACIONES</option>
-                      <option value="RETARDO">OTRO</option>                      
-                  </select>
+                      <option value="RETARDO">OTRO</option>
+                    </select>
                     <small *ngIf="form.controls.motivo.errors?.required && (form.controls.motivo?.touched || submitted)"
                       class="form-text text-muted text-validator-error">
                       Se requiere motivo
                     </small>
-                    <small *ngIf="(form.controls.motivo.errors?.whitespace) && (form.controls.motivo?.touched || submitted) && !form.controls.motivo.errors?.required"
+                    <small
+                      *ngIf="(form.controls.motivo.errors?.whitespace) && (form.controls.motivo?.touched || submitted) && !form.controls.motivo.errors?.required"
                       class="form-text text-muted text-validator-error">
                       Escriba motivo
                     </small>
-                    <small *ngIf="form.controls.motivo.errors?.maxlength && (form.controls.motivo?.touched || submitted) && (!form.controls.motivo.errors?.whitespace)"
+                    <small
+                      *ngIf="form.controls.motivo.errors?.maxlength && (form.controls.motivo?.touched || submitted) && (!form.controls.motivo.errors?.whitespace)"
                       class="form-text text-muted text-validator-error">
                       Máximo 100 caracteres
                     </small>
@@ -61,30 +76,42 @@
                   <div class="form-group form-float">
                     <div class="form-line">
                       <label class="form-label">DESCRIPCIÓN</label>
-                      <textarea name="description" cols="30" rows="5" class="form-control no-resize"
+                      <textarea name="description" cols="30" rows="3" class="form-control no-resize"
                         formControlName='descripcion' [(ngModel)]="justificacion.descripcion"></textarea>
                     </div>
-                    <small *ngIf="form.controls.descripcion.errors?.required && (form.controls.descripcion?.touched || submitted)"
+                    <small
+                      *ngIf="form.controls.descripcion.errors?.required && (form.controls.descripcion?.touched || submitted)"
                       class="form-text text-muted text-validator-error">
                       Se requiere descripción
                     </small>
-                    <small *ngIf="(form.controls.descripcion.errors?.whitespace) && (form.controls.descripcion?.touched || submitted) && !form.controls.descripcion.errors?.required"
+                    <small
+                      *ngIf="(form.controls.descripcion.errors?.whitespace) && (form.controls.descripcion?.touched || submitted) && !form.controls.descripcion.errors?.required"
                       class="form-text text-muted text-validator-error">
                       Escriba una descripción
                     </small>
-                    <small *ngIf="(form.controls.descripcion.errors?.maxlength) && (form.controls.descripcion?.touched || submitted) && (!form.controls.descripcion.errors?.whitespace)"
+                    <small
+                      *ngIf="(form.controls.descripcion.errors?.maxlength) && (form.controls.descripcion?.touched || submitted) && (!form.controls.descripcion.errors?.whitespace)"
                       class="form-text text-muted text-validator-error">
                       Maximo 500 caracteres
                     </small>
                   </div>
-                  <div class="pull-right">
-                    <button type="button" class="btn bg-lime m-t-15 waves-effect">SIGUIENTE</button>
-                  </div>
                 </div>
-              </form>
+              </div>
             </div>
-          </div>
-        </form>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <label>EMPLEADOS SELECCIONADOS: </label><span>NINGÚN EMPLEADO</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="pull-right">
+                  <button type="submit" class="btn bg-lime m-t-15 waves-effect">JUSTIFICAR AHORA</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
