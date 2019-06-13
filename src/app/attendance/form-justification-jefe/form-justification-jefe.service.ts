@@ -3,10 +3,11 @@ import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BASE_URL } from '../../constants';
 import { Justificacion } from 'src/app/models/justificacion';
+
 @Injectable({
   providedIn: 'root'
 })
-export class FormJustificationService {
+export class FormJustificationJefeService {
 
   private URL = BASE_URL + '/api/';
 
@@ -15,6 +16,5 @@ export class FormJustificationService {
   createJustificacion(justificacion: Justificacion): Observable<any> {
     return this.http.post<any>(this.URL + 'justificacion/crear',JSON.stringify(justificacion));
   }
-
   
 }
