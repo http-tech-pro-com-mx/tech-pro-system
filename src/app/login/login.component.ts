@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { LoginService } from './login.service';
 
-declare var toastr:any;
+declare var toastr: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,13 +25,13 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.usuario = new Usuario(-1, '', '',-1, false);
+    this.usuario = new Usuario(-1, '', '', -1, false);
     this.mensaje_error = "";
     this.submitted = false;
     this.disabled = false;
     this.formLogin = this.fb.group({
-      usuario: new FormControl('',[Validators.required]),
-      contrasenia: new FormControl('',[Validators.required])
+      usuario: new FormControl('', [Validators.required]),
+      contrasenia: new FormControl('', [Validators.required])
     });
   }
 
@@ -39,10 +39,10 @@ export class LoginComponent implements OnInit {
     this.mensaje_error = "";
     this.submitted = true;
 
-    if (this.formLogin.valid) {    
+    if (this.formLogin.valid) {
       this.disabled = true;
       this.service.login(this.usuario).subscribe(result => {
-      
+
         if (result.access_token) {
           if (typeof (Storage) !== "undefined") {
             localStorage.setItem('bio2019t3chPr0', result.access_token);
@@ -58,7 +58,17 @@ export class LoginComponent implements OnInit {
         this.disabled = false;
       }, error => {
         this.disabled = false;
-        toastr.error('Ocurrió un error en el servicio');
+        let mensaje = "";
+
+        switch (error.error.error) {
+          case "unauthorized":
+            mensaje = "No existe el usuario"
+            break;
+          case "invalid_grant":
+            mensaje = "Contraseña incorrecta";
+            break;
+        }
+        toastr.error('Error! ' + mensaje);
       });
 
     } else {

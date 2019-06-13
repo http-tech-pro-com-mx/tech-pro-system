@@ -20,6 +20,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 registerLocaleData(localeEsMx);
 
 const appRoutes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard] , children: [
