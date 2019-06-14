@@ -16,7 +16,7 @@ declare var toastr: any;
 @Component({
   selector: 'app-form-justification',
   templateUrl: './form-justification.component.html',
-  styleUrls: ['./form-justification.component.css']
+  styleUrls: ['../form-justification-jefe/form-justification-jefe.component.css']
 })
 export class FormJustificationComponent implements OnInit {
 
