@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.url = this.router.url;
-    console.log(this.url)
+    
     let datos = JSON.parse(localStorage.getItem('data_user'));
     this.personal = new Personal(datos.id_personal, datos.nombre, datos.apellido_paterno, datos.apellido_materno, datos.genero, datos.nombre_foto, datos.email, datos.id_area, datos.id_perfil);
 
@@ -54,13 +54,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     }, 50);
   }
-
-  cos():void{
-
- 
-  }
-
-
 
 
   logout(event) {
