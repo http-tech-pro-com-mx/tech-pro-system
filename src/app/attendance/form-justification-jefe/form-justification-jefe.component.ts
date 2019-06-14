@@ -131,7 +131,7 @@ export class FormJustificationJefeComponent implements OnInit {
 
       swal.fire({
         title: '<span style="color: #2196f3">¿Esta seguro de justificar?</span>',
-        html: '<p style="color: #2196f3">Se enviará un correo a TODOS los empleados</p>',
+        html: '<p style="color: #2196f3">Se enviará un correo a TODOS los empleados seleccionados</p>',
         type: 'question',
         showCancelButton: true,
         confirmButtonColor: '#0075D3',
