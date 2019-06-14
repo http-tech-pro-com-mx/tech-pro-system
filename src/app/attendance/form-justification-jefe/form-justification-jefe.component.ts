@@ -29,8 +29,9 @@ export class FormJustificationJefeComponent implements OnInit {
   public submitted: boolean;
   public hasDays: boolean;
   public empleados: Array<any>;
-  public loading:boolean;
-  public empleados_justificacion:Array<any>;
+  public loading: boolean;
+  public empleados_justificacion: Array<any>;
+  public empleados_seleccionados: string;
 
 
   constructor(
@@ -49,9 +50,10 @@ export class FormJustificationJefeComponent implements OnInit {
     this.hasDays = false;
     this.empleados = [];
     this.empleados_justificacion = [];
+    this.empleados_seleccionados = "";
 
     this.service.findEmpleados().subscribe(response => {
-      
+
       if (response.successful) {
         this.empleados = response.empleados;
         this.status_message = null;
@@ -83,7 +85,6 @@ export class FormJustificationJefeComponent implements OnInit {
       $.AdminBSB.select.activate();
       $.AdminBSB.input.activate();
       $('.calendario').datepicker({
-        // title: 'SELECCIONE LOS DIAS',
         multidate: true,
         format: 'mm/dd/yyyy',
         language: 'es'
@@ -91,16 +92,35 @@ export class FormJustificationJefeComponent implements OnInit {
         this.hasDays = (ev.dates.length == 0)
       });
 
+      $('.empleados-justificados').on('changed.bs.select', (e, clickedIndex, isSelected, previousValue) => {
+        
+        this.empleados_justificacion = this.validaPluginSelect($('.empleados-justificados').selectpicker('val'));
+
+        if (this.empleados_justificacion.length > 0) {
+          let arg_names = this.empleados.filter(empleado => {
+            if (this.empleados_justificacion.includes("" + empleado[0])) return empleado;
+          }).map(empleado => empleado[1]);
+
+          this.empleados_seleccionados = arg_names.toString();
+        } else {
+          this.empleados_seleccionados = "";
+        }
+
+
+
+      });
+
+
 
     }, 100);
   }
 
   submit(): void {
-    
+
     this.submitted = true;
     this.dias = [];
     let dias_seleccionados = $('.calendario').datepicker('getDates');
-    this.empleados_justificacion = $('.empleados-justificados').selectpicker('val');
+    // this.empleados_justificacion = this.validaPluginSelect($('.empleados-justificados').selectpicker('val'));
     if (this.form.valid && (dias_seleccionados.length > 0) && (this.empleados_justificacion.length > 0)) {
 
       dias_seleccionados.forEach(dia => {
@@ -110,8 +130,8 @@ export class FormJustificationJefeComponent implements OnInit {
       this.justificacion.dias = this.dias;
 
       swal.fire({
-        title: '<span style="color: #2196f3">¿Esta seguro de enviar?</span>',
-        html: '<p style="color: #2196f3">Su jefe recibirá un correo electrónico para validar su registro</p>',
+        title: '<span style="color: #2196f3">¿Esta seguro de justificar?</span>',
+        html: '<p style="color: #2196f3">Se enviará un correo a TODOS los empleados</p>',
         type: 'question',
         showCancelButton: true,
         confirmButtonColor: '#0075D3',
@@ -154,6 +174,14 @@ export class FormJustificationJefeComponent implements OnInit {
       this.hasDays = (dias_seleccionados.length == 0);
       toastr.error('Verifique los datos capturados!');
     }
+  }
+
+  validaPluginSelect(select:any):Array<any>{
+      if(select == null){
+        return [];
+      }else{
+        return select;
+      }
   }
 
 }

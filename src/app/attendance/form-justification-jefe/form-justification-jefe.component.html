@@ -43,9 +43,14 @@
 
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group form-float">
-                    <select class="form-control empleados-justificados" multiple title="-- SELECCIONE EMPLEADO(S) --" data-live-search="true">
+                    <select class="form-control empleados-justificados" multiple title="-- SELECCIONE EMPLEADO(S) --"
+                      data-live-search="true" data-actions-box="true" data-select-all-text="Todos"
+                      data-deselect-all-text="Ninguno">
                       <option *ngFor="let empleado of empleados" [value]="empleado[0]">{{ empleado[1].trim() }}</option>
                     </select>
+                    <small *ngIf="submitted && empleados_justificacion.length == 0" class="form-text text-muted text-validator-error">
+                      Seleccione empleado(s)
+                    </small>
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -100,7 +105,7 @@
             </div>
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <label>EMPLEADOS SELECCIONADOS: </label><span>NINGÚN EMPLEADO</span>
+                <label>EMPLEADOS SELECCIONADOS: </label><span>{{ empleados_seleccionados }}</span>
               </div>
             </div>
             <div class="row">
