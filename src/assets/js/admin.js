@@ -75,7 +75,7 @@ $.AdminBSB.leftSideBar = {
         });
 
         //Collapse or Expand Menu
-        $('.menu-toggle').on('click', function (e) {
+        $('.menu-toggle,.menu-simple').on('click', function (e) {
             
             var $this = $(this);
             var $content = $this.next();

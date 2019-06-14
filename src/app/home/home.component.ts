@@ -55,6 +55,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }, 50);
   }
 
+  cos():void{
+
+ 
+  }
+
+
 
 
   logout(event) {
