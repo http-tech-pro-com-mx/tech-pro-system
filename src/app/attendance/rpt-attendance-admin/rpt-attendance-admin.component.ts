@@ -6,13 +6,36 @@ import { Anio } from '../../models/anio';
 import { Mes } from '../../models/mes';
 import * as highcharts from 'highcharts';
 import { configChart as grafica1 } from '../rpt-attendance/rpt.config.export';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 
 declare var $: any;
 declare var toastr: any;
 @Component({
   selector: 'app-rpt-attendance-admin',
   templateUrl: './rpt-attendance-admin.component.html',
-  styleUrls: ['./rpt-attendance-admin.component.css']
+  styleUrls: ['./rpt-attendance-admin.component.css'],
+  animations:[
+    trigger('status_animation', [
+      state('open', style({
+        opacity: 1
+      })),
+      state('closed', style({
+        opacity: 0.2,
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('1s')
+      ]),
+    ])
+  ]
 })
 export class RptAttendanceAdminComponent implements OnInit {
 
@@ -33,6 +56,8 @@ export class RptAttendanceAdminComponent implements OnInit {
   public descuento_retardos: number;
   public busqueda: boolean;
   public registros_comidas: Array<any>;
+  public status_animation: string;
+
 
   constructor(private service: RptAttendanceAdminService,
     private fb: FormBuilder,
@@ -40,6 +65,7 @@ export class RptAttendanceAdminComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.status_animation = "closed";
     this.section = "REPORTE ADMINISTRADOR";
     this.status_message = null;
     this.submitted = false;
@@ -105,6 +131,7 @@ export class RptAttendanceAdminComponent implements OnInit {
 
   submit(): void {
 
+    this.status_animation = "closed";
     this.busqueda = false;
     this.submitted = true;
     this.total_retardos = 0;
@@ -127,8 +154,9 @@ export class RptAttendanceAdminComponent implements OnInit {
           this.total_ok = this.registros.filter(el => el[3] == "OK").length;
           this.total_faltas = this.registros.filter(el => el[3] == "FALTA").length;
           this.descuento_retardos = this.total_retardos / 3;
-          this.descuento_retardos = parseInt("" + this.descuento_retardos);
+          this.descuento_retardos = parseInt("" + this.descuento_retardos) + this.total_faltas;
           this.busqueda = true;
+          setTimeout(()=> this.status_animation = "open", 100);
         } else {
           toastr.error('Ocurrió un error al consultar! Error: ' + result.message);
 

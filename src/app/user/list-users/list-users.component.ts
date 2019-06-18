@@ -4,13 +4,37 @@ import { Usuario } from 'src/app/models/usuario';
 import { BASE_URL } from 'src/app/constants';
 import { validaTextNull } from '../../utils';
 import swal from 'sweetalert2';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 
 declare var $: any;
 declare var toastr: any;
 @Component({
   selector: 'app-list-users',
   templateUrl: './list-users.component.html',
-  styleUrls: ['./list-users.component.css']
+  styleUrls: ['./list-users.component.css'],
+  animations:[
+    trigger('status_animation', [
+      state('open', style({
+        opacity: 1,
+      })),
+      state('closed', style({
+        opacity: 0.2,
+        transform: 'translateY(-50px)'
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('1s')
+      ]),
+    ])
+  ]
 })
 export class ListUsersComponent implements OnInit {
 
@@ -20,6 +44,7 @@ export class ListUsersComponent implements OnInit {
   public empleados: Array<Usuario>;
   public URL_IMAGEN: string = BASE_URL + '/api/usuarios/getImageProfile/';
   public searchText: string;
+  public status_animation: string;
 
 
   constructor(private service: ListUsersService) { }
@@ -31,6 +56,7 @@ export class ListUsersComponent implements OnInit {
     this.section = "CONSULTA EMPLEADOS";
     this.empleados = [];
     this.searchText = "";
+    this.status_animation = "closed";
 
     this.service.getAllEmpleados().subscribe(response => {
    
@@ -55,7 +81,8 @@ export class ListUsersComponent implements OnInit {
   }
 
   ngAfterInitEffectForm(): void {
-    setTimeout(function () {
+    setTimeout( () =>{
+      this.status_animation = "open";
       $.AdminBSB.input.activate();
     }, 100);
 

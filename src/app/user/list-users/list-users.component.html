@@ -28,7 +28,7 @@
   <div class="row clearfix">
     <br>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" *ngFor="let empleado of empleados | search: searchText">
-      <div class="card">
+      <div class="card"  [@status_animation]="status_animation">
         <div class="header">
           <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">

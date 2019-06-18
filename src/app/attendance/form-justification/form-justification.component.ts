@@ -10,13 +10,37 @@ import { Quincena } from 'src/app/models/quincena';
 import { Mes } from 'src/app/models/mes';
 import { Anio } from 'src/app/models/anio';
 import swal from 'sweetalert2';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 
 declare var $: any;
 declare var toastr: any;
 @Component({
   selector: 'app-form-justification',
   templateUrl: './form-justification.component.html',
-  styleUrls: ['../form-justification-jefe/form-justification-jefe.component.css']
+  styleUrls: ['../form-justification-jefe/form-justification-jefe.component.css'],
+  animations:[
+    trigger('status_animation', [
+      state('open', style({
+        opacity: 1,
+      })),
+      state('closed', style({
+        opacity: 0.2,
+        transform: 'translateX(-50px)'
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('0.5s')
+      ]),
+    ])
+  ]
 })
 export class FormJustificationComponent implements OnInit {
 
@@ -28,6 +52,7 @@ export class FormJustificationComponent implements OnInit {
   public personal: Personal;
   public submitted: boolean;
   public hasDays: boolean;
+  public status_animation: string;
 
 
   constructor(
@@ -37,6 +62,7 @@ export class FormJustificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.status_animation = "closed";
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
     this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "",null, "");
@@ -60,6 +86,7 @@ export class FormJustificationComponent implements OnInit {
         this.hasDays = (ev.dates.length == 0)
       });
 
+      this.status_animation = "open";
 
     }, 100);
 
