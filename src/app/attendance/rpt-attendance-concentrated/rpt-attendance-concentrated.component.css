@@ -1,0 +1,17 @@
+.small-name-quincena{
+    padding-top: 20px;
+    display: table-row-group;
+}
+
+
+tbody>tr {
+    cursor: pointer;
+    transition-duration: 800ms;
+}
+
+tbody>tr:hover {
+    cursor: pointer;
+    background-color: #c5e1a5;
+    font-weight: bold;
+    transition-duration: 800ms;
+}

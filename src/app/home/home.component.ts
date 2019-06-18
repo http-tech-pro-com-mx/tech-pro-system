@@ -40,9 +40,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
         element_menu = ".menu-empleados,.empleados-consulta";
       } else if (this.url == "/home/attendance/report") {
         element_menu = ".menu-asistencias,.menu-asistencias-consulta";
-      } else if (this.url.includes("/home/attendance/report-admin")) {
+      } else if (this.url == "/home/attendance/report-admin") {
         element_menu = ".menu-asistencias,.menu-asistencias-rpt";
-      } else if (this.url.includes("/home/attendance/justication/crear")) {
+      } else if (this.url == "/home/attendance/report-concentrated") {
+        element_menu = ".menu-asistencias,.menu-asistencias-c";
+      }else if (this.url.includes("/home/attendance/justication/crear")) {
         element_menu = ".menu-justicantes,.menu-justicantes-crear";
       } else if (this.url.includes("/home/attendance/justication/employees/crear")) {
         element_menu = ".menu-justicantes,.menu-justicantes-empl";

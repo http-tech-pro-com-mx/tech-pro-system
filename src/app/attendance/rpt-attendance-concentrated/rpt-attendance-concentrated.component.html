@@ -1,0 +1,124 @@
+<app-preloader *ngIf="loading"></app-preloader>
+<div *ngIf="!loading && status_message">
+  <h3>{{ status_message }}</h3>
+  <p>Por favor, intenta más tarde</p>
+</div>
+<div *ngIf="!loading && !status_message">
+  <h2>
+    <b>{{ section }}</b>
+  </h2>
+  <br>
+  <div class="row clearfix">
+    <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="header">
+            <h5> BUSCAR QUINCENA
+            </h5>
+          </div>
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-sm-3">
+                <select class="form-control" formControlName='anio' [(ngModel)]="params.anio">
+                  <option value="">-- AÑO --</option>
+                  <option *ngFor="let anio of anios" [value]="anio.id_anio"> {{ anio.anio }}</option>
+                </select>
+                <small *ngIf="form.controls.anio.errors?.required && (form.controls.anio?.touched || submitted)"
+                  class="form-text text-muted text-validator-error">
+                  Seleccione
+                </small>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" formControlName='mes' [(ngModel)]="params.mes">
+                  <option value="">-- MES --</option>
+                  <option *ngFor="let mes of meses" [value]="mes.id_mes">{{ mes.mes_descripcion }}</option>
+                </select>
+                <small *ngIf="form.controls.mes.errors?.required && (form.controls.mes?.touched || submitted)"
+                  class="form-text text-muted text-validator-error">
+                  Seleccione
+                </small>
+              </div>
+              <div class="col-sm-3">
+                <select class="form-control" formControlName='quincena' [(ngModel)]="params.quincena">
+                  <option value="">-- QUINCENA --</option>
+                  <option value="1">PRIMERA</option>
+                  <option value="2">SEGUNDA</option>
+                </select>
+                <small *ngIf="form.controls.quincena.errors?.required && (form.controls.quincena?.touched || submitted)"
+                  class="form-text text-muted text-validator-error">
+                  Seleccione
+                </small>
+              </div>
+              <div class="col-sm-3">
+                <button type="submit" class="btn bg-lime m-l-15 waves-effect waves-brown waves-ripple">
+                  <i class="material-icons">
+                    search
+                  </i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+ 
+  <div class="row clearfix" *ngIf="registros.length > 0">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="card">
+        <div class="header">
+          <h5>REPORTE HORARIO LABORAL 
+            <small class="small-name-quincena">{{name_quincena}}</small>
+          </h5>
+          <ul class="header-dropdown m-r--5">
+            <li class="dropdown">
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">help</i>
+              </a>
+              <ul class="dropdown-menu pull-right">
+                <li><a href="#">HELP</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="body table-responsive">
+          <table id="mainTable" class="table table-striped">
+            <thead>
+              <tr>
+                <th>NOMBRE</th>
+                <th># DE DÍAS HÁBILES</th>
+                <th>JUSTIFICACIONES</th>
+                <th>FALTAS</th>
+                <th>RETARDOS</th>
+                <th>DÍAS DESCONTADOS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let registro of registros" >
+                <td>{{ registro[0] }}</td>
+                <td>{{ registro[1] }}</td>
+                <td>{{ registro[2] }}</td>
+                <td>{{ registro[3] }}</td>
+                <td>{{ registro[4] }}</td>
+                <td>{{ registro[5] }}</td>
+              </tr>
+            </tbody>
+            <!-- <tfoot>
+              <tr>
+                <th>
+                  <strong>TOTAL RETARDOS: {{ total_retardos }}</strong>
+                </th>
+                <th></th>
+                <th>DESCUENTOS POR RETARDOS: {{ descuento_retardos }}</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </tfoot> -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
