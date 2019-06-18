@@ -3,6 +3,9 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { RptAttendanceConcentratedService } from './rpt-attendance-concentrated.service';
 import { Anio } from '../../models/anio';
 import { Mes } from '../../models/mes';
+import { getTablaUtf8 } from '../../utils';
+import swal from 'sweetalert2';
+
 
 declare var $: any;
 declare var toastr: any;
@@ -97,7 +100,7 @@ export class RptAttendanceConcentratedComponent implements OnInit {
     if (this.form.valid) {
 
       this.service.consultaRegistroQuincena(this.params).subscribe(result => {
-        console.log(result)
+        
         if (result.successful) {
           
           this.registros = result.reporte;
@@ -124,6 +127,39 @@ export class RptAttendanceConcentratedComponent implements OnInit {
     let mes = this.meses.filter(mes => mes.id_mes == id_mes)[0].mes_descripcion;
     let numero_q = (number_quincena == 1) ? "PRIMERA DE " : "SEGUNDA DE " 
     return numero_q.concat(" ").concat(mes).concat(" ").concat(anio);
+  }
+
+  exportarExcel(): void {
+
+    let linkFile = document.createElement('a');
+    let data_type = 'data:application/vnd.ms-excel;';
+
+    if (linkFile.download != undefined) {
+      document.body.appendChild(linkFile);
+      let tabla = getTablaUtf8('tblReporte');
+
+      linkFile.href = data_type + ', ' + tabla;
+      linkFile.download = this.name_quincena;
+
+      linkFile.click();
+      linkFile.remove();
+    } else {
+
+      let elem = $("#tblReporte")[0].outerHTML;
+      let blobObject = new Blob(["\ufeff", elem], { type: 'application/vnd.ms-excel' });
+      window.navigator.msSaveBlob(blobObject, this.name_quincena+'.xls');
+    }
+
+  }
+
+  helpUserMessage(): void {
+
+    swal.fire({
+      type: 'info',
+      title: 'Información',
+      text: 'Este reporte contiene el conteo global de la quincena seleccionada y solo es visible para usuarios con privilegios de administrador.'
+    });
+
   }
 
 

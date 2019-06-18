@@ -66,24 +66,26 @@
   <div class="row clearfix" *ngIf="registros.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <div class="card">
-        <div class="header">
-          <h5>REPORTE HORARIO LABORAL 
+        <div class="header header-color">
+          <h5 class="title">REPORTE HORARIO LABORAL
             <small class="small-name-quincena">{{name_quincena}}</small>
           </h5>
-          <ul class="header-dropdown m-r--5">
-            <li class="dropdown">
-              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="material-icons">help</i>
-              </a>
-              <ul class="dropdown-menu pull-right">
-                <li><a href="#">HELP</a></li>
-              </ul>
-            </li>
+          <ul class="header-dropdown m-r-0">
+              <li>
+                  <a href="javascript:void(0);" (click)="exportarExcel()" title="Descargar Tabla">
+                      <i class="material-icons">cloud_download</i>
+                  </a>
+              </li>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <li>
+                  <a href="javascript:void(0);" (click)="helpUserMessage()" title="Información">
+                      <i class="material-icons">info</i>
+                  </a>
+              </li>
           </ul>
         </div>
         <div class="body table-responsive">
-          <table id="mainTable" class="table table-striped">
+          <table id="tblReporte" class="table table-striped">
             <thead>
               <tr>
                 <th>NOMBRE</th>
@@ -97,24 +99,13 @@
             <tbody>
               <tr *ngFor="let registro of registros" >
                 <td>{{ registro[0] }}</td>
-                <td>{{ registro[1] }}</td>
-                <td>{{ registro[2] }}</td>
-                <td>{{ registro[3] }}</td>
-                <td>{{ registro[4] }}</td>
-                <td>{{ registro[5] }}</td>
+                <td class="text-center">{{ registro[1] }}</td>
+                <td class="text-center">{{ registro[2] }}</td>
+                <td class="text-center">{{ registro[3] }}</td>
+                <td class="text-center">{{ registro[4] }}</td>
+                <td class="text-center">{{ registro[5] }}</td>
               </tr>
             </tbody>
-            <!-- <tfoot>
-              <tr>
-                <th>
-                  <strong>TOTAL RETARDOS: {{ total_retardos }}</strong>
-                </th>
-                <th></th>
-                <th>DESCUENTOS POR RETARDOS: {{ descuento_retardos }}</th>
-                <th></th>
-                <th></th>
-              </tr>
-            </tfoot> -->
           </table>
         </div>
       </div>

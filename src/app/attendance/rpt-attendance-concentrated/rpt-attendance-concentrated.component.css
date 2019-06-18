@@ -1,6 +1,7 @@
 .small-name-quincena{
     padding-top: 20px;
     display: table-row-group;
+    color: #f5f5f5;
 }
 
 
@@ -14,4 +15,16 @@ tbody>tr:hover {
     background-color: #c5e1a5;
     font-weight: bold;
     transition-duration: 800ms;
+}
+
+.header-color{
+    background-color: #A8C04D;
+}
+
+.card .header .header-dropdown i{
+    color: white;
+}
+
+.header h5.title{
+    color: white;
 }
