@@ -65,7 +65,7 @@
  
   <div class="row clearfix" *ngIf="registros.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card">
+      <div class="card"  [@status_animation]="status_animation">
         <div class="header header-color">
           <h5 class="title">REPORTE HORARIO LABORAL
             <small class="small-name-quincena">{{name_quincena}}</small>

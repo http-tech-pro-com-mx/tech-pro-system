@@ -5,6 +5,13 @@ import { Anio } from '../../models/anio';
 import { Mes } from '../../models/mes';
 import { getTablaUtf8 } from '../../utils';
 import swal from 'sweetalert2';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
 
 
 declare var $: any;
@@ -12,7 +19,23 @@ declare var toastr: any;
 @Component({
   selector: 'app-rpt-attendance-concentrated',
   templateUrl: './rpt-attendance-concentrated.component.html',
-  styleUrls: ['./rpt-attendance-concentrated.component.css']
+  styleUrls: ['./rpt-attendance-concentrated.component.css'],
+  animations:[
+    trigger('status_animation', [
+      state('open', style({
+        opacity: 1
+      })),
+      state('closed', style({
+        opacity: 0.2,
+      })),
+      transition('open => closed', [
+        animate('0.5s')
+      ]),
+      transition('closed => open', [
+        animate('1s')
+      ]),
+    ])
+  ]
 })
 export class RptAttendanceConcentratedComponent implements OnInit {
 
@@ -26,6 +49,7 @@ export class RptAttendanceConcentratedComponent implements OnInit {
   public params: any;
   public registros: Array<any>;
   public name_quincena: string;
+  public status_animation: string;
  
   constructor(
     private service: RptAttendanceConcentratedService,
@@ -37,7 +61,7 @@ export class RptAttendanceConcentratedComponent implements OnInit {
   ngOnInit() {
 
     this.loading = true;
-    
+    this.status_animation = "closed";
     this.status_message = null;
     this.submitted = false;
     this.section = "REPORTE CONCENTRADO";
@@ -93,7 +117,7 @@ export class RptAttendanceConcentratedComponent implements OnInit {
 
 
   submit(): void {
-
+    this.status_animation = "closed";
     this.submitted = true;  
     this.registros = [];
 
@@ -105,6 +129,9 @@ export class RptAttendanceConcentratedComponent implements OnInit {
           
           this.registros = result.reporte;
           this.name_quincena = this.quincenaSelected(this.params.anio, this.params.mes, this.params.quincena);
+          
+          setTimeout(()=> this.status_animation = "open", 100);
+          
         
         } else {
           toastr.error('Ocurrió un error al consultar! Error: ' + result.message);
