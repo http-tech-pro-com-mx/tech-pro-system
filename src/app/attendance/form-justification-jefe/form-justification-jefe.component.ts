@@ -69,6 +69,7 @@ export class FormJustificationJefeComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.status_animation = "closed";
+    this.empleados = [];
     this.initVariablesComponent();
 
     this.service.findEmpleados().subscribe(response => {
@@ -101,7 +102,6 @@ export class FormJustificationJefeComponent implements OnInit {
     this.section = "JUSTIFICAR EMPEADOS";
     this.submitted = false;
     this.hasDays = false;
-    this.empleados = [];
     this.empleados_justificacion = [];
     this.empleados_seleccionados = "";
   }
@@ -109,7 +109,7 @@ export class FormJustificationJefeComponent implements OnInit {
   ngAfterInitEffectForm(): void {
     this.form = this.fb.group({
       motivo: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(100)]),
-      descripcion: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(500)])
+      descripcion: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.minLength(5), Validators.maxLength(500)])
     });
 
     setTimeout(() => {
@@ -187,7 +187,9 @@ export class FormJustificationJefeComponent implements OnInit {
               this.initVariablesComponent();
               this.form.reset();
               $('.calendario').datepicker('update', '');
-              $('.motivo-justificacion,.empleados-justificados').selectpicker('refresh');
+              $('.empleados-justificados').selectpicker('deselectAll');
+              $('.motivo-justificacion').selectpicker('refresh');
+            
             } else {
               toastr.error(response.message);
             }
