@@ -71,7 +71,7 @@ export class FormJustificationJefeComponent implements OnInit {
     this.status_animation = "closed";
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-    this.justificacion = new Justificacion(-1, "", "", 1, this.dias, this.personal, null, -1, "", null, "");
+    this.justificacion = new Justificacion(-1, "", "", 1, this.dias, null, this.personal, -1, "", null, "");
     this.section = "JUSTIFICAR EMPEADOS";
     this.submitted = false;
     this.hasDays = false;
@@ -173,24 +173,26 @@ export class FormJustificationJefeComponent implements OnInit {
          */
         if (result.value) {
 
-          // this.service.createJustificacion(this.justificacion).subscribe(response => {
+         
 
-          //   if (response.successful) {
-          //     swal.fire('Exito !', response.message, 'success');
-          //     this.dias = [];
-          //     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-          //     this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "", -1, "");
-          //     this.submitted = false;
-          //     this.hasDays = false;
-          //     this.form.reset();
-          //     $('.calendario').datepicker('update', '');
-          //   } else {
-          //     toastr.error(response.message);
-          //   }
-          // }, error => {
-          //   toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
+          this.service.createJustificacion(this.justificacion, this.empleados_justificacion).subscribe(response => {
+           
+            if (response.successful) {
+              swal.fire('Exito !', response.message, 'success');
+              // this.dias = [];
+              // this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
+              // this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "", -1, "");
+              // this.submitted = false;
+              // this.hasDays = false;
+              // this.form.reset();
+              // $('.calendario').datepicker('update', '');
+            } else {
+              toastr.error(response.message);
+            }
+          }, error => {
+            toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
 
-          // });
+          });
 
 
         } else if (result.dismiss === swal.DismissReason.cancel) { }

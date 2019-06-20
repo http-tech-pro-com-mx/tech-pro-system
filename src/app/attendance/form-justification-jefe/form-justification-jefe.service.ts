@@ -17,8 +17,8 @@ export class FormJustificationJefeService {
     return this.http.get<any>(this.URL + 'justificacion/findEmpleados');
   }
 
-  createJustificacion(justificacion: Justificacion): Observable<any> {
-    return this.http.post<any>(this.URL + 'justificacion/crear',JSON.stringify(justificacion));
+  createJustificacion(justificacion: Justificacion, empleados: Array<any>): Observable<any> {
+    return this.http.post<any>(this.URL + 'justificacion/justificar-empleados',JSON.stringify({justificacion:justificacion, empleados: empleados}));
   }
   
 }

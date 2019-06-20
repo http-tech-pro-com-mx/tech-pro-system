@@ -7,8 +7,8 @@ export class Diah{
         public fecha: Date,
         public id_quincena: Quincena,
         public estatus: number,
-        public id_usuario_regitro?: number,
-        public fecha_regitro?: string,
+        public id_usuario_registro?: number,
+        public fecha_registro?: string,
         public id_usuario_modifica_registro?: number,
         public fecha_modifica_registro?: string,
         public justificaciones?: Array<Justificacion>

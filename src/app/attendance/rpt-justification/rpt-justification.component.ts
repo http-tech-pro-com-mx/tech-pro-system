@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RptJustificationService } from './rpt-justification.service';
 import { Justificacion } from 'src/app/models/justificacion';
-import { dataTableConfigJSON } from '../../utils';
+import { dataTableConfigJSON, validaTextNull } from '../../utils';
 import swal from 'sweetalert2';
 import { Personal } from 'src/app/models/personal';
 
@@ -43,6 +43,9 @@ export class RptJustificationComponent implements OnInit {
       if (response.successful) {
         this.status_message = null;
         this.justificaciones = response.justificaciones;
+        this.justificaciones.map(justificacion =>{
+           justificacion.id_personal.apellido_materno = validaTextNull(justificacion.id_personal.apellido_materno)
+        });
       } else {
         toastr.error(response.message);
         this.status_message = " " + response.message;
