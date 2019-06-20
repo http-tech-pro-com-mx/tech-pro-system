@@ -25,7 +25,7 @@ declare var toastr: any;
   selector: 'app-form-justification-jefe',
   templateUrl: './form-justification-jefe.component.html',
   styleUrls: ['./form-justification-jefe.component.css'],
-  animations:[
+  animations: [
     trigger('status_animation', [
       state('open', style({
         opacity: 1
@@ -69,15 +69,7 @@ export class FormJustificationJefeComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.status_animation = "closed";
-    this.dias = [];
-    this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-    this.justificacion = new Justificacion(-1, "", "", 1, this.dias, null, this.personal, -1, "", null, "");
-    this.section = "JUSTIFICAR EMPEADOS";
-    this.submitted = false;
-    this.hasDays = false;
-    this.empleados = [];
-    this.empleados_justificacion = [];
-    this.empleados_seleccionados = "";
+    this.initVariablesComponent();
 
     this.service.findEmpleados().subscribe(response => {
 
@@ -102,6 +94,18 @@ export class FormJustificationJefeComponent implements OnInit {
 
   }
 
+  initVariablesComponent(): void {
+    this.dias = [];
+    this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
+    this.justificacion = new Justificacion(-1, "", "", 1, this.dias, null, this.personal, -1, "", null, "");
+    this.section = "JUSTIFICAR EMPEADOS";
+    this.submitted = false;
+    this.hasDays = false;
+    this.empleados = [];
+    this.empleados_justificacion = [];
+    this.empleados_seleccionados = "";
+  }
+
   ngAfterInitEffectForm(): void {
     this.form = this.fb.group({
       motivo: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(100)]),
@@ -120,7 +124,7 @@ export class FormJustificationJefeComponent implements OnInit {
       });
 
       $('.empleados-justificados').on('changed.bs.select', (e, clickedIndex, isSelected, previousValue) => {
-        
+
         this.empleados_justificacion = this.validaPluginSelect($('.empleados-justificados').selectpicker('val'));
 
         if (this.empleados_justificacion.length > 0) {
@@ -173,19 +177,17 @@ export class FormJustificationJefeComponent implements OnInit {
          */
         if (result.value) {
 
-         
+
 
           this.service.createJustificacion(this.justificacion, this.empleados_justificacion).subscribe(response => {
-           
+
             if (response.successful) {
+              
               swal.fire('Exito !', response.message, 'success');
-              // this.dias = [];
-              // this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
-              // this.justificacion = new Justificacion(-1, "", "",1, this.dias, this.personal, null, -1, "", -1, "");
-              // this.submitted = false;
-              // this.hasDays = false;
-              // this.form.reset();
-              // $('.calendario').datepicker('update', '');
+              this.initVariablesComponent();
+              this.form.reset();
+              $('.calendario').datepicker('update', '');
+              $('.motivo-justificacion,.empleados-justificados').selectpicker('refresh');
             } else {
               toastr.error(response.message);
             }
@@ -205,12 +207,12 @@ export class FormJustificationJefeComponent implements OnInit {
     }
   }
 
-  validaPluginSelect(select:any):Array<any>{
-      if(select == null){
-        return [];
-      }else{
-        return select;
-      }
+  validaPluginSelect(select: any): Array<any> {
+    if (select == null) {
+      return [];
+    } else {
+      return select;
+    }
   }
 
 }

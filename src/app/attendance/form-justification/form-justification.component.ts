@@ -72,7 +72,7 @@ export class FormJustificationComponent implements OnInit {
 
     this.form = this.fb.group({
       motivo: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(100)]),
-      descripcion: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.maxLength(500)])
+      descripcion: new FormControl('', [Validators.required, noWhitespaceValidator, Validators.minLength(5), Validators.maxLength(500)])
     });
 
     setTimeout(() => {
@@ -133,6 +133,8 @@ export class FormJustificationComponent implements OnInit {
               this.hasDays = false;
               this.form.reset();
               $('.calendario').datepicker('update', '');
+              $('.motivo-justificacion').selectpicker('refresh');
+             
             } else {
               toastr.error(response.message);
             }
