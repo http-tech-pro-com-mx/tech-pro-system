@@ -217,4 +217,16 @@ export class FormJustificationJefeComponent implements OnInit {
     }
   }
 
+  helpUserMessage(): void {
+
+    swal.fire({
+      type: 'question',
+      title: 'Ayuda',
+      html: 'Llene todos los campos y haga clic en el '+
+      'botón <b>JUSTIFICAR AHORA</b>.<br> En esta sección se <b>justifica y aprueba </b> a uno o mas empleados. '+
+      'Puede ver el estatus de esta justificación en la sección de <b>CONSULTA</b>'
+    });
+
+  }
+
 }

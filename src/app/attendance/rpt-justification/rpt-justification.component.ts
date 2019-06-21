@@ -152,5 +152,19 @@ export class RptJustificationComponent implements OnInit {
     $('#modalDetalle').modal('hide');
   }
 
+  helpUserMessage(): void {
+
+    swal.fire({
+      type: 'question',
+      title: 'Ayuda',
+      html: 'Haga <b>clic en el motivo</b> para ver el detalle. <br>'+
+      '<b>Estatus disponibles: </b> <br>'+
+      '<div><span><i style="font-size:9px"class="material-icons">hourglass_full</i><span> Esperando validación<br>'+
+      '<span><i style="font-size:9px"class="material-icons">cancel</i><span> No aprobada<br>'+
+      '<span><i style="font-size:9px"class="material-icons">check_circle</i><span> Aprobada </div>'
+    });
+
+  }
+
 
 }

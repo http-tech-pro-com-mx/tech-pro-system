@@ -9,3 +9,7 @@
     background-color: #fff;
     border: 1px solid #ddd;
 }
+
+.card .header .header-dropdown i{
+    color: #A8C04D;
+}

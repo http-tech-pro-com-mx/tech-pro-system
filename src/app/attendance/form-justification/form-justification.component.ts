@@ -154,6 +154,19 @@ export class FormJustificationComponent implements OnInit {
     }
   }
 
+  helpUserMessage(): void {
+
+    swal.fire({
+      type: 'question',
+      title: 'Ayuda',
+      html: 'Ingrese todos los datos del formulario y haga clic en el botón <b>ENVIAR</b>.'+
+            'Su jefe inmediato será notificado a tráves de un email para validar<br>'+
+            'Puede ver el estatus de esta justificación en la sección de <b>CONSULTA</b>'
+    });
+
+  }
+
+
 
 
 }

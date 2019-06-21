@@ -15,6 +15,14 @@
           <h2>
             <small>HAGA CLIC SOBRE EL MOTIVO PARA VER EL DETALLE</small>
           </h2>
+          <ul class="header-dropdown m-r--5">
+            <li class="dropdown">
+              <a href="javascript:void(0);" (click)="helpUserMessage()" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">help</i>
+              </a>
+            </li>
+          </ul>
           <div class="body table-responsive">
             <table id="mainTable" class="table table-striped table-bordered" style="width:100%">
               <thead>
@@ -38,7 +46,7 @@
                     <i class="material-icons" *ngSwitchCase="2">cancel</i>
                     <i class="material-icons" *ngSwitchCase="3">check_circle</i>
                   </td>
-                  <td>{{ justificacion.fecha_registro  | date: 'fullDate' : 'es-MX' }}</td>
+                  <td>{{ justificacion.fecha_registro  | date: 'mediumDate' : 'es-MX' }}</td>
                   <td>
                     <div class="form-group">
                       <input type="radio" [name]="'row'+i" [id]="'si_justifica'+i"
