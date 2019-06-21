@@ -77,7 +77,7 @@ export class RptJustificationComponent implements OnInit {
 
   }
 
-  cambiarEstatus(status: number, justificacion: Justificacion, event: any): void {
+  cambiarEstatus(status: number, justificacion: Justificacion, index_row: number,event: any): void {
     let estatus_tmp = justificacion.id_estatus;
     justificacion.id_estatus = status;
 
@@ -104,6 +104,18 @@ export class RptJustificationComponent implements OnInit {
         
           if (response.successful) {
             swal.fire('Exito !', response.message, 'success');
+            let update = response.justificacion_update as Justificacion;
+
+            this.justificaciones.map(justificacion => {
+              if(justificacion.id_justificacion == update.id_justificacion){
+                justificacion = update
+              }
+              return justificacion;
+            }); 
+        
+            let cell = $('#mainTable').DataTable().cell(index_row, 4 );
+            cell.data( update.id_personal_autoriza.nombre +" "+update.id_personal_autoriza.apellido_paterno).draw();
+
           } else {
             toastr.error('Ocurrió un error! Error: ' + response.message);
           }

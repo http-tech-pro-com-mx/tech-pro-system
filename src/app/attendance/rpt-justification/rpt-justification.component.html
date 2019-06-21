@@ -22,6 +22,7 @@
                   <th>EMPLEADO</th>
                   <th>MOTIVO</th>
                   <th>STATUS</th>
+                  <th>ELABORADO</th>
                   <th>AUTORIZAR</th>
                   <th>¿AUTORIZÓ?</th>
                 </tr>
@@ -37,15 +38,16 @@
                     <i class="material-icons" *ngSwitchCase="2">cancel</i>
                     <i class="material-icons" *ngSwitchCase="3">check_circle</i>
                   </td>
+                  <td>{{ justificacion.fecha_registro  | date: 'fullDate' : 'es-MX' }}</td>
                   <td>
                     <div class="form-group">
                       <input type="radio" [name]="'row'+i" [id]="'si_justifica'+i"
                         [checked]="justificacion.id_estatus == 3" class="with-gap"
-                        (change)="cambiarEstatus(3, justificacion,$event)">
+                        (change)="cambiarEstatus(3, justificacion,i,$event)">
                       <label [for]="'si_justifica'+i">SI</label>
                       <input type="radio" [name]="'row'+i" [id]="'no_justifica'+i"
                         [checked]="justificacion.id_estatus == 2" class="with-gap"
-                        (change)="cambiarEstatus(2, justificacion, $event)">
+                        (change)="cambiarEstatus(2, justificacion,i,$event)">
                       <label [for]="'no_justifica'+i" class="m-l-20">NO</label>
                     </div>
                   </td>
