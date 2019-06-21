@@ -8,7 +8,7 @@ import {  BASE_URL } from '../constants';
 })
 export class ForgotPasswordService {
 
-  private URL = BASE_URL + '/forgot-password-user';
+  private URL = BASE_URL + '/api/usuarios/forgot-password-user';
   
   
   constructor(private http: HttpClient) { }
@@ -16,11 +16,11 @@ export class ForgotPasswordService {
   recoveryPwd(correo_electronico: string): Observable<any>{
     const credentiales = btoa('tech-pro-app' + ':' + 't3chPr02019');
     const httpHeaders = new HttpHeaders({
-      'Content-Type':'application/x-www-form-urlencoded',
+      'Content-Type':'application/json',
       'Authorization': 'Basic '+ credentiales
     });
 
-    return this.http.post<any>(this.URL,JSON.stringify({correo_electronico: correo_electronico}),{ headers: httpHeaders});
+    return this.http.post<any>(this.URL,correo_electronico,{ headers: httpHeaders});
   }
 
 

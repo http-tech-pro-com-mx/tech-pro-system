@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ForgotPasswordService } from './forgot-password.service';
+import swal from 'sweetalert2';
+
 
 declare var $: any;
 declare var toastr: any;
@@ -35,10 +37,13 @@ export class ForgotPasswordComponent implements OnInit {
     }else if(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/.test(this.correo_electronico)){
       
       this.service.recoveryPwd(this.correo_electronico).subscribe(response =>{
-        console.log(response)
         if (response.successful) {
+          this.correo_electronico = "";
+          this.mensaje_error = ""; 
+          swal.fire('Exito!', 'Se envió tu nueva contraseña al correo electrónico!', 'success');
+
         } else {
-            toastr.error('Ocurrió un error al recuperar contraseña! Error: ' + response.message);
+            toastr.error(response.message);
           }
       }, error=>{
         toastr.error('Ocurrió un error al recuperar contraseña! Error: ' + error.status);
