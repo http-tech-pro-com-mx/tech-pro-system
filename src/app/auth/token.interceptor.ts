@@ -14,7 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
         let token = this.auth.getToken();
 
-        if(request.url.includes('oauth/token')){
+        if(request.url.includes('oauth/token') || request.url.includes('forgot-password-user')){
             return next.handle(request.clone());
         }else if(request.url.includes('upload')){
             request = request.clone({

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ForgotPasswordService } from './forgot-password.service';
 
+declare var $: any;
+declare var toastr: any;
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -7,9 +11,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  constructor() { }
+  public correo_electronico: string;
+  public valid_email: boolean;
+  public mensaje_error: string;
+
+  constructor(
+    private service: ForgotPasswordService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
+    this.correo_electronico = "";
+    this.mensaje_error = "";
+    
+  }
+
+  recoveryPwd(){
+    
+    this.mensaje_error = "";
+    if(this.correo_electronico == null || this.correo_electronico == undefined || this.correo_electronico == ""){
+      this.mensaje_error = "Ingrese correo";
+
+    }else if(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/.test(this.correo_electronico)){
+      
+      this.service.recoveryPwd(this.correo_electronico).subscribe(response =>{
+        console.log(response)
+        if (response.successful) {
+        } else {
+            toastr.error('Ocurrió un error al recuperar contraseña! Error: ' + response.message);
+          }
+      }, error=>{
+        toastr.error('Ocurrió un error al recuperar contraseña! Error: ' + error.status);
+      });
+
+    }else{
+      this.mensaje_error = "Correo no válido";
+    }
+  }
+
+  keyPress(event:any): void{
+    this.mensaje_error = "";
   }
 
 }
