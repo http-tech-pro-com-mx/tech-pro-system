@@ -18,12 +18,14 @@ import { AuthService } from './auth/auth.service';
 import { NotAuthGuard } from './auth/not.auth.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 registerLocaleData(localeEsMx);
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
+  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NotAuthGuard] },
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard] , children: [
       { path: 'attendance', loadChildren: './attendance/attendance.module#AttendanceModule' },
@@ -39,7 +41,8 @@ const appRoutes: Routes = [
     LoaderComponent,
     LoginComponent,
     NotFound404Component,
-    HomeComponent
+    HomeComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
