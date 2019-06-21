@@ -64,9 +64,58 @@ function getTablaUtf8(id: string): string {
       .replace(/#/g, '%23');
 }
 
+/**
+ * @function setCookie
+ * @param  {string} name -  nombre de cookie
+ * @param  {string} cvalue -  cvalue valor de la cookie
+ * @param  {number} exdays -  tiempo de vida
+ * @return  {void} 
+ * @description funcion utilizada para almacenar  cookies
+ */
+function setCookie(cname, cvalue, exdays) {
+  let d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+/**
+ * @function getCookie
+ * @param  {string} cname -  nombre de cookie
+ * @return  {string} 
+ * @description funcion utilizada para recuperar la cookie 
+ */
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+      }
+  }
+  return "";
+}
+
+/**
+ * @function eraseCookie
+ * @param  {string} cname -  nombre de cookie
+ * @return  {void} 
+ * @description funcion utilizada para eliminar la cookie 
+ */
+function eraseCookie(name) {
+  document.cookie = name + '=; Max-Age=0'
+}
+
 export{
     noWhitespaceValidator,
     dataTableConfigJSON,
     validaTextNull,
-    getTablaUtf8
+    getTablaUtf8,
+    setCookie,
+    getCookie,
+    eraseCookie
 }

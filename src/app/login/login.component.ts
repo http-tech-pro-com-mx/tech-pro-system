@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { LoginService } from './login.service';
+import { getCookie, setCookie, eraseCookie } from '../utils';
 
 declare var toastr: any;
 @Component({
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   public mensaje_error: string;
   public disabled: boolean;
   public usuario: Usuario;
+  public remember: boolean;
 
 
   constructor(private service: LoginService,
@@ -25,6 +27,7 @@ export class LoginComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.remember = false;
     this.usuario = new Usuario(-1, '', '', -1, false);
     this.mensaje_error = "";
     this.submitted = false;
@@ -33,6 +36,12 @@ export class LoginComponent implements OnInit {
       usuario: new FormControl('', [Validators.required]),
       contrasenia: new FormControl('', [Validators.required])
     });
+
+    this.usuario.usuario = getCookie("username");
+    if(this.usuario.usuario != ""){
+      this.remember = true;
+    }
+    
   }
 
   login() {
@@ -45,9 +54,16 @@ export class LoginComponent implements OnInit {
 
         if (result.access_token) {
           if (typeof (Storage) !== "undefined") {
+            if(this.remember){
+              setCookie("username", this.usuario.usuario, 365);
+            }else{
+              if(getCookie("username") != ""){
+                eraseCookie("username");
+              }
+            }
             localStorage.setItem('bio2019t3chPr0', result.access_token);
             localStorage.setItem('data_user', JSON.stringify(result));
-            this.router.navigate(['home']);
+            this.router.navigate(['home']); 
           } else {
             toastr.error('LocalStorage no soportado en este navegador!');
           }
@@ -79,6 +95,10 @@ export class LoginComponent implements OnInit {
 
   resetMensaje() {
     this.mensaje_error = "";
+  }
+
+  rememberMe(event: any): void {
+    this.remember = event.target.checked;
   }
 
 }

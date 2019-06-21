@@ -35,7 +35,7 @@
         </div>
         <div class="row">
           <div class="col-xs-6 p-t-5">
-            <input type="checkbox" id="rememberme" class="filled-in chk-col-blue">
+            <input type="checkbox" id="rememberme" class="filled-in chk-col-blue" (click)="rememberMe($event)" [checked]="remember">
             <label for="rememberme">RECORDAR</label>
           </div>
           <div class="col-xs-6">
