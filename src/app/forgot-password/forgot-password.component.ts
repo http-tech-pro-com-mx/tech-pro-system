@@ -16,6 +16,7 @@ export class ForgotPasswordComponent implements OnInit {
   public correo_electronico: string;
   public valid_email: boolean;
   public mensaje_error: string;
+  public disabled_btn: boolean;
 
   constructor(
     private service: ForgotPasswordService,
@@ -25,14 +26,16 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
     this.correo_electronico = "";
     this.mensaje_error = "";
+    this.disabled_btn = false;
     
   }
 
   recoveryPwd(){
-    
+    this.disabled_btn = true;
     this.mensaje_error = "";
     if(this.correo_electronico == null || this.correo_electronico == undefined || this.correo_electronico == ""){
       this.mensaje_error = "Ingrese correo";
+      this.disabled_btn = false;
 
     }else if(/^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@(([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})$/.test(this.correo_electronico)){
       
@@ -45,12 +48,15 @@ export class ForgotPasswordComponent implements OnInit {
         } else {
             toastr.error(response.message);
           }
+        this.disabled_btn = false;
       }, error=>{
         toastr.error('Ocurrió un error al recuperar contraseña! Error: ' + error.status);
+        this.disabled_btn = false;
       });
 
     }else{
       this.mensaje_error = "Correo no válido";
+      this.disabled_btn = false;
     }
   }
 
