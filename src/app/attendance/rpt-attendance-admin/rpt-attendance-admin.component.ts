@@ -92,6 +92,12 @@ export class RptAttendanceAdminComponent implements OnInit {
       
       if (response.successful) {
         this.empleados = response.empleados;
+
+        if(this.auth.getNivelJerarquico() == 2){
+          let id_personal_jefe = this.auth.getIdPersonal();
+          this.empleados = this.empleados.filter(empleado => empleado[2] == id_personal_jefe);
+        }
+       
         this.meses = response.meses;
         this.anios = response.anios;
         this.status_message = null;

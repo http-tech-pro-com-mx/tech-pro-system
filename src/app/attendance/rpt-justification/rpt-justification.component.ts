@@ -47,6 +47,12 @@ export class RptJustificationComponent implements OnInit {
       if (response.successful) {
         this.status_message = null;
         this.justificaciones = response.justificaciones;
+
+        if(this.auth.getNivelJerarquico() == 2){
+          let id_personal_jefe = this.auth.getIdPersonal();
+          this.justificaciones = this.justificaciones.filter(jst => jst.id_personal.id_personal == id_personal_jefe);
+        }
+
         this.justificaciones.map(justificacion =>{
            justificacion.id_personal.apellido_materno = validaTextNull(justificacion.id_personal.apellido_materno)
         });

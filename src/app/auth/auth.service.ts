@@ -40,6 +40,10 @@ export class AuthService {
       return result;
   }
 
+  public getNivelJerarquico(): number{
+     return jwt_decode(this.getToken()).nivel_jerarquico || -1;
+  }
+
 
 
 }
