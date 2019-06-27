@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import * as jwt_decode  from 'jwt-decode';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable()
 export class AuthService {
@@ -16,19 +16,25 @@ export class AuthService {
     // return a boolean reflecting 
     // whether or not the token is expired
     return !this.helper.isTokenExpired(token);
-    
+
   }
 
-  public getIdPersonal(): number{
-     return jwt_decode(this.getToken()).id_personal || -1; 
+  public getIdPersonal(): number {
+    return jwt_decode(this.getToken()).id_personal || -1;
   }
 
-  public getUserName(): string{
-    return jwt_decode(this.getToken()).user_name || "NOT_USER"; 
- }
+  public getUserName(): string {
+    return jwt_decode(this.getToken()).user_name || "NOT_USER";
+  }
 
- public getUserid(): number{
-  return jwt_decode(this.getToken()).userid || -1; 
-}
+  public getUserid(): number {
+    return jwt_decode(this.getToken()).userid || -1;
+  }
+
+  public getRoles():Array<string>{
+    return jwt_decode(this.getToken()).authorities || [];
+  }
+
+
 
 }

@@ -10,30 +10,69 @@ import { RptAttendanceAdminComponent } from './rpt-attendance-admin/rpt-attendan
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormJustificationJefeComponent } from './form-justification-jefe/form-justification-jefe.component';
 import { RptAttendanceConcentratedComponent } from './rpt-attendance-concentrated/rpt-attendance-concentrated.component';
+import { AuthGuardSecurity } from '../auth/auth.guard.security';
 
 const routesAttendance: Routes = [
-  { path: 'report', component: RptAttendanceComponent },
-  { path: 'quincenas', component: QuincenaComponent },
-  { path: 'justication/:id', component: FormJustificationComponent },
-  { path: 'justication/employees/crear', component: FormJustificationJefeComponent },
-  { path: 'report-justication', component: RptJustificationComponent },
-  { path: 'report-admin', component: RptAttendanceAdminComponent },
-  { path: 'report-concentrated', component: RptAttendanceConcentratedComponent }
+  {
+    path: 'quincenas', component: QuincenaComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_CONSULTA_QUINCENA'
+    }
+  },
+  {
+    path: 'justication/:id', component: FormJustificationComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_CREA_JST'
+    }
+  },
+  {
+    path: 'justication/employees/crear', component: FormJustificationJefeComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_CREA_JST_EMPLEADO'
+    }
+  },
+  {
+    path: 'report-justication', component: RptJustificationComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_CONSULTA_JST'
+    }
+  },
+  {
+    path: 'report', component: RptAttendanceComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_RPT_INDIVIDUAL'
+    }
+  },
+  {
+    path: 'report-admin', component: RptAttendanceAdminComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_RPT_ADMIN'
+    }
+  },
+  {
+    path: 'report-concentrated', component: RptAttendanceConcentratedComponent, canActivate: [AuthGuardSecurity],
+    data: {
+      expectedRole: 'ROLE_RPT_CONCENTRADO'
+    }
+  }
 ];
 
 @NgModule({
   declarations: [
-    RptAttendanceComponent, 
-    QuincenaComponent, 
-    FormJustificationComponent, 
-    RptJustificationComponent, 
+    RptAttendanceComponent,
+    QuincenaComponent,
+    FormJustificationComponent,
+    RptJustificationComponent,
     RptAttendanceAdminComponent, FormJustificationJefeComponent, RptAttendanceConcentratedComponent],
   imports: [
     CommonModule,
     SharedModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(routesAttendance)
+  ],
+  providers: [
+    AuthGuardSecurity
   ]
 })
 export class AttendanceModule { }
