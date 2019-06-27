@@ -121,8 +121,10 @@ export class RptJustificationComponent implements OnInit {
               return justificacion;
             }); 
         
-            let cell = $('#mainTable').DataTable().cell(index_row, 4 );
-            cell.data( update.id_personal_autoriza.nombre +" "+update.id_personal_autoriza.apellido_paterno).draw();
+            let cell = $('#mainTable').DataTable().cell(index_row, 5 );
+            // Linea comentada agrega el nombre del jefe pero queremos que aparezca la leyenda "YO"
+            // cell.data( update.id_personal_autoriza.nombre +" "+update.id_personal_autoriza.apellido_paterno).draw();
+            cell.data( "YO" ).draw();
 
           } else {
             toastr.error('Ocurrió un error! Error: ' + response.message);

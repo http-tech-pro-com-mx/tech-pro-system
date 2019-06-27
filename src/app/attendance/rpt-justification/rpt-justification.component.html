@@ -17,8 +17,8 @@
           </h2>
           <ul class="header-dropdown m-r--5">
             <li class="dropdown">
-              <a href="javascript:void(0);" (click)="helpUserMessage()" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                aria-haspopup="true" aria-expanded="false">
+              <a href="javascript:void(0);" (click)="helpUserMessage()" class="dropdown-toggle" data-toggle="dropdown"
+                role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="material-icons">help</i>
               </a>
             </li>
@@ -59,9 +59,12 @@
                       <label [for]="'no_justifica'+i" class="m-l-20">NO</label>
                     </div>
                   </td>
-                  <td> 
-                      {{ justificacion.id_personal_autoriza | nombre: id_personal_session  }}
+                  <td *ngIf="justificacion.id_personal_autoriza;else vacio">
+                    {{ justificacion.id_personal_autoriza | nombre: id_personal_session  }}
                   </td>
+                  <ng-template #vacio>
+                    <td>-</td>
+                  </ng-template>
                 </tr>
               </tbody>
             </table>
@@ -102,7 +105,8 @@
           </div>
           <div class="form-group form-float">
             <h6 class="card-inside-title">DIA(S):</h6>
-            <span *ngFor="let dia of detalle.dias">&#8226; &nbsp;{{dia.fecha | date: 'fullDate' : 'es-MX' + '   ' }} &nbsp;</span>
+            <span *ngFor="let dia of detalle.dias">&#8226; &nbsp;{{dia.fecha | date: 'fullDate' : 'es-MX' + '   ' }}
+              &nbsp;</span>
           </div>
         </div>
         <div class="modal-footer">

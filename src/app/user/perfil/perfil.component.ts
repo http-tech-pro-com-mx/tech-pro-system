@@ -6,9 +6,10 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Area } from '../../models/area';
 import { Perfil } from '../../models/perfil';
 import { ViewChild } from '@angular/core';
-import swal from 'sweetalert2';
 import { HttpEventType } from '@angular/common/http';
 import { BASE_URL } from '../../constants';
+import { validaTextNull } from '../../utils';
+import swal from 'sweetalert2';
 
 declare var $: any;
 declare var toastr: any;
@@ -67,6 +68,7 @@ export class PerfilComponent implements OnInit {
 
         this.areas = result.areas;
         this.personal = result.getUser.personal;
+        this.personal.apellido_materno = validaTextNull(this.personal.apellido_materno);
         this.status_message = null;
 
       } else {

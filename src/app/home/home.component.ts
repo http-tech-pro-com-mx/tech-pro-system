@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario';
 import { Personal } from '../models/personal';
 import { BASE_URL } from '../constants';
+import { validaTextNull } from '../utils';
 
 declare var $: any;
 declare var toastr: any;
@@ -43,7 +44,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.url = this.router.url;
     let datos = JSON.parse(localStorage.getItem('data_user'));
-    this.personal = new Personal(datos.id_personal, datos.nombre, datos.apellido_paterno, datos.apellido_materno, datos.genero, datos.nombre_foto, datos.email, datos.id_area, datos.id_perfil);
+    this.personal = new Personal(datos.id_personal, datos.nombre, datos.apellido_paterno, validaTextNull(datos.apellido_materno), datos.genero, datos.nombre_foto, datos.email, datos.id_area, datos.id_perfil);
 
   }
 
