@@ -150,10 +150,10 @@ export class RptAttendanceComponent implements OnInit {
         if (result.successful) {
           this.registros_comidas = result.hora_comida;
           this.registros = result.entrada_salida;
-          this.total_retardos = this.registros.filter(el => el[3] == "RETARDO").length;
+          this.total_retardos = this.registros.filter(el => el[3] == "RETARDO" || el[3] == "JUSTIFICACIÓN NO APROBADA").length;
           this.total_no_check = this.registros.filter(el => el[3] == "NO CHECO ENTRADA").length;
           this.total_ok = this.registros.filter(el => el[3] == "OK").length;
-          this.total_faltas = this.registros.filter(el => el[3] == "FALTA").length;
+          this.total_faltas = this.registros.filter(el => el[3] == "FALTA" ||  el[3] == "FALTA NO JUSTIFICADA").length;
           this.descuento_retardos = this.total_retardos / 3;
           this.descuento_retardos = parseInt("" + this.descuento_retardos) + this.total_faltas;
           this.busqueda = true;
