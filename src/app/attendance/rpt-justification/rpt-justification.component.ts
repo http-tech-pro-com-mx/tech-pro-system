@@ -50,8 +50,8 @@ export class RptJustificationComponent implements OnInit {
         this.status_message = null;
         this.justificaciones = response.justificaciones;
 
-        if(this.auth.getNivelJerarquico() == 2){
-          this.justificaciones = this.justificaciones.filter(jst => jst.id_personal.id_personal == this.id_personal_session);
+        if(this.auth.getNivelJerarquico() == 1){
+          this.justificaciones = this.justificaciones.filter(jst => jst.id_personal.id_personal == this.id_personal_session || jst.id_personal.jefe_directo == this.id_personal_session);
         }
 
       } else {

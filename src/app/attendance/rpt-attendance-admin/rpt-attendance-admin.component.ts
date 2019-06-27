@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RptAttendanceAdminService } from './rpt-attendance-admin.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth/auth.service';
 import { Anio } from '../../models/anio';
 import { Mes } from '../../models/mes';
 import * as highcharts from 'highcharts';
@@ -60,8 +59,7 @@ export class RptAttendanceAdminComponent implements OnInit {
 
 
   constructor(private service: RptAttendanceAdminService,
-    private fb: FormBuilder,
-    private auth: AuthService) { }
+    private fb: FormBuilder) { }
 
   ngOnInit() {
     this.loading = true;
@@ -92,11 +90,6 @@ export class RptAttendanceAdminComponent implements OnInit {
       
       if (response.successful) {
         this.empleados = response.empleados;
-
-        if(this.auth.getNivelJerarquico() == 2){
-          let id_personal_jefe = this.auth.getIdPersonal();
-          this.empleados = this.empleados.filter(empleado => empleado[2] == id_personal_jefe);
-        }
        
         this.meses = response.meses;
         this.anios = response.anios;
