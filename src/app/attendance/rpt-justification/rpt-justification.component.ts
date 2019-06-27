@@ -24,6 +24,7 @@ export class RptJustificationComponent implements OnInit {
   public busqueda: boolean;
   public justificaciones: Array<Justificacion>;
   public detalle: Justificacion;
+  public id_personal_session: number;
   public permissions: any ={
     validar: false
   };
@@ -34,6 +35,7 @@ export class RptJustificationComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.id_personal_session = this.auth.getIdPersonal();
     this.permissions.validar = this.auth.hasPermission('ROLE_VALIDA_JST');
     this.section = "JUSTIFICANTES";
     this.status_message = null;
@@ -49,13 +51,9 @@ export class RptJustificationComponent implements OnInit {
         this.justificaciones = response.justificaciones;
 
         if(this.auth.getNivelJerarquico() == 2){
-          let id_personal_jefe = this.auth.getIdPersonal();
-          this.justificaciones = this.justificaciones.filter(jst => jst.id_personal.id_personal == id_personal_jefe);
+          this.justificaciones = this.justificaciones.filter(jst => jst.id_personal.id_personal == this.id_personal_session);
         }
 
-        this.justificaciones.map(justificacion =>{
-           justificacion.id_personal.apellido_materno = validaTextNull(justificacion.id_personal.apellido_materno)
-        });
       } else {
         toastr.error(response.message);
         this.status_message = " " + response.message;

@@ -38,7 +38,7 @@
               <tbody>
                 <tr *ngFor="let justificacion of justificaciones; let i = index">
                   <td>
-                    {{ justificacion.id_personal.nombre + ' '+ justificacion.id_personal.apellido_paterno + ' ' + justificacion.id_personal.apellido_materno  }}
+                    {{ justificacion.id_personal | nombre: id_personal_session  }}
                   </td>
                   <td><a href="#" (click)="openModal(justificacion, $event)">{{ justificacion.motivo }}</a></td>
                   <td [ngSwitch]="justificacion.id_estatus">
@@ -59,12 +59,9 @@
                       <label [for]="'no_justifica'+i" class="m-l-20">NO</label>
                     </div>
                   </td>
-                  <td *ngIf="justificacion.id_personal_autoriza; else vacio"> 
-                      {{ justificacion.id_personal_autoriza.nombre + ' '+ justificacion.id_personal_autoriza.apellido_paterno  }}
+                  <td> 
+                      {{ justificacion.id_personal_autoriza | nombre: id_personal_session  }}
                   </td>
-                  <ng-template #vacio>
-                      <td>-</td>
-                  </ng-template>
                 </tr>
               </tbody>
             </table>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
+import { PipeModule } from '../pipe/pipe.module';
 import { RptAttendanceComponent } from './rpt-attendance/rpt-attendance.component';
 import { QuincenaComponent } from './quincenas/quincenas.component';
 import { FormJustificationComponent } from './form-justification/form-justification.component';
@@ -69,6 +70,7 @@ const routesAttendance: Routes = [
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    PipeModule,
     RouterModule.forChild(routesAttendance)
   ],
   providers: [
