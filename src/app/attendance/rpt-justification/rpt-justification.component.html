@@ -31,7 +31,7 @@
                   <th>MOTIVO</th>
                   <th>STATUS</th>
                   <th>ELABORADO</th>
-                  <th>AUTORIZAR</th>
+                  <th *ngIf="permissions.validar">AUTORIZAR</th>
                   <th>¿AUTORIZÓ?</th>
                 </tr>
               </thead>
@@ -47,7 +47,7 @@
                     <i class="material-icons" *ngSwitchCase="3">check_circle</i>
                   </td>
                   <td>{{ justificacion.fecha_registro  | date: 'mediumDate' : 'es-MX' }}</td>
-                  <td>
+                  <td *ngIf="permissions.validar">
                     <div class="form-group">
                       <input type="radio" [name]="'row'+i" [id]="'si_justifica'+i"
                         [checked]="justificacion.id_estatus == 3" class="with-gap"

@@ -30,6 +30,10 @@ export class QuincenaComponent implements OnInit {
   public quincena: Quincena;
   public dias_habiles: Array<Diah>;
   public isEdit: boolean;
+  public permissions: any ={
+    create: false,
+    edit: false
+  };
 
 
   constructor(private service: QuincenasService,
@@ -39,6 +43,8 @@ export class QuincenaComponent implements OnInit {
   ngOnInit() {
 
     this.loading = true;
+    this.permissions.create = this.auth.hasPermission('ROLE_CREA_QUINCENA');
+    this.permissions.edit = this.auth.hasPermission('ROLE_MODIFICA_QUINCENA');
     this.section = "CONFIGURACIÓN";
     this.status_message = null;
     this.submitted = false;

@@ -24,6 +24,9 @@ export class RptJustificationComponent implements OnInit {
   public busqueda: boolean;
   public justificaciones: Array<Justificacion>;
   public detalle: Justificacion;
+  public permissions: any ={
+    validar: false
+  };
 
 
   constructor(private service: RptJustificationService,
@@ -31,6 +34,7 @@ export class RptJustificationComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.permissions.validar = this.auth.hasPermission('ROLE_VALIDA_JST');
     this.section = "JUSTIFICANTES";
     this.status_message = null;
     this.submitted = false;

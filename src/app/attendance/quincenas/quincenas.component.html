@@ -17,7 +17,7 @@
                         QUINCENAS CREADAS
                         <small>HAZ CLIC SOBRE CADA ELEMENTO PARA VER SU CONFIGURACIÓN.</small>
                     </h2>
-                    <ul class="header-dropdown m-r--5">
+                    <ul class="header-dropdown m-r--5" *ngIf="permissions.create">
                         <li class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                 aria-haspopup="true" aria-expanded="false">
@@ -83,7 +83,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" *ngIf="permissions.edit">
                                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                     <div class="pull-right">
                                                         <a href="javascript:void(0);" (click)="editaQuincena(quincena)">EDITAR</a>

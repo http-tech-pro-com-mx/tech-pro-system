@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListUsersService } from './list-users.service';
+import { AuthService } from '../../auth/auth.service';
 import { Usuario } from 'src/app/models/usuario';
 import { BASE_URL } from 'src/app/constants';
 import { validaTextNull } from '../../utils';
@@ -45,13 +46,19 @@ export class ListUsersComponent implements OnInit {
   public URL_IMAGEN: string = BASE_URL + '/api/usuarios/getImageProfile/';
   public searchText: string;
   public status_animation: string;
+  public permissions: any ={
+    activate: false
+  };
 
 
-  constructor(private service: ListUsersService) { }
+  constructor(private service: ListUsersService,
+    private auth: AuthService
+    ) { }
 
   ngOnInit() {
 
     this.loading = true;
+    this.permissions.activate = this.auth.hasPermission('ROLE_ACTIVA_USUARIO');
     this.status_message = null;
     this.section = "CONSULTA EMPLEADOS";
     this.empleados = [];

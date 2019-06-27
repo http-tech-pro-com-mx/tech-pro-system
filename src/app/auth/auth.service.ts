@@ -35,6 +35,11 @@ export class AuthService {
     return jwt_decode(this.getToken()).authorities || [];
   }
 
+  public hasPermission(role:string):boolean{
+      let result =  this.getRoles().indexOf(role) != -1;
+      return result;
+  }
+
 
 
 }
