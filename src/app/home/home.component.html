@@ -93,7 +93,7 @@
               <span>HOME</span>
             </a>
           </li>
-          <li>
+          <li *ngIf="permissions.consulta_empleados">
             <a href="javascript:void(0);" class="menu-toggle menu-empleados">
               <i class="material-icons">people</i>
               <span>EMPLEADOS</span>
@@ -104,7 +104,7 @@
               </li>
             </ul>
           </li>
-          <li routerLinkActive="active">
+          <li routerLinkActive="active" *ngIf="permissions.consulta_quincena">
             <a routerLink="attendance/quincenas" class="toggled waves-effect waves-block menu-simple" >
               <i class="material-icons">
                 date_range
@@ -118,13 +118,13 @@
               <span>ASISTENCIAS</span>
             </a>
             <ul class="ml-menu">
-              <li routerLinkActive="active">
+              <li routerLinkActive="active" *ngIf="permissions.rpt_individual">
                 <a routerLink="attendance/report" class="toggled waves-effect waves-block menu-asistencias-consulta">CONSULTA</a>
               </li>
-              <li routerLinkActive="active">
+              <li routerLinkActive="active" *ngIf="permissions.rpt_admin">
                 <a routerLink="attendance/report-admin" class="toggled waves-effect waves-block menu-asistencias-rpt">REPORTE ADMIN</a>
               </li>
-              <li routerLinkActive="active">
+              <li routerLinkActive="active" *ngIf="permissions.rpt_concentrado">
                 <a routerLink="attendance/report-concentrated" class="toggled waves-effect waves-block menu-asistencias-rpt-c">REPORTE CONCENTRADO</a>
               </li>
             </ul>
@@ -135,13 +135,13 @@
               <span>JUSTIFICANTE</span>
             </a>
             <ul class="ml-menu">
-              <li routerLinkActive="active">
+              <li routerLinkActive="active" *ngIf="permissions.jst_create">
                 <a routerLink="attendance/justication/crear" class="toggled waves-effect waves-block menu-justicantes-crear">CREAR</a>
               </li>
-              <li routerLinkActive="active">
+              <li routerLinkActive="active" *ngIf="permissions.jft_empleados">
                 <a routerLink="attendance/justication/employees/crear" class="toggled waves-effect waves-block menu-justicantes-empl">JUSTIFICAR EMPLEADOS</a>
               </li>
-              <li routerLinkActive="active">
+              <li routerLinkActive="active" *ngIf="permissions.consulta_jst">
                 <a routerLink="attendance/report-justication" class="toggled waves-effect waves-block menu-justicantes-rpt">CONSULTAR</a>
               </li>
             </ul>
