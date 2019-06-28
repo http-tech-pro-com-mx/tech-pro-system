@@ -19,6 +19,7 @@ import { NotAuthGuard } from './auth/not.auth.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 registerLocaleData(localeEsMx);
 
@@ -61,6 +62,7 @@ const appRoutes: Routes = [
       useClass: TokenInterceptor,
       multi: true
     },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: LOCALE_ID, useValue: 'es-MX' }
   ],
   bootstrap: [AppComponent]
