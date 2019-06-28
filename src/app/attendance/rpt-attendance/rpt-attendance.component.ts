@@ -73,7 +73,7 @@ export class RptAttendanceComponent implements OnInit {
     this.status_message = null;
     this.submitted = false;
     this.status_animation = "closed";
-    this.section = "CONSULTA DE ASISTENCIAS";
+    this.section = "MIS ASISTENCIAS";
     this.anios = [];
     this.meses = [];
     this.registros_comidas = [];

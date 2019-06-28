@@ -62,26 +62,32 @@
       </div>
     </form>
   </div>
- 
+
   <div class="row clearfix" *ngIf="registros.length > 0">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      <div class="card"  [@status_animation]="status_animation">
+      <div class="card" [@status_animation]="status_animation">
         <div class="header header-color">
           <h5 class="title">REPORTE HORARIO LABORAL
             <small class="small-name-quincena">{{name_quincena}}</small>
           </h5>
           <ul class="header-dropdown m-r-0">
-              <li>
-                  <a href="javascript:void(0);" (click)="exportarExcel()" title="Descargar Tabla">
-                      <i class="material-icons">cloud_download</i>
-                  </a>
-              </li>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <li>
-                  <a href="javascript:void(0);" (click)="helpUserMessage()" title="Información">
-                      <i class="material-icons">info</i>
-                  </a>
-              </li>
+            <li>
+              <a href="javascript:void(0);" (click)="openModalGrafica($event)" title="Ver gráfica">
+                <i class="material-icons">bar_chart</i>
+              </a>
+            </li>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <li>
+              <a href="javascript:void(0);" (click)="exportarExcel()" title="Descargar Tabla">
+                <i class="material-icons">cloud_download</i>
+              </a>
+            </li>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <li>
+              <a href="javascript:void(0);" (click)="helpUserMessage()" title="Información">
+                <i class="material-icons">info</i>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="body table-responsive">
@@ -97,7 +103,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let registro of registros" >
+              <tr *ngFor="let registro of registros">
                 <td>{{ registro[0] }}</td>
                 <td class="text-center">{{ registro[1] }}</td>
                 <td class="text-center">{{ registro[2] }}</td>
@@ -107,6 +113,22 @@
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modalGrafica" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+        </div>
+        <div class="modal-body">
+          <div id="divGrafica" style="width:100%; height:500px;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="closeModal()">CERRAR</button>
         </div>
       </div>
     </div>
