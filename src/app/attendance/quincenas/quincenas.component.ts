@@ -30,6 +30,7 @@ export class QuincenaComponent implements OnInit {
   public quincena: Quincena;
   public dias_habiles: Array<Diah>;
   public isEdit: boolean;
+  public disabled_btn: boolean;
   public permissions: any ={
     create: false,
     edit: false
@@ -48,6 +49,7 @@ export class QuincenaComponent implements OnInit {
     this.section = "CONFIGURACIÓN";
     this.status_message = null;
     this.submitted = false;
+    this.disabled_btn = false;
     this.quincenas = [];
     this.dias_by_quincena = [];
     this.meses = [];
@@ -229,7 +231,7 @@ export class QuincenaComponent implements OnInit {
            * Si acepta
            */
           if (result.value) {
-           
+            this.disabled_btn = true;
             this.service.updateQuincena(this.quincena, this.dias_habiles).subscribe(response => {
               
               if (response.successful) {
@@ -243,29 +245,35 @@ export class QuincenaComponent implements OnInit {
                   }
                 });
                 swal.fire('Exito !', response.message, 'success');
+                this.disabled_btn = false;
               } else {
                 toastr.error(response.message);
+                this.disabled_btn = false;
               }
             }, error => {
               toastr.error('Ocurrió un error al actualizar! Error: ' + error.status);
+              this.disabled_btn = false;
             });
           } else if (result.dismiss === swal.DismissReason.cancel) { }
         })
 
       } else {
+        this.disabled_btn = true;
         this.service.createQuincena(this.quincena, this.dias_habiles).subscribe(response => {
 
           if (response.successful) {
             this.quincenas.push(response.quincena);
             $('select').selectpicker('val', '-1');
             swal.fire('Exito !', response.message, 'success');
-
+            this.disabled_btn = false;
             this.closeModal(false);
           } else {
             toastr.error(response.message);
+            this.disabled_btn = false;
           }
         }, error => {
           toastr.error('Ocurrió un error al crear! Error: ' + error.status);
+          this.disabled_btn = false;
         });
       }
 
@@ -301,6 +309,14 @@ export class QuincenaComponent implements OnInit {
       toastr.error('Ocurrió un error al consultar! Error: ' + error.status);
     });
 
+  }
+
+  getTextoBtn(): string{
+    if(this.disabled_btn){
+      return "PROCESANDO"
+    }else{
+      return (!this.isEdit)? "REGISTRAR" : "ACTUALIZAR";
+    }
   }
 
 

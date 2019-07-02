@@ -77,7 +77,7 @@
                     </small>
                   </div>
                   <div class="pull-right">
-                    <button type="submit" class="btn bg-lime m-t-15 waves-effect">ENVIAR</button>
+                    <button type="submit" class="btn bg-lime m-t-15 waves-effect" [disabled]="disabled_btn">{{ disabled_btn ? 'ENVIANDO' : 'ENVIAR' }}</button>
                   </div>
                 </div>
               </form>

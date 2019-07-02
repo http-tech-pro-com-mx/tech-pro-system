@@ -57,6 +57,7 @@ export class FormJustificationJefeComponent implements OnInit {
   public empleados_justificacion: Array<any>;
   public empleados_seleccionados: string;
   public status_animation: string;
+  public disabled_btn: boolean;
 
 
 
@@ -68,6 +69,7 @@ export class FormJustificationJefeComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.disabled_btn = false;
     this.status_animation = "closed";
     this.empleados = [];
     this.initVariablesComponent();
@@ -76,7 +78,7 @@ export class FormJustificationJefeComponent implements OnInit {
 
       if (response.successful) {
         this.empleados = response.empleados;
-        if(this.auth.getNivelJerarquico() == 1){
+        if (this.auth.getNivelJerarquico() == 1) {
           let id_personal_jefe = this.auth.getIdPersonal();
           this.empleados = this.empleados.filter(empleado => empleado[2] == id_personal_jefe);
         }
@@ -182,24 +184,27 @@ export class FormJustificationJefeComponent implements OnInit {
         if (result.value) {
 
 
-
+          this.disabled_btn = true;
           this.service.createJustificacion(this.justificacion, this.empleados_justificacion).subscribe(response => {
 
             if (response.successful) {
-              
+
               swal.fire('Exito !', response.message, 'success');
               this.initVariablesComponent();
               this.form.reset();
               $('.calendario').datepicker('update', '');
               $('.empleados-justificados').selectpicker('deselectAll');
               $('.motivo-justificacion').selectpicker('refresh');
-            
+              this.disabled_btn = false;
+
             } else {
               toastr.error(response.message);
+              this.disabled_btn = false;
+
             }
           }, error => {
             toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
-
+            this.disabled_btn = false;
           });
 
 
@@ -226,9 +231,9 @@ export class FormJustificationJefeComponent implements OnInit {
     swal.fire({
       type: 'question',
       title: 'Ayuda',
-      html: 'Llene todos los campos y haga clic en el '+
-      'botón <b>JUSTIFICAR AHORA</b>.<br> En esta sección se <b>justifica y aprueba </b> a uno o mas empleados. '+
-      'Puede ver el estatus de esta justificación en la sección de <b>CONSULTA</b>'
+      html: 'Llene todos los campos y haga clic en el ' +
+        'botón <b>JUSTIFICAR AHORA</b>.<br> En esta sección se <b>justifica y aprueba </b> a uno o mas empleados. ' +
+        'Puede ver el estatus de esta justificación en la sección de <b>CONSULTA</b>'
     });
 
   }

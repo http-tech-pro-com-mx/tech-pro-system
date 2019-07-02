@@ -211,7 +211,7 @@
                                 <button data-direction="prev" type="button"
                                     class="btn btn-primary">ANTERIOR</button>&nbsp;&nbsp;
                                 <button data-direction="next" type="button" class="btn btn-primary">SIGUIENTE</button>
-                                <button data-direction="finish" type="button" class="btn btn-primary" (click)="sendQuincena()">{{ (!isEdit)? 'REGISTRAR' : 'ACTUALIZAR'}}</button>
+                                <button data-direction="finish" type="button" class="btn btn-primary" (click)="sendQuincena()" [disabled]="disabled_btn">{{ getTextoBtn() }}</button>
                             </div>
                         </div>
                     </div>

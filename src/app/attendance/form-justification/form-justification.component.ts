@@ -53,6 +53,7 @@ export class FormJustificationComponent implements OnInit {
   public submitted: boolean;
   public hasDays: boolean;
   public status_animation: string;
+  public disabled_btn: boolean;
 
 
   constructor(
@@ -62,6 +63,7 @@ export class FormJustificationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.disabled_btn = false;
     this.status_animation = "closed";
     this.dias = [];
     this.personal = new Personal(this.auth.getIdPersonal(), "", "", "", -1, "", "");
@@ -122,6 +124,7 @@ export class FormJustificationComponent implements OnInit {
          */
         if (result.value) {
 
+          this.disabled_btn = true;
           this.service.createJustificacion(this.justificacion).subscribe(response => {
 
             if (response.successful) {
@@ -134,13 +137,17 @@ export class FormJustificationComponent implements OnInit {
               this.form.reset();
               $('.calendario').datepicker('update', '');
               $('.motivo-justificacion').selectpicker('refresh');
+              this.disabled_btn = false;
              
             } else {
               toastr.error(response.message);
+              this.disabled_btn = false;
             }
+
+           
           }, error => {
             toastr.error('Ocurrió un error al enviar! Error: ' + error.status);
-
+            this.disabled_btn = false;
           });
 
 

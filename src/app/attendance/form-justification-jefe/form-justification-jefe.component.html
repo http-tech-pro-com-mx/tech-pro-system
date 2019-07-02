@@ -111,7 +111,7 @@
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="pull-right">
-                  <button type="submit" class="btn bg-lime m-t-15 waves-effect">JUSTIFICAR AHORA</button>
+                  <button type="submit" class="btn bg-lime m-t-15 waves-effect"  [disabled]="disabled_btn">{{ disabled_btn ? 'JUSTIFICANDO' : 'JUSTIFICAR AHORA' }}</button>
                 </div>
               </div>
             </div>
