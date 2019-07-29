@@ -1,0 +1,19 @@
+import { Component, OnInit } from '@angular/core';
+
+declare var $:any;
+@Component({
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
+})
+export class ChatComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+    // setTimeout(()=>{
+    //   $.AdminBSB.input.activate();
+    // },100)
+  }
+
+}
