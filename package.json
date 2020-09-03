@@ -21,7 +21,7 @@
     "@angular/router": "~7.2.0",
     "@auth0/angular-jwt": "^2.1.0",
     "bootstrap-datepicker": "^1.8.0",
-    "bootstrap-select": "^1.10.0",
+    "bootstrap-select": "^1.13.6",
     "core-js": "^2.5.4",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
