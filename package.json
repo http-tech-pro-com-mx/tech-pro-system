@@ -23,7 +23,7 @@
     "bootstrap-datepicker": "^1.8.0",
     "bootstrap-select": "^1.10.0",
     "core-js": "^2.5.4",
-    "datatables.net": "^1.10.19",
+    "datatables.net": "^1.10.22",
     "datatables.net-dt": "^1.10.19",
     "highcharts": "^7.1.1",
     "jquery.steps": "^1.0.1",
