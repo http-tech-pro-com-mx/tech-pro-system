@@ -28,7 +28,7 @@
     "highcharts": "^7.1.1",
     "jquery.steps": "^1.0.1",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "rxjs": "~6.3.3",
     "sweetalert2": "^8.8.1",
     "toastr": "^2.1.4",
